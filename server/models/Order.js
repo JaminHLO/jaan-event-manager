@@ -7,10 +7,10 @@ const orderSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  products: [
+  clubs: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Product'
+      ref: 'Club'
     }
   ]
 });
