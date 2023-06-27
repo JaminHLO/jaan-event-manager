@@ -2,15 +2,10 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Order = require('./Order');
+// const Order = require('./Order');
 
 const userSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  lastName: {
+  name: {
     type: String,
     required: true,
     trim: true
@@ -18,14 +13,38 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    match: [/.+@.+\..+/, 'Must match an email address!'],
   },
   password: {
     type: String,
     required: true,
     minlength: 5
   },
-  orders: [Order.schema]
+  myEvents: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Event'
+    }
+  ],
+  myClubs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Club'
+    }
+  ],
+  participants: [
+    {
+      type: String
+    }
+  ],
+  image: {
+    type: String
+  },
+  address: {
+    type: String,
+  },
+  // orders: [Order.schema]
 });
 
 // set up pre-save middleware to create password

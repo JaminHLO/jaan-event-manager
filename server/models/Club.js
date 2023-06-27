@@ -7,9 +7,12 @@ const clubSchema = new Schema({
     type: String,
     required: true,
   },
-  events: {
-    type: String,
-  },
+  events: [
+    {
+    type: Schema.Types.ObjectId,
+    ref: 'Event'
+    }
+  ],
   title: {
     type: String,
     required: true,
@@ -23,9 +26,12 @@ const clubSchema = new Schema({
     ref: 'Category',
     required: true
   },
-  members: {
-    type: String
-  },
+  members: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
   maxMembers: {
     type: Number,
     min: 1
@@ -52,7 +58,16 @@ const clubSchema = new Schema({
     min: 0,
     default: 0
   }
+},
+{
+    toJSON: {
+      virtuals: true
+    }
 });
+
+clubSchema.virtual('currentNumMembers').length(function() {
+  return this.members.length
+})
 
 const Club = mongoose.model('Club', clubSchema);
 
