@@ -45,29 +45,22 @@ const clubSchema = new Schema({
   zipCode: {
     type: Number
   },
-  messages: {
-    type: String
-  },
+  messages: [
+    {
+      type: String
+    }
+  ],
   price: {
     type: Number,
     required: true,
     min: 0.99
   },
-  quantity: {
+  spotsAvailable: {
     type: Number,
     min: 0,
     default: 0
   }
-},
-{
-    toJSON: {
-      virtuals: true
-    }
 });
-
-clubSchema.virtual('currentNumMembers').length(function() {
-  return this.members.length
-})
 
 const Club = mongoose.model('Club', clubSchema);
 

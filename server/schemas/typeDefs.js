@@ -6,27 +6,38 @@ const typeDefs = gql`
     name: String
   }
 
-  type Product {
+  type Club {
     _id: ID
-    name: String
+    adminId: String
+    events: [Event]
+    title: String
     description: String
-    image: String
-    quantity: Int
-    price: Float
     category: Category
+    members: [User]    
+    maxMembers: Number
+    image: String
+    notifications: String
+    zipCode: Number
+    messages: [String]
+    price: Float
+    spotsAvailable: Int
   }
 
   type Order {
     _id: ID
     purchaseDate: String
-    products: [Product]
+    clubs: [Club]
   }
 
   type User {
     _id: ID
-    firstName: String
-    lastName: String
+    name: String
     email: String
+    myClubs: [Club]
+    myEvents: [Event]
+    participants: [String]
+    image: String
+    address: String
     orders: [Order]
   }
 
@@ -41,18 +52,18 @@ const typeDefs = gql`
 
   type Query {
     categories: [Category]
-    products(category: ID, name: String): [Product]
-    product(_id: ID!): Product
+    clubs(category: ID, name: String): [Club]
+    club(_id: ID!): Club
     user: User
     order(_id: ID!): Order
-    checkout(products: [ID]!): Checkout
+    checkout(clubs: [ID]!): Checkout
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addOrder(products: [ID]!): Order
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateProduct(_id: ID!, quantity: Int!): Product
+    addUser(name: String!, email: String!, password: String!): Auth
+    addOrder(clubs: [ID]!): Order
+    updateUser(name: String, email: String, password: String): User
+    updateClub(_id: ID!, spotsAvailable: Int!): Club
     login(email: String!, password: String!): Auth
   }
 `;
