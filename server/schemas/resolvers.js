@@ -172,29 +172,29 @@ const resolvers = {
       }
       throw new AuthenticationError('Incorrect credentials');
     },
-    updateEvent: async (parent, { eventId, EventInput }, context) => {
+    updateEvent: async (parent, { eventId, event }, context) => {
       if (context.user) {
-        const updatedEvent = await Event.findOneAndUpdate(
-          { _id: eventId },
-          { event: { EventInput }},
+        const updatedEvent = await Event.findByIdAndUpdate(
+          eventId,
+          { ...event },
           { new: true }
         )
         return updatedEvent
       }
       throw new AuthenticationError('Incorrect credentials');
     },
-    updateClub: async (parent, { clubId, ClubInput }, context) => {
+    updateClub: async (parent, { clubId, club }, context) => {
       if (context.user) {
-        const updatedClub = await Club.findOneAndUpdate(
-          { _id: clubId },
-          { club: { ClubInput }},
+        const updatedClub = await Club.findByIdAndUpdate(
+          clubId,
+          { ...club },
           { new: true }
         )
         return updatedClub
       }
       throw new AuthenticationError('Incorrect credentials');
     },
-    joinClub: async (parent, { clubId }, context) => {
+    joinClub: async (parent, clubId, context) => {
       const userId = context.user._id
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(

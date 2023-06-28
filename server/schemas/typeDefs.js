@@ -122,8 +122,8 @@ const typeDefs = gql`
     addEvent(event: EventInput): Event
     updateEvent(eventId: ID!, event: EventInput): Event
     updateClub(clubId: ID!, club: ClubInput): Club
-    joinClub(clubId: ID!): Club
-    joinEvent(eventId: ID!): Event
+    joinClub(clubId: ID!): User
+    joinEvent(eventId: ID!): User
   }
 `;
 
