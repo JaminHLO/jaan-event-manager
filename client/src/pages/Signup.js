@@ -1,3 +1,4 @@
+// Project-3
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
@@ -14,8 +15,7 @@ function Signup(props) {
       variables: {
         email: formState.email,
         password: formState.password,
-        firstName: formState.firstName,
-        lastName: formState.lastName,
+        name: formState.name,
       },
     });
     const token = mutationResponse.data.addUser.token;
@@ -37,22 +37,12 @@ function Signup(props) {
       <h2>Signup</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
-          <label htmlFor="firstName">First Name:</label>
+          <label htmlFor="Name">Name:</label>
           <input
-            placeholder="First"
-            name="firstName"
-            type="firstName"
-            id="firstName"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            placeholder="Last"
-            name="lastName"
-            type="lastName"
-            id="lastName"
+            placeholder="Name"
+            name="name"
+            type="name"
+            id="name"
             onChange={handleChange}
           />
         </div>
@@ -77,7 +67,11 @@ function Signup(props) {
           />
         </div>
         <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+          <button 
+            type="submit"
+            disabled={!(formState.name && formState.email && formState.password)}
+            >Submit
+          </button>
         </div>
       </form>
     </div>
