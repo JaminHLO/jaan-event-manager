@@ -14,12 +14,12 @@ const typeDefs = gql`
     events: [Event]
     title: String
     description: String
-    category: Category
+    category: String
     members: [User]    
-    maxMembers: Number
+    maxMembers: Int
     image: String
     notifications: String
-    zipCode: Number
+    zipCode: Int
     messages: [String]
     price: Float
     spotsAvailable: Int
@@ -65,28 +65,28 @@ const typeDefs = gql`
   }
 
   input ClubInput {
-    adminId: String!
-    title: String!
+    adminId: String
+    title: String
     description: String
-    category: Category!
-    members: [User]
-    maxMembers: Number
+    category: String
+    members: [String]
+    maxMembers: Int
     image: String
-    zipCode: Number
-    price: Float!
+    zipCode: Int
+    price: Float
     spotsAvailable: Int
     notifications: String
     messages: [String]
   }
 
-  type EventInput {
+  input EventInput {
     title: String
     description: String
     location: String
     dateTime: String
     image: String
     address: String
-    participants: [User]
+    participants: [String]
     isAvailable: Boolean
   }
 
@@ -98,7 +98,7 @@ const typeDefs = gql`
     order(_id: ID!): Order
     checkout(clubs: [ID]!): Checkout
     myEvents(club: ID, name: String): [Event]
-    eventById(_id): Event
+    eventById(_id:ID!): Event
     me: User
   }
 

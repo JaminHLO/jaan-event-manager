@@ -24,7 +24,6 @@ const clubSchema = new Schema({
   category: {
     type: Schema.Types.ObjectId,
     ref: 'Category',
-    required: true
   },
   members: [
     {
@@ -52,8 +51,7 @@ const clubSchema = new Schema({
   ],
   price: {
     type: Number,
-    required: true,
-    min: 0
+    default: 0
   },
   spotsAvailable: {
     type: Number,
