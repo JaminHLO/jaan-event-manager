@@ -101,7 +101,7 @@ const resolvers = {
       }
       throw new AuthenticationError('Please log in first')
     },
-    eventById: async (parent,  { _id }) => {
+    eventById: async (parent, { _id }) => {
       return Event.findById(_id)
     }
   },
@@ -160,14 +160,19 @@ const resolvers = {
     },
     addClub: async (parent, { club }, context) => {
       if (context.user) {
-        const newClub = await Club.create( { ...club, adminId: context.user._id })
+        const newClub = await Club.create({ ...club, adminId: context.user._id })
         return newClub
       }
       throw new AuthenticationError('Incorrect credentials');
     },
-    addEvent: async (parent, { event }, context) => {
+    addEvent: async (parent, { event, clubId }, context) => {
       if (context.user) {
-        const newEvent = await Event.create({ ...event })
+        const newEvent = await Event.create({ ...event, clubId: clubId });
+        const updatedClub = await Club.findOneAndUpdate(
+          { _id: clubId },
+          { $addToSet: { events: newEvent._id } },
+          { new: true }
+        )
         return newEvent
       }
       throw new AuthenticationError('Incorrect credentials');
@@ -194,17 +199,17 @@ const resolvers = {
       }
       throw new AuthenticationError('Incorrect credentials');
     },
-    joinClub: async (parent, clubId, context) => {
+    joinClub: async (parent, { clubId }, context) => {
       const userId = context.user._id
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: userId },
-          { $addToSet: { myClubs: { clubId }}},
+          { $addToSet: { myClubs: clubId } },
           { new: true }
         )
         const updatedClub = await Club.findOneAndUpdate(
           { _id: clubId },
-          { $addToSet: { members: { userId }}},
+          { $addToSet: { members: userId } },
           { new: true }
         )
         return updatedClub
@@ -216,18 +221,18 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: userId },
-          { $addToSet: { myEvents: { eventId }}},
+          { $addToSet: { myEvents: eventId } },
           { new: true }
         )
         const updatedEvent = await Event.findOneAndUpdate(
           { _id: eventId },
-          { $addToSet: { participants: { userId }}},
+          { $addToSet: { participants: userId } },
           { new: true }
         )
         return updatedEvent
       }
       throw new AuthenticationError('Incorrect credentials');
-    },    
+    },
   }
 };
 

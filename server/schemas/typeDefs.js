@@ -14,7 +14,7 @@ const typeDefs = gql`
     events: [Event]
     title: String
     description: String
-    category: String
+    category: Category
     members: [User]    
     maxMembers: Int
     image: String
@@ -45,6 +45,7 @@ const typeDefs = gql`
 
   type Event {
     _id: ID!
+    club: Club
     title: String
     description: String
     location: String
@@ -90,6 +91,7 @@ const typeDefs = gql`
   }
 
   input EventInput {
+    clubId: String
     title: String
     description: String
     location: String
@@ -119,7 +121,7 @@ const typeDefs = gql`
     buyMembership(_id: ID!, spotsAvailable: Int!): Club
     login(email: String!, password: String!): Auth
     addClub(club: ClubInput): Club
-    addEvent(event: EventInput): Event
+    addEvent(event: EventInput, clubId: ID!): Event
     updateEvent(eventId: ID!, event: EventInput): Event
     updateClub(clubId: ID!, club: ClubInput): Club
     joinClub(clubId: ID!): User

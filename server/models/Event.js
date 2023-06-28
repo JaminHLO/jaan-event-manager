@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const eventSchema = new Schema({
+  clubId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Club'
+  },
   title: {
     type: String,
     required: true,
