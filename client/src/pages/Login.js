@@ -1,3 +1,4 @@
+// Project-3
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
@@ -61,7 +62,11 @@ function Login(props) {
           </div>
         ) : null}
         <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+          <button 
+            type="submit"
+            disabled={!(formState.email && formState.password)}
+            >Submit
+          </button>
         </div>
       </form>
     </div>

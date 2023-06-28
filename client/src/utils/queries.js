@@ -1,20 +1,58 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_PRODUCTS = gql`
-  query getProducts($category: ID) {
-    products(category: $category) {
-      _id
-      name
+export const QUERY_CLUBS = gql`
+query getClubs($category: ID) {
+  clubs(category: $category) {
+    _id
+    adminId
+    events {
+      title
       description
-      price
-      quantity
+      location
+      dateTime
       image
-      category {
-        _id
-      }
+      address
+      isAvailable
     }
+    title
+    description
+    maxMembers
+    image
+    notifications
+    zipCode
+    messages
+    price
+    spotsAvailable
   }
+}
 `;
+
+export const QUERY_CLUB = gql`
+  query getClub($id: ID!) {
+  club(_id: $id) {
+    _id
+    adminId
+    events {
+      _id
+      title
+      description
+      location
+      dateTime
+      image
+      address
+      isAvailable
+    }
+    title
+    description
+    maxMembers
+    image
+    notifications
+    zipCode
+    messages
+    price
+    spotsAvailable
+  }
+}`
 
 export const QUERY_CHECKOUT = gql`
   query getCheckout($products: [ID]!) {
