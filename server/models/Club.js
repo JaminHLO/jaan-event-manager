@@ -4,8 +4,8 @@ const { Schema } = mongoose;
 
 const clubSchema = new Schema({
   adminId: {
-    type: String,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   events: [
     {
@@ -53,12 +53,16 @@ const clubSchema = new Schema({
   price: {
     type: Number,
     required: true,
-    min: 0.99
+    min: 0
   },
   spotsAvailable: {
     type: Number,
     min: 0,
     default: 0
+  }, 
+  isAvailable: {
+    type: Boolean,
+    default: true
   }
 });
 

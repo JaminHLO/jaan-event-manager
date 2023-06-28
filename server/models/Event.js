@@ -32,6 +32,10 @@ const eventSchema = new Schema({
   },
   address: {
     type: String
+  },
+  isAvailable: {
+    type: Boolean,
+    default: true
   }
 });
 
