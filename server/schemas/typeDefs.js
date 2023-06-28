@@ -1,5 +1,7 @@
 const { gql } = require('apollo-server-express');
 
+// Check queries and mutations
+
 const typeDefs = gql`
   type Category {
     _id: ID
@@ -30,7 +32,7 @@ const typeDefs = gql`
   }
 
   type User {
-    _id: ID
+    _id: ID!
     name: String
     email: String
     myClubs: [Club]
@@ -39,6 +41,18 @@ const typeDefs = gql`
     image: String
     address: String
     orders: [Order]
+  }
+
+  type Event {
+    _id: ID!
+    title: String
+    description: String
+    location: String
+    participants: [User]    
+    dateTime: String
+    image: String
+    address: String
+    isAvailable: Boolean
   }
 
   type Checkout {
@@ -50,6 +64,32 @@ const typeDefs = gql`
     user: User
   }
 
+  input ClubInput {
+    adminId: String!
+    title: String!
+    description: String
+    category: Category!
+    members: [User]
+    maxMembers: Number
+    image: String
+    zipCode: Number
+    price: Float!
+    spotsAvailable: Int
+    notifications: String
+    messages: [String]
+  }
+
+  type EventInput {
+    title: String
+    description: String
+    location: String
+    dateTime: String
+    image: String
+    address: String
+    participants: [User]
+    isAvailable: Boolean
+  }
+
   type Query {
     categories: [Category]
     clubs(category: ID, name: String): [Club]
@@ -57,14 +97,23 @@ const typeDefs = gql`
     user: User
     order(_id: ID!): Order
     checkout(clubs: [ID]!): Checkout
+    myEvents(club: ID, name: String): [Event]
+    eventById(_id): Event
+    me: User
   }
 
   type Mutation {
     addUser(name: String!, email: String!, password: String!): Auth
     addOrder(clubs: [ID]!): Order
     updateUser(name: String, email: String, password: String): User
-    updateClub(_id: ID!, spotsAvailable: Int!): Club
+    buyMembership(_id: ID!, spotsAvailable: Int!): Club
     login(email: String!, password: String!): Auth
+    addClub(club: ClubInput): Club
+    addEvent(event: EventInput): Event
+    updateEvent(eventId: ID!, event: EventInput): Event
+    updateClub(clubId: ID!, club: ClubInput): Club
+    joinClub(clubId: ID!): Club
+    joinEvent(eventId: ID!): Event
   }
 `;
 

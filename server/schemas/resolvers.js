@@ -52,6 +52,12 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate('clubs');
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    },
     checkout: async (parent, args, context) => {
       const url = new URL(context.headers.referer).origin;
       const order = new Order({ clubs: args.clubs });
@@ -87,8 +93,19 @@ const resolvers = {
       });
 
       return { session: session.id };
+    },
+    // Update args
+    myEvents: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate('myEvents')
+      }
+      throw new AuthenticationError('Please log in first')
+    },
+    eventById: async (parent, { eventId }) => {
+      return Event.findById({ _id: eventId })
     }
   },
+
   Mutation: {
     addUser: async (parent, args) => {
       const user = await User.create(args);
@@ -115,7 +132,7 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    updateClub: async (parent, { _id, spotsAvailable }) => {
+    buyMembership: async (parent, { _id, spotsAvailable }) => {
       const decrement = Math.abs(spotsAvailable) * -1;
 
       return await Club.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
@@ -136,7 +153,77 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
-    }
+    },
+    addClub: async (parent, { ...club }, context) => {
+      if (context.user) {
+        const newClub = await Club.create({...club, adminId: context.user._id})
+        return newClub
+      }
+      throw new AuthenticationError('Incorrect credentials');
+    },
+    addEvent: async (parent, { ...event }, context) => {
+      if (context.user) {
+        const newEvent = await Event.create({ ...event })
+        return newEvent
+      }
+      throw new AuthenticationError('Incorrect credentials');
+    },
+    updateEvent: async (parent, { eventId, EventInput }, context) => {
+      if (context.user) {
+        const updatedEvent = await Event.findOneAndUpdate(
+          { _id: eventId },
+          { event: { EventInput }},
+          { new: true }
+        )
+        return updatedEvent
+      }
+      throw new AuthenticationError('Incorrect credentials');
+    },
+    updateClub: async (parent, { clubId, ClubInput }, context) => {
+      if (context.user) {
+        const updatedClub = await Club.findOneAndUpdate(
+          { _id: clubId },
+          { club: { ClubInput }},
+          { new: true }
+        )
+        return updatedClub
+      }
+      throw new AuthenticationError('Incorrect credentials');
+    },
+    joinClub: async (parent, { clubId }, context) => {
+      const userId = context.user._id
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: userId },
+          { $addToSet: { myClubs: { clubId }}},
+          { new: true }
+        )
+        const updatedClub = await Club.findOneAndUpdate(
+          { _id: clubId },
+          { $addToSet: { members: { userId }}},
+          { new: true }
+        )
+        return updatedClub
+      }
+      throw new AuthenticationError('Incorrect credentials');
+    },
+    joinEvent: async (parent, { eventId }, context) => {
+      const userId = context.user._id
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: userId },
+          { $addToSet: { myEvents: { eventId }}},
+          { new: true }
+        )
+        const updatedEvent = await Event.findOneAndUpdate(
+          { _id: eventId },
+          { $addToSet: { participants: { userId }}},
+          { new: true }
+        )
+        return updatedEvent
+      }
+      throw new AuthenticationError('Incorrect credentials');
+    },    
   }
 };
 
