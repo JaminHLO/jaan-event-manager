@@ -217,19 +217,29 @@ const resolvers = {
       throw new AuthenticationError('Incorrect credentials');
     },
     joinEvent: async (parent, { eventId }, context) => {
-      const userId = context.user._id
       if (context.user) {
-        const updatedUser = await User.findOneAndUpdate(
-          { _id: userId },
-          { $addToSet: { myEvents: eventId } },
-          { new: true }
-        )
-        const updatedEvent = await Event.findOneAndUpdate(
-          { _id: eventId },
-          { $addToSet: { participants: userId } },
-          { new: true }
-        )
-        return updatedEvent
+        const userId = context.user._id
+        const currentUser = await User.findById({ _id: userId })
+        const currentEvent = await Event.findById({ _id: eventId })
+        const userClubs = currentUser.myClubs
+        const currentClubId = currentEvent.clubId.toString()
+        const clubCheck = userClubs.some((clubId) => clubId.toString() === currentClubId)
+        if (clubCheck) {
+          const updatedUser = await User.findOneAndUpdate(
+            { _id: userId },
+            { $addToSet: { myEvents: eventId } },
+            { new: true }
+          )
+          const updatedEvent = await Event.findOneAndUpdate(
+            { _id: eventId },
+            { $addToSet: { participants: userId } },
+            { new: true }
+          )
+          return updatedEvent
+        } else {
+          console.log("NOT IN CLUB")
+          return;
+        }
       }
       throw new AuthenticationError('Incorrect credentials');
     },
