@@ -64,6 +64,16 @@ const typeDefs = gql`
     user: User
   }
 
+  input UserInput {
+    name: String
+    email: String
+    myClubs: [String]
+    myEvents: [String]
+    participants: [String]
+    image: String
+    address: String
+  }
+
   input ClubInput {
     adminId: String
     title: String
@@ -97,7 +107,7 @@ const typeDefs = gql`
     user: User
     order(_id: ID!): Order
     checkout(clubs: [ID]!): Checkout
-    myEvents(club: ID, name: String): [Event]
+    myEvents(user: ID): User
     eventById(_id:ID!): Event
     me: User
   }
@@ -105,7 +115,7 @@ const typeDefs = gql`
   type Mutation {
     addUser(name: String!, email: String!, password: String!): Auth
     addOrder(clubs: [ID]!): Order
-    updateUser(name: String, email: String, password: String): User
+    updateUser(user: UserInput): User
     buyMembership(_id: ID!, spotsAvailable: Int!): Club
     login(email: String!, password: String!): Auth
     addClub(club: ClubInput): Club

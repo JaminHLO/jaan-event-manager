@@ -8,16 +8,16 @@ const resolvers = {
     categories: async () => {
       return await Category.find();
     },
-    clubs: async (parent, { category, name }) => {
+    clubs: async (parent, { category, title }) => {
       const params = {};
 
       if (category) {
         params.category = category;
       }
 
-      if (name) {
+      if (title) {
         params.name = {
-          $regex: name
+          $regex: title
         };
       }
 
@@ -54,7 +54,7 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('clubs');
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('You need to be logged in!');
     },
@@ -101,8 +101,8 @@ const resolvers = {
       }
       throw new AuthenticationError('Please log in first')
     },
-    eventById: async (parent, { eventId }) => {
-      return Event.findById({ _id: eventId })
+    eventById: async (parent,  { _id }) => {
+      return Event.findById(_id)
     }
   },
 
@@ -125,9 +125,13 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    updateUser: async (parent, args, context) => {
+    updateUser: async (parent, { user }, context) => {
       if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+        return await User.findByIdAndUpdate(
+          context.user._id,
+          { ...user },
+          { new: true }
+        )
       }
 
       throw new AuthenticationError('Not logged in');
@@ -161,7 +165,7 @@ const resolvers = {
       }
       throw new AuthenticationError('Incorrect credentials');
     },
-    addEvent: async (parent, { ...event }, context) => {
+    addEvent: async (parent, { event }, context) => {
       if (context.user) {
         const newEvent = await Event.create({ ...event })
         return newEvent
