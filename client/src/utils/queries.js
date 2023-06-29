@@ -62,6 +62,28 @@ query Me {
     participants
     image
     address
+    myClubs {
+      _id
+      adminId
+      events {
+        _id
+        title
+        description
+      }
+      title
+      description
+      category {
+        _id
+        name
+      }
+      maxMembers
+      image
+      notifications
+      zipCode
+      messages
+      price
+      spotsAvailable
+    }
   }
 }`
 
@@ -84,6 +106,34 @@ query MyEvents {
       }
       address
       isAvailable
+    }
+  }
+}`
+
+export const QUERY_MY_CLUBS = gql`
+query Me {
+  me {
+    myClubs {
+      _id
+      adminId
+      events {
+        _id
+        title
+        description
+      }
+      title
+      description
+      category {
+        _id
+        name
+      }
+      maxMembers
+      image
+      notifications
+      zipCode
+      messages
+      price
+      spotsAvailable
     }
   }
 }`

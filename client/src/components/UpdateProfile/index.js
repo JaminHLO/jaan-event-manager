@@ -7,10 +7,10 @@ import { UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
 
 const UpdateProfile = (props) => {
-  // const { loading, data } = useQuery(QUERY_ME)
+  const { loading, data } = useQuery(QUERY_ME)
   const [updateUser] = useMutation(UPDATE_USER);
 
-  // const userData = data?.me || {}
+  const userData = data?.me || {}
   // console.log(userData)
 
   const [formState, setFormState] = useState({ name: "", image: "", address: "" });
@@ -52,7 +52,7 @@ const UpdateProfile = (props) => {
 
   return (
     <div className="container my-1">
-      <Link to="/">← Go to Homepage</Link>
+      <Link to="/profile">← Back to Profile</Link>
 
       <h2>Update your Profile</h2>
       <form onSubmit={handleFormSubmit}>
