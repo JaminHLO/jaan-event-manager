@@ -3,11 +3,17 @@ import React from "react";
 // import CategoryMenu from "../components/CategoryMenu";
 // import Cart from "../components/Cart";
 
+import UpdateProfile from '../components/UpdateProfile';
 
 const Home = () => {
   return (
     <div className="container">
-      <div className="hero flex items-center pl-40">
+      {/* <CategoryMenu /> */}
+      {/* <ProductList /> */}
+      {/* <UpdateProfile />  */}
+      {/* <Cart />  */}
+
+    <div className="hero flex items-center pl-40">
         <div className="bg-slate-100 h-80 w-80 rounded-full flex justify-center items-center">
           <div className="flex flex-col text-center">
             <h1 className="text-2xl font-bold">Sports Connect</h1>
