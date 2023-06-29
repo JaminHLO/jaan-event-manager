@@ -57,19 +57,12 @@ export const QUERY_CLUB = gql`
 export const QUERY_ME = gql`
 query Me {
   me {
+    _id
     name
     email
-    participants
-    image
-    address
     myClubs {
       _id
       adminId
-      events {
-        _id
-        title
-        description
-      }
       title
       description
       category {
@@ -84,6 +77,18 @@ query Me {
       price
       spotsAvailable
     }
+    myEvents {
+      _id
+      club {
+        title
+        _id
+      }
+      title
+      dateTime
+    }
+    participants
+    image
+    address
   }
 }`
 
