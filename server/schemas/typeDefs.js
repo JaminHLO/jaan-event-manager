@@ -41,6 +41,7 @@ const typeDefs = gql`
     image: String
     address: String
     orders: [Order]
+    geocode: String
   }
 
   type Event {
@@ -73,6 +74,7 @@ const typeDefs = gql`
     participants: [String]
     image: String
     address: String
+    latLng: String
   }
 
   input ClubInput {

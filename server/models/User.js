@@ -47,7 +47,10 @@ const userSchema = new Schema({
   address: {
     type: String,
   },
-  orders: [Order.schema]
+  orders: [Order.schema],
+  geocode: {
+    type: String,
+  }
 });
 
 // set up pre-save middleware to create password

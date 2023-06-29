@@ -7,10 +7,13 @@ export function pluralize(name, count) {
 
 //initial approach works within EventMap
 export function getGeocode(address) {
+
+  const APIKey = "";
+
   const geoArray = address.trim().split(' ');
   const geoString = geoArray.join("+");
   console.log("geoString is:", geoString);
-  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${geoString}&key=AIzaSyDRsmW5OJbpiAhShk3u3a06FwJK9F9RjE4`)
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${geoString}&key=${APIKey}`)
   .then((response) => {
       return response.json();
   }).then(jsonData => {
@@ -27,11 +30,14 @@ export function getGeocode(address) {
 
 // alternate cleaner approach
 export async function getGeocode2(address) {
+
+  const APIKey = "";
+
   const geoArray = address.trim().split(' ');
   const geoString = geoArray.join("+");
   console.log("geoString is:", geoString);
   try {
-  const response = await   fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${geoString}&key=AIzaSyDRsmW5OJbpiAhShk3u3a06FwJK9F9RjE4`);
+  const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${geoString}&key=${APIKey}`);
   const jsonData = response.json();
   const geoCode = jsonData.results[0].geometry.location;
   return geoCode;
