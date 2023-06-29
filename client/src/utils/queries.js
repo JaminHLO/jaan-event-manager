@@ -54,6 +54,72 @@ export const QUERY_CLUB = gql`
   }
 }`
 
+export const QUERY_ME = gql`
+query Me {
+  me {
+    name
+    email
+    participants
+    image
+    address
+  }
+}`
+
+export const QUERY_MY_EVENTS = gql`
+query MyEvents {
+  myEvents {
+    myEvents {
+      _id
+      club {
+        title
+        _id
+      }
+      title
+      description
+      location
+      dateTime
+      image
+      participants {
+        name
+      }
+      address
+      isAvailable
+    }
+  }
+}`
+
+export const QUERY_EVENT = gql`
+query EventById($id: ID!) {
+  eventById(_id: $id) {
+    _id
+    club {
+      title
+      _id
+    }
+    title
+    description
+    participants {
+      name
+    }
+    location
+    dateTime
+    image
+    address
+    isAvailable
+  }
+}`
+
+// Next from starter code
+
+export const QUERY_CATEGORIES = gql`
+  {
+    categories {
+      _id
+      name
+    }
+  }
+`;
+
 export const QUERY_CHECKOUT = gql`
   query getCheckout($products: [ID]!) {
     checkout(products: $products) {
@@ -77,14 +143,6 @@ export const QUERY_ALL_PRODUCTS = gql`
   }
 `;
 
-export const QUERY_CATEGORIES = gql`
-  {
-    categories {
-      _id
-      name
-    }
-  }
-`;
 
 export const QUERY_USER = gql`
   {
