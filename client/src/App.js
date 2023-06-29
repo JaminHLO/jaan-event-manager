@@ -13,6 +13,7 @@ import './styles.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Profile from './pages/Profile'
 
 import Detail from './pages/Detail';
 import NoMatch from './pages/NoMatch';
@@ -20,6 +21,7 @@ import Nav from './components/Nav';
 import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
+import UpdateProfile from './components/UpdateProfile';
 
 
 
@@ -61,6 +63,14 @@ function App() {
               <Route
                 path="/signup"
                 element={<Signup />}
+              />
+              <Route
+                path="/profile"
+                element={<Profile />}
+              />
+              <Route
+                path="/profile/update"
+                element={<UpdateProfile />}
               />
               <Route
                 path="/success"

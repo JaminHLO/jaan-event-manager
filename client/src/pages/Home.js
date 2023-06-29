@@ -3,14 +3,12 @@ import React from "react";
 // import CategoryMenu from "../components/CategoryMenu";
 // import Cart from "../components/Cart";
 
-import UpdateProfile from '../components/UpdateProfile';
 
 const Home = () => {
   return (
     <div className="container">
       {/* <CategoryMenu /> */}
       {/* <ProductList /> */}
-      {/* <UpdateProfile />  */}
       {/* <Cart />  */}
 
     <div className="hero flex items-center pl-40">
