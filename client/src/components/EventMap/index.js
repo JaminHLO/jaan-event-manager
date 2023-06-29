@@ -1,17 +1,31 @@
 import {useCallback, useState} from "react"; //
 import { GoogleMap, useJsApiLoader, Marker} from "@react-google-maps/api"; //
 
+// import fetch from "node-fetch"; // npm i node-fetch
+
+
  const containerStyle = {
     width: '300px',
     height: '300px'
  };
 
- const center = {
-    lat: 33.7722,
-    lng: -84.3902
- };
+//  const center = {
+//     lat: 33.7722,
+//     lng: -84.3902
+//  };
 
-export default function EventMap() {
+
+
+export default function EventMap(center) {
+    // hardcoded overwrite for test purposes
+    center = { 
+        lat: 33.7722,
+        lng: -84.3902
+    };
+
+    // const address = "1837 Glendmere Drive, Birmingham, AL 35223";
+    // geoCode = geocode(address)
+    // console.log("geoCode in EventMap is", geoCode)
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -46,6 +60,7 @@ export default function EventMap() {
             ></GoogleMap>)
             : <> </>
     )
+
 } 
 
 
