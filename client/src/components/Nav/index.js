@@ -2,6 +2,7 @@ import React from "react";
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 
+
 function Nav() {
 
   function showNavigation() {
@@ -23,30 +24,37 @@ function Nav() {
       );
     } else {
       return (
-        <ul className="flex-row">
-          <li className="mx-1">
-            <Link to="/signup">
-              Signup
-            </Link>
-          </li>
-          <li className="mx-1">
-            <Link to="/login">
-              Login
-            </Link>
-          </li>
-        </ul>
+        <div className="flex flex-row justify-between p-4 bg-slate-950 w-screen">
+          <h1 className="text-2xl text-white">Sports Connect</h1>
+          <ul className="flex flex-row">
+            <li className="mx-1">
+              <button className="bg-stone-900 hover:bg-stone-800 text-white font-bold py-2 px-4 rounded-2xl">
+                <Link to="/login">
+                  Login
+                </Link>
+              </button>
+            </li>
+            <li className="mx-1">
+              <button className="bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-2xl">
+                <Link to="/signup">
+                  Signup
+                </Link>
+              </button>
+            </li>
+          </ul>
+        </div>
       );
     }
   }
 
   return (
-    <header className="flex-row px-1">
-      <h1>
+    <header className="flex-row">
+      {/* <h1>
         <Link to="/">
           <span role="img" aria-label="shopping bag">🛍️</span>
-          -Shop-Shop
+          Sports Connect
         </Link>
-      </h1>
+      </h1> */}
 
       <nav>
         {showNavigation()}

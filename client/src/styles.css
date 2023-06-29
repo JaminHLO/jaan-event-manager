@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* home styles */
+.hero {
+    background-image: url('./images/hero-red.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 60vh;
+    width: 100vw;
+}
+
+.mid-page {
+    min-height: 60vh;
+}
