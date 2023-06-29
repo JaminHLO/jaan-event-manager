@@ -60,6 +60,30 @@ userSchema.pre('save', async function(next) {
   next();
 });
 
+userSchema.pre("insertMany", async function (next, docs) {
+  if (Array.isArray(docs) && docs.length) {
+      const hashedUsers = docs.map(async (user) => {
+          return await new Promise((resolve, reject) => {
+              bcrypt.genSalt(10).then((salt) => {
+                  let password = user.password.toString()
+                  bcrypt.hash(password, salt).then(hash => {
+                      user.password = hash
+                      resolve(user)
+                  }).catch(e => {
+                      reject(e)
+                  })
+              }).catch((e) => {
+                  reject(e)
+              })
+          })
+      })
+      docs = await Promise.all(hashedUsers)
+      next()
+  } else {
+      return next(new Error("User list should not be empty")) // lookup early return pattern
+  }
+})
+
 // compare the incoming password with the hashed password
 userSchema.methods.isCorrectPassword = async function(password) {
   return await bcrypt.compare(password, this.password);
