@@ -36,7 +36,7 @@ const Home = () => {
             <div className="bg-red-900 h-96 w-60"></div>
           </div>
           <div className="top-image">
-            <img src={teamwork} className="teamwork"></img>
+            <img src={teamwork} alt="" className="teamwork"></img>
           </div>
         </div>
       </div>
