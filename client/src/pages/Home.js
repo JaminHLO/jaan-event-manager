@@ -3,6 +3,7 @@ import React from "react";
 // import CategoryMenu from "../components/CategoryMenu";
 // import Cart from "../components/Cart";
 import teamwork from "../images/teamwork.png";
+import EventMap from "../components/EventMap";
 
 
 const Home = () => {
@@ -23,6 +24,7 @@ const Home = () => {
       <div className="mid-page bg-slate-100 w-screen flex flex-row">
         <div className="w-1/2 flex flex-col items-center justify-center">
           <div className="flex justify-center m-8">
+            <EventMap />
             <p className="w-1/2 text-3xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sollicitudin erat id eros fermentum, vel tincidunt felis vestibulum.</p>
           </div>
           <div>
