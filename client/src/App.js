@@ -24,7 +24,6 @@ import OrderHistory from './pages/OrderHistory';
 import UpdateProfile from './components/UpdateProfile';
 
 
-
 const httpLink = createHttpLink({
   uri: 'http://localhost:3001/graphql',
 });
