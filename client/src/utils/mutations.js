@@ -52,9 +52,9 @@ mutation updateUser($user: UserInput) {
   }
 }`;
 
-export const ADD_CLUB = gql`
-mutation Mutation($club: ClubInput) {
-  addClub(club: $club) {
+export const CREATE_CLUB = gql`
+mutation createClub($club: ClubInput) {
+  createClub(club: $club) {
     _id
     adminId
     title

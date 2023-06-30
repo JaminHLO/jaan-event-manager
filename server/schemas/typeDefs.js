@@ -5,22 +5,36 @@ const typeDefs = gql`
     _id: ID
     name: String
   }
+  input ClubInput {
+    adminId: String
+    title: String
+    description: String
+    category: String
+    members: [String]
+    maxMembers: Int
+    image: String
+    zipCode: Int
+    price: Float
+    spotsAvailable: Int
+    notifications: String
+    messages: [String]
+  }
 
   type Club {
     _id: ID
     adminId: String
-    events: [Event]
     title: String
     description: String
     category: Category
     members: [User]    
     maxMembers: Int
     image: String
-    notifications: String
     zipCode: Int
-    messages: [String]
     price: Float
     spotsAvailable: Int
+    notifications: String
+    messages: [String]
+    events: [Event]
   }
 
   type Order {
@@ -72,23 +86,10 @@ const typeDefs = gql`
     participants: [String]
     image: String
     address: String
-    latLng: String
+    geocode: String
   }
 
-  input ClubInput {
-    adminId: String
-    title: String
-    description: String
-    category: String
-    members: [String]
-    maxMembers: Int
-    image: String
-    zipCode: Int
-    price: Float
-    spotsAvailable: Int
-    notifications: String
-    messages: [String]
-  }
+
 
   input EventInput {
     clubId: String
@@ -120,7 +121,7 @@ const typeDefs = gql`
     updateUser(user: UserInput): User
     buyMembership(_id: ID!, spotsAvailable: Int!): Club
     login(email: String!, password: String!): Auth
-    addClub(club: ClubInput): Club
+    createClub(club: ClubInput): Club
     addEvent(event: EventInput, clubId: ID!): Event
     updateEvent(eventId: ID!, event: EventInput): Event
     updateClub(clubId: ID!, club: ClubInput): Club
