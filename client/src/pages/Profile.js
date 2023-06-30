@@ -3,6 +3,7 @@ import { Navigate, Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import ClubList from '../components/ClubList';
+import EventList from '../components/EventList'
 import Auth from '../utils/auth';
 
 
@@ -14,20 +15,16 @@ const Profile = () => {
     console.log('clubs', user.myClubs)
     console.log('events', user.myEvents)
 
-
     const token = Auth.loggedIn() ? Auth.getToken() : null;
     console.log(token)
-
 
     if (!token) {
       return false;
     }
 
-
     if (loading) {
         return <div>Loading...</div>;
     }
-
 
     if (!user?.name) {
         return (
@@ -59,6 +56,12 @@ const Profile = () => {
                 />
             </div>
            
+            <div className="col-12 col-md-10 mb-5">
+                <EventList
+                    events={user.myEvents}
+                />
+            </div>
+
             <Link
               className="btn btn-primary btn-block btn-squared"
               to={`/clubs`}
@@ -66,6 +69,13 @@ const Profile = () => {
               Join a Club
             </Link>
            
+            <Link
+              className="btn btn-primary btn-block btn-squared"
+              to={`/events`}
+            >
+              Search for Events
+            </Link>
+
             <Link
               className="btn btn-primary btn-block btn-squared"
               to={`/newclub`}
