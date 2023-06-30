@@ -55,35 +55,48 @@ const Profile = () => {
                 </div>
             </div>
             <aside id="aside" className='col-span-3 p-4'>
-                <Link
-                className="btn btn-primary btn-block btn-squared"
-                to={`/profile/update`}
-                >
-                    Update your Profile
-                    <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <div className="relative w-20 h-20 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                    { !user.image ? (
+                    <img src='./images/profile.png' className="w-30 h-30"/>
+                    ) : (
+                    <img src={user.image} />   
+                    )}
+                </div>
+                <ul>
+                <li>
+                    <Link
+                    className="btn btn-primary btn-block btn-squared"
+                    to={`/profile/update`}
+                    >
+                        Update your Profile
 
-                </Link>
-                <Link
-                className="btn btn-primary btn-block btn-squared"
-                to={`/clubs`}
-                >
-                    Join a Club
-                </Link>
-                
-                <Link
-                className="btn btn-primary btn-block btn-squared"
-                to={`/events`}
-                >
-                    Search for Events
-                </Link>
-
-                <Link
-                className="btn btn-primary btn-block btn-squared"
-                to={`/newclub`}
-                >
-                    Create a Club
-                </Link>
-
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                    className="btn btn-primary btn-block btn-squared"
+                    to={`/clubs`}
+                    >
+                        Join a Club
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                    className="btn btn-primary btn-block btn-squared"
+                    to={`/events`}
+                    >
+                        Search for Events
+                    </Link>
+                </li>
+                <li>
+                    <Link
+                    className="btn btn-primary btn-block btn-squared"
+                    to={`/newclub`}
+                    >
+                        Create a Club
+                    </Link>
+                    </li>
+                </ul>
             </aside>
         </div>
     );
