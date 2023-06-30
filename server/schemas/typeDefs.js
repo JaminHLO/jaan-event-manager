@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  scalar Upload
+  
   type Category {
     _id: ID
     name: String
@@ -66,6 +68,7 @@ const typeDefs = gql`
 
   input UserInput {
     name: String
+    password: String
     email: String
     myClubs: [String]
     myEvents: [String]

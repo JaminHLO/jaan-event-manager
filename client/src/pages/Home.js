@@ -3,6 +3,7 @@ import React from "react";
 // import CategoryMenu from "../components/CategoryMenu";
 // import Cart from "../components/Cart";
 import teamwork from "../images/teamwork.png";
+// import EventMap from "../components/EventMap";
 
 
 const Home = () => {

@@ -3,6 +3,12 @@ const { User, Club, Event, Category, Order } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
+// const {GraphQLUpload} = require('graphql-upload')
+
+// const costumResolvers = {
+//   Upload: GraphQLUpload
+// }
+
 const resolvers = {
   Query: {
     categories: async () => {
@@ -54,7 +60,7 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('myClubs');
+        return User.findOne({ _id: context.user._id }).populate('myClubs').populate('myEvents');
       }
       throw new AuthenticationError('You need to be logged in!');
     },

@@ -55,28 +55,27 @@ export const QUERY_CLUB = gql`
 }`
 
 export const QUERY_ME = gql`
-query Me {
+query Query {
   me {
     _id
     name
     email
+    myEvents {
+      _id
+      title
+      description
+      location
+      dateTime
+    }
     participants
     image
     address
+    geocode
     myClubs {
       _id
       adminId
-      events {
-        _id
-        title
-        description
-      }
       title
       description
-      category {
-        _id
-        name
-      }
       maxMembers
       image
       notifications
