@@ -32,8 +32,6 @@ const UpdateProfile = (props) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState)
-    console.log("click")
 
     try {
       const { data } = await updateUser({
