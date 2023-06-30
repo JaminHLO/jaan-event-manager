@@ -8,7 +8,6 @@ import Auth from '../utils/auth';
 
 
 const Profile = () => {
-    // const { name: userParam } = useParams();
     const { loading, data } = useQuery(QUERY_ME);
     const user = data?.me || {};
     console.log(user)
@@ -16,7 +15,6 @@ const Profile = () => {
     console.log('events', user.myEvents)
 
     const token = Auth.loggedIn() ? Auth.getToken() : null;
-    console.log(token)
 
     if (!token) {
       return false;

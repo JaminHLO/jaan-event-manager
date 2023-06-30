@@ -22,7 +22,6 @@ import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
 import UpdateProfile from './components/UpdateProfile';
-import UpdateParticipants from './components/UpdateParticipants'
 
 
 const httpLink = createHttpLink({
@@ -71,10 +70,6 @@ function App() {
               <Route
                 path="/profile/update"
                 element={<UpdateProfile />}
-              />
-              <Route
-                path="/profile/update/participants"
-                element={<UpdateParticipants />}
               />
               <Route
                 path="/success"

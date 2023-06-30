@@ -6,19 +6,19 @@ import Auth from '../../utils/auth';
 import { UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
 
+
 const UpdateProfile = (props) => {
   const { loading, data } = useQuery(QUERY_ME)
   const [updateUser, { error }] = useMutation(UPDATE_USER);
   const [showModal, setShowModal] = React.useState(false);
 
   const userData = data?.me || {}
-  // console.log(userData)
   const participants = userData.participants
-  // const [formState, setFormState] = useState({ name: "", image: "", address: "" });
-  const [formState, setFormState] = useState({ name: `${userData?.name}`, image: ``, address: `${userData?.address}`, participants: `${userData?.participants}` });
+  // Populate form with current user data
+  const [formState, setFormState] = useState({ name: `${userData?.name}`, image: ``, address: `${userData?.address}`, participants:  `${userData?.participants}` });
+  const [newParticipant, setNewParticipant] = useState({ newParticipantName: ''})
 
   const token = Auth.loggedIn() ? Auth.getToken() : null;
-  // console.log(token)
   if (!token) {
     return false;
   }
@@ -27,6 +27,14 @@ const UpdateProfile = (props) => {
     const { name, value } = event.target;
     setFormState({
       ...formState,
+      [name]: value,
+    });
+  };
+
+  const handleParticipantChange = (event) => {
+    const { name, value } = event.target;
+    setNewParticipant({
+      ...newParticipant,
       [name]: value,
     });
   };
@@ -47,6 +55,24 @@ const UpdateProfile = (props) => {
       console.error(error)
     }
   };
+
+  const handleParticipantSubmit = async () => {
+    // event.preventDefault()
+    console.log("new name", newParticipant)
+    const newParticipantArray = [...participants, newParticipant.newParticipantName]
+    try {
+      const { data } = await updateUser({
+        variables: {
+          user: { 
+            participants: newParticipantArray
+          }
+        }
+      })
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div className="container my-1">
@@ -92,19 +118,22 @@ const UpdateProfile = (props) => {
         {
         participants?.map((participant) => (
           <div className="flex-row space-between my-2">
-          <input
-            placeholder="name"
-            name="name"
-            type="name"
-            // id="name"
-            // onChange={handleChange}            
+          <input readOnly           
             value={(participant)}
           />
         </div>
         ))}
-        {/* <Link to="/profile/update/participants">Add Participants</Link> */}
         
-        <button
+        <div className="flex-row flex-end">
+          <button
+            type="submit"
+          >Submit
+          </button>
+        </div>
+      </form>
+
+      {/* Modal to Add Participant */}
+      <button
         className="bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         type="button"
         onClick={() => setShowModal(true)}
@@ -136,13 +165,19 @@ const UpdateProfile = (props) => {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    I always felt like I could do anything. That’s the main
-                    thing people are controlled by! Thoughts- their perception
-                    of themselves! They're slowed down by their perception of
-                    themselves. If you're taught you can’t do anything, you
-                    won’t do anything. I was taught I could do everything.
-                  </p>
+                <form onSubmit={handleParticipantSubmit}>
+                <div className="flex-row space-between my-2">
+                  <label htmlFor="newParticipantName">New participant:</label>
+                  <input
+                    placeholder="Name"
+                    name="newParticipantName"
+                    type="name"
+                    id="newParticipantName"
+                    onChange={handleParticipantChange}
+                    value={newParticipant.newParticipantName}
+                  />
+                  </div>
+                </form>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
@@ -154,9 +189,13 @@ const UpdateProfile = (props) => {
                     Close
                   </button>
                   <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
+                    className="bg-red-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="submit"
+                    onClick={() => {
+                      handleParticipantSubmit()
+                      setShowModal(false)
+                    }}
+
                   >
                     Save Changes
                   </button>
@@ -168,14 +207,6 @@ const UpdateProfile = (props) => {
         </>
       ) : null}
 
-
-        <div className="flex-row flex-end">
-          <button
-            type="submit"
-          >Submit
-          </button>
-        </div>
-      </form>
     </div>
   );
 }
