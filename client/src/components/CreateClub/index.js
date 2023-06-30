@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
-import { CREATE_CLUB } from '../../utils/mutations';
+import { CREATE_CLUB, UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
 
 
 const CreateClub = (props) => {
     const { loading, data } = useQuery(QUERY_ME)
     const [createClub, { error }] = useMutation(CREATE_CLUB);
+    const [updateUser, { error2 }] = useMutation(UPDATE_USER);
 
     const userData = data?.me || {}
     // console.log(userData)
@@ -47,20 +48,26 @@ const CreateClub = (props) => {
         // console.log("newClub is", newClub);
 
         try {
-        //   const { data } = 
-          await createClub({
-            variables: {
-                title: club.title,
-                description: club.description,
-                // maxMembers: club.maxMembers,
-                // image: club.image,
-                // price: club.price,
-                // // category: club.category,
-                // zipCode: club.zipCode
-            },
-        });
-        //   console.log("createClub data is")
-        //   console.log(data)
+            const { data } = await createClub({
+                variables: {
+                    title: club.title,
+                    description: club.description,
+                    // maxMembers: club.maxMembers,
+                    // image: club.image,
+                    // price: club.price,
+                    // // category: club.category,
+                    // zipCode: club.zipCode
+                },
+            });
+          console.log("data.createClub._id is")
+          console.log(data.createClub._id)
+        //   const clubId = data?.createClub._id;
+        //   const adminId = data?.createClub.adminId;
+        //   if (clubId && adminId) {
+        //     // const response = await updateUser({
+        //     //     user: { }
+        //     // })
+        //   }
         } catch (error) {
           console.error(error)
         }
