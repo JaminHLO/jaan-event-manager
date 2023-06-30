@@ -18,11 +18,13 @@ import Profile from './pages/Profile'
 import Detail from './pages/Detail';
 import NoMatch from './pages/NoMatch';
 import Nav from './components/Nav';
-import { StoreProvider } from './utils/GlobalState';
+// import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
 import UpdateProfile from './components/UpdateProfile';
+import CreateClub from './components/CreateClub';
 import ClubDetail from './components/ClubDetail';
+
 
 
 const httpLink = createHttpLink({
@@ -71,6 +73,10 @@ function App() {
               <Route
                 path="/profile/update"
                 element={<UpdateProfile />}
+              />
+              <Route
+                path="/clubs/create"
+                element={<CreateClub />}
               />
               <Route
                 path="/success"

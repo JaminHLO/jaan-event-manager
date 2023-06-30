@@ -88,7 +88,7 @@ const Profile = () => {
                 <li>
                     <Link
                     className="btn btn-primary btn-block btn-squared"
-                    to={`/newclub`}
+                    to={`/clubs/create`}
                     >
                         Create a Club
                     </Link>
