@@ -26,7 +26,7 @@ import UpdateProfile from './components/UpdateProfile';
 
 
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: 'http://localhost:3001/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -49,7 +49,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          <StoreProvider>
+          {/* <StoreProvider> */}
             <Nav />
             <Routes>
               <Route
@@ -89,7 +89,7 @@ function App() {
                 element={<NoMatch />}
               />
             </Routes>
-          </StoreProvider>
+          {/* </StoreProvider> */}
         </div>
       </Router>
     </ApolloProvider>
