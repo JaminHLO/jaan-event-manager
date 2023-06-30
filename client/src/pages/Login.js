@@ -32,9 +32,9 @@ function Login(props) {
 
   return (
     <div className="login-logout flex justify-center items-center text-white text-xl">
-      <div className="login-container bg-black opacity-50 rounded-2xl h-96 w-2/5 text-center">
+      <div className="login-container bg-black opacity-50 rounded-2xl h-auto w-2/5 text-center">
         <h2 className='text-4xl m-4'>Login</h2>
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit} className='m-5'>
           <div className="flex-row space-between my-2">
             <label htmlFor="email"></label>
             <input

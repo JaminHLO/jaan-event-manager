@@ -31,50 +31,56 @@ function Signup(props) {
   };
 
   return (
-    <div className="container my-1">
-      <Link to="/login">← Go to Login</Link>
-
-      <h2>Signup</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="Name">Name:</label>
-          <input
-            placeholder="Name"
-            name="name"
-            type="name"
-            id="name"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email:</label>
-          <input
-            placeholder="youremail@test.com"
-            name="email"
-            type="email"
-            id="email"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
-          <input
-            placeholder="******"
-            name="password"
-            type="password"
-            id="pwd"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="flex-row flex-end">
-          <button 
-            type="submit"
-            disabled={!(formState.name && formState.email && formState.password)}
+    <div className="login-logout flex justify-center items-center text-white text-xl">
+      <div className="login-container bg-black opacity-50 rounded-2xl h-auto w-2/5 text-center">
+        <h2 className='text-4xl m-4'>Signup</h2>
+        <form onSubmit={handleFormSubmit} className='m-5'>
+          <div className="flex-row space-between my-2">
+            <label htmlFor="Name"></label>
+            <input
+              className="login-input rounded-2xl m-3"
+              placeholder="Name"
+              name="name"
+              type="name"
+              id="name"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex-row space-between my-2">
+            <label htmlFor="email"></label>
+            <input
+              className="login-input rounded-2xl m-3"
+              placeholder="Email"
+              name="email"
+              type="email"
+              id="email"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex-row space-between my-2">
+            <label htmlFor="pwd"></label>
+            <input
+              className="login-input rounded-2xl m-3"
+              placeholder="Password"
+              name="password"
+              type="password"
+              id="pwd"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex-row flex-end">
+            <button
+              className='bg-red-900 cursor-pointer rounded-2xl p-2 m-3'
+              type="submit"
+              disabled={!(formState.name && formState.email && formState.password)}
             >Submit
-          </button>
-        </div>
-      </form>
-    </div>
+            </button>
+            <br></br>
+            <Link to="/login">← Go to Login</Link>
+          </div>
+        </form>
+      </div>
+    </div >
   );
 }
 
