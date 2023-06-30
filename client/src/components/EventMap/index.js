@@ -29,7 +29,7 @@ export default function EventMap(center) {
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: "" // add Key from Slack
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY // add Key from Slack
         
     });
     //process.env.REACT_APP_GOOGLE_MAPS_API_KEY // not secure
