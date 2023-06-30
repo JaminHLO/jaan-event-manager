@@ -11,20 +11,29 @@ const EventList = ({ events }) => {
       <h3>My Events</h3>
         {events &&
         events.map((singleEvent) => (
-          <div key={singleEvent.title} className="card mb-3">
-            <h4 className="card-header bg-primary text-light p-2 m-0">
-              {singleEvent.title} <br/>
-              {/* {singleEvent.description} */}
-              {singleEvent.dateTime}
-              {singleEvent.address}
-            </h4>
-              <Link
-              className="btn btn-primary btn-block btn-squared"
-              to={`/events/${singleEvent._id}`}
-              >
-              More...
-            </Link>
+          <div key={singleEvent._id} className="max-w-sm rounded overflow-hidden shadow-lg">
+            <div className="px-6 py-4">
+              <div className='font-bold text-xl mb-2'>
+                {singleEvent.title}
+              </div>
+              <p className='text-gray-700 text-base'>
+                {singleEvent.description}
+                <ul>
+                  <li>{singleEvent.dateTime}</li>
+                  <li>{singleEvent.address}</li>
+                </ul>
+              </p>
+            </div>
+            <div class="px-6 pt-4 pb-2">
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                    <Link
+                    to={`/events/${singleEvent._id}`}
+                    >
+                    More...
+                    </Link>
+                </span>
           </div>
+        </div>
         ))}
     </div>
   );

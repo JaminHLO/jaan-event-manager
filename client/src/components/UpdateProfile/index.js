@@ -1,11 +1,9 @@
-// Project-3 Cmplete your profile
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
-
 
 const UpdateProfile = (props) => {
   const { loading, data } = useQuery(QUERY_ME)
@@ -41,8 +39,6 @@ const UpdateProfile = (props) => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState)
-    console.log("click")
 
     try {
       const { data } = await updateUser({
@@ -50,14 +46,12 @@ const UpdateProfile = (props) => {
           user: { ...formState }
         },
       });
-      console.log(data)
     } catch (error) {
       console.error(error)
     }
   };
 
   const handleParticipantSubmit = async () => {
-    // event.preventDefault()
     console.log("new name", newParticipant)
     const newParticipantArray = [...participants, newParticipant.newParticipantName]
     try {
@@ -79,7 +73,7 @@ const UpdateProfile = (props) => {
       <Link to="/profile">← Back to Profile</Link>
 
       <h2>Update your Profile</h2>
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={handleFormSubmit} encType='multipart/form-data'>
         <div className="flex-row space-between my-2">
           <label htmlFor="Name">Name:</label>
           <input
@@ -98,11 +92,12 @@ const UpdateProfile = (props) => {
             name="image"
             type="file"
             id="image"
-            // accept="image/*"
+            accept=".png, .jpg, jpeg*"
             onChange={handleChange}
             value={formState.image}
           />
         </div>
+
         <div className="flex-row space-between my-2">
           <label htmlFor="address">Address:</label>
           <input
@@ -207,7 +202,7 @@ const UpdateProfile = (props) => {
         </>
       ) : null}
 
-    </div>
+          </div>
   );
 }
 
