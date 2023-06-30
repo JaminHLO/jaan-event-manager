@@ -1,5 +1,5 @@
 // Project-3 Cmplete your profile
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
@@ -8,20 +8,20 @@ import { QUERY_ME } from '../../utils/queries';
 
 const UpdateProfile = (props) => {
   const { loading, data } = useQuery(QUERY_ME)
-  const [updateUser] = useMutation(UPDATE_USER);
+  const [updateUser, { error }] = useMutation(UPDATE_USER);
 
   const userData = data?.me || {}
   // console.log(userData)
 
   const [formState, setFormState] = useState({ name: "", image: "", address: "" });
   // const [formState, setFormState] = useState({ name: `${userData?.name}`, image: `${userData?.image}`, address: `${userData?.address}` });
-  
+
   const token = Auth.loggedIn() ? Auth.getToken() : null;
   // console.log(token)
   if (!token) {
-      return false;
+    return false;
   }
-  
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormState({
@@ -33,22 +33,19 @@ const UpdateProfile = (props) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState)
-          
+    console.log("click")
+
     try {
       const { data } = await updateUser({
-        variables: { 
-          ...formState
-          // name: formState.name,
-          // image: formState.image,
-          // address: formState.address,
-          // password: formState.password
+        variables: {
+          user: { ...formState }
         },
       });
       console.log(data)
-    } catch (e) {
-      console.error(e)
-    }  
-    };
+    } catch (error) {
+      console.error(error)
+    }
+  };
 
   return (
     <div className="container my-1">
@@ -80,13 +77,13 @@ const UpdateProfile = (props) => {
           />
         </div>
         <div className="flex-row space-between my-2">
-          <label htmlFor="img">Address:</label>
+          <label htmlFor="address">Address:</label>
           <input
             placeholder="address"
             name="address"
             type="address"
             id="address"
-            onChange={handleChange}            
+            onChange={handleChange}
             value={formState.address}
           />
         </div>
@@ -102,9 +99,9 @@ const UpdateProfile = (props) => {
           />
         </div> */}
         <div className="flex-row flex-end">
-          <button 
+          <button
             type="submit"
-            >Submit
+          >Submit
           </button>
         </div>
       </form>
