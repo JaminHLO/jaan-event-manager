@@ -13,7 +13,7 @@ const UpdateProfile = (props) => {
   const userData = data?.me || {}
   const participants = userData.participants
   // Populate form with current user data
-  const [formState, setFormState] = useState({ name: `${userData?.name}`, image: ``, address: `${userData?.address}`, participants:  `${userData?.participants}` });
+  const [formState, setFormState] = useState({ name: `${userData?.name}`, image: ``, address: `${userData?.address}`, participants:  `${userData?.participants}`, image:`${userData?.image}` });
   const [newParticipant, setNewParticipant] = useState({ newParticipantName: ''})
 
   const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -88,9 +88,9 @@ const UpdateProfile = (props) => {
         <div className="flex-row space-between my-2">
           <label htmlFor="img">Image:</label>
           <input
-            placeholder="image"
+            placeholder="image link"
             name="image"
-            type="file"
+            type="image"
             id="image"
             accept=".png, .jpg, jpeg*"
             onChange={handleChange}
