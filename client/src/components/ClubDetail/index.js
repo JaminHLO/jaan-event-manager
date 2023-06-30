@@ -35,7 +35,9 @@ const ClubDetail = () => {
             setIsAdmin(true)
         }
     }, [])
-
+    console.log(userData._id)
+    console.log(clubData.adminId)
+    console.log(isAdmin)
     if (loading || meLoading) {
         return <div>Loading...</div>
     }
