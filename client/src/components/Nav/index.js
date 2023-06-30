@@ -8,19 +8,23 @@ function Nav() {
   function showNavigation() {
     if (Auth.loggedIn()) {
       return (
-        <ul className="flex-row">
-          {/* <li className="mx-1">
+        <div className="flex flex-row justify-between p-4 bg-slate-950 w-screen">
+          <h1 className="text-2xl text-white p-3">Sports Connect</h1>
+          <ul className=" flex flex-row">
+            {/* <li className="mx-1">
             <Link to="/orderHistory">
               Order History
             </Link>
           </li> */}
-          <li className="mx-1">
-            {/* this is not using the Link component to logout or user and then refresh the application to the start */}
-            <a href="/" onClick={() => Auth.logout()}>
-              Logout
-            </a>
-          </li>
-        </ul>
+
+            <li className="text-white p-3">
+              {/* this is not using the Link component to logout or user and then refresh the application to the start */}
+              <a href="/" onClick={() => Auth.logout()}>
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
       );
     } else {
       return (
