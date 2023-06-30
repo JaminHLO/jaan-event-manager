@@ -15,23 +15,19 @@ const ClubList = ({ clubs }) => {
             <h4 className="card-header bg-primary text-light p-2 m-0">
               {club.title} <br/>
               {club.description}
-              {/* <span style={{ fontSize: '1rem' }}>
-                had this thought on {thought.createdAt}
-              </span> */}
+              {club.address}
             </h4>
-            {/* <div className="card-body bg-light p-2">
-              <p>{thought.thoughtText}</p>
-            </div>
-            <Link
+              <Link
               className="btn btn-primary btn-block btn-squared"
-              to={`/thoughts/${thought._id}`}
-            > */}
-              {/* Join the discussion on this thought.
-            </Link> */}
+              to={`/clubs/${club._id}`}
+              >
+              More...
+            </Link>
           </div>
         ))}
     </div>
   );
 };
+
 
 export default ClubList;
