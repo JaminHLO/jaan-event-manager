@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
 /* home styles */
 .hero {
     background-image: url('./images/hero-red.png');
@@ -24,4 +31,25 @@
     position: absolute;
     margin-top: 5em;
     margin-left: 5em;
+}
+
+/* login & logout page styles */
+
+.login-logout {
+    background-image: url('./images/rock-climbing.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    width: 100vw;
+    margin: 0;
+}
+
+.login-input::placeholder {
+    color: black;
+}
+
+.login-input {
+    color: black;
+    padding: 0.5rem;
 }
