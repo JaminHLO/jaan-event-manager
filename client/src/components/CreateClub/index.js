@@ -14,14 +14,14 @@ const CreateClub = (props) => {
     // console.log(userData)
   
 
-    const [formState, setFormState] = useState({  
-        title: '',
-        description: '',
-        // category: '',
-        maxMembers: '',
-        image: '',
-        zipCode: '',
-        price: ''
+    const [club, setClub] = useState({  
+        title: " ",
+        description: " ",
+        category: " ",
+        maxMembers: 1,
+        image: " ",
+        zipCode: 0,
+        price: 0
     });
 
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -32,8 +32,8 @@ const CreateClub = (props) => {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setFormState({
-          ...formState,
+        setClub({
+          ...club,
           [name]: value,
         });
       };
@@ -41,15 +41,26 @@ const CreateClub = (props) => {
       const handleFormSubmit = async (event) => {
         event.preventDefault();
         console.log("inside handleFormSubmit")
-        console.log(formState)
+        console.log(club)
     
+        // const newClub =  {club: {...club}};
+        // console.log("newClub is", newClub);
+
         try {
-          const { data } = await createClub({ //
+        //   const { data } = 
+          await createClub({
             variables: {
-              club: { ...formState }
+                title: club.title,
+                description: club.description,
+                // maxMembers: club.maxMembers,
+                // image: club.image,
+                // price: club.price,
+                // // category: club.category,
+                // zipCode: club.zipCode
             },
-          });
-          console.log(data)
+        });
+        //   console.log("createClub data is")
+        //   console.log(data)
         } catch (error) {
           console.error(error)
         }
@@ -70,7 +81,7 @@ const CreateClub = (props) => {
                 type="title"
                 id="title"
                 onChange={handleChange}
-                value={formState.title}
+                value={club.title}
             />
             </div>
             <div className="flex-row space-between my-2">
@@ -81,25 +92,25 @@ const CreateClub = (props) => {
                 type="description"
                 id="description"
                 onChange={handleChange}
-                value={formState.description}
+                value={club.description}
             />
             </div>
             {/* <div className="flex-row space-between my-2">
             <label htmlFor="category">Category:</label>
             <select id="category" name="category" type="category">
                 <option > --Please Select--</option>
-                <option value={formState.category}>Soccer</option>
-                <option value={formState.category}>Football</option>
-                <option value={formState.category}>Basketball</option>
-                <option value={formState.category}>Baseball</option>
-                <option value={formState.category}>Gymnastics</option>
-                <option value={formState.category}>Cardio</option>
-                <option value={formState.category}>Yoga</option>
-                <option value={formState.category}>Swimming</option>
-                <option value={formState.category}>Weight Lifting</option>
-                <option value={formState.category}>Tennis</option>
-                <option value={formState.category}>Cycling</option>
-                <option value={formState.category}>Martial Arts</option>
+                <option value={club.category}>Soccer</option>
+                <option value={club.category}>Football</option>
+                <option value={club.category}>Basketball</option>
+                <option value={club.category}>Baseball</option>
+                <option value={club.category}>Gymnastics</option>
+                <option value={club.category}>Cardio</option>
+                <option value={club.category}>Yoga</option>
+                <option value={club.category}>Swimming</option>
+                <option value={club.category}>Weight Lifting</option>
+                <option value={club.category}>Tennis</option>
+                <option value={club.category}>Cycling</option>
+                <option value={club.category}>Martial Arts</option>
             </select>
             </div> */}
             <div className="flex-row space-between my-2">
@@ -109,9 +120,10 @@ const CreateClub = (props) => {
                 name="maxMembers"
                 type="number"
                 id="maxMembers"
+                
                 // accept="image/*"
                 onChange={handleChange}
-                value={formState.maxMembers}
+                value={club.maxMembers}
             />
             </div>
             <div className="flex-row space-between my-2">
@@ -123,7 +135,7 @@ const CreateClub = (props) => {
                 id="image"
                 // accept="image/*"
                 onChange={handleChange}
-                value={formState.image}
+                value={club.image}
             />
             </div>
             <div className="flex-row space-between my-2">
@@ -135,7 +147,7 @@ const CreateClub = (props) => {
                 max="99999"
                 id="zipCode"
                 onChange={handleChange}
-                value={formState.zipCode}
+                value={club.zipCode}
             />
             </div>
             <div className="flex-row space-between my-2">
@@ -146,7 +158,7 @@ const CreateClub = (props) => {
                 type="price"
                 id="price"
                 onChange={handleChange}
-                value={formState.price}
+                value={club.price}
             />
             </div>
             <div className="flex-row flex-end">

@@ -158,9 +158,11 @@ const resolvers = {
 
       return { token, user };
     },
-    createClub: async (parent, { club }, context) => {
+    createClub: async (parent, club , context) => {
       if (context.user) {
-        const newClub = await Club.create({ ...club, adminId: context.user._id })
+        const newClub = await Club.create(
+          { ...club, adminId: context.user._id }
+          )
         return newClub
       }
       throw new AuthenticationError('Incorrect credentials');

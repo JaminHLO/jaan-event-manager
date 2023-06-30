@@ -11,11 +11,11 @@ const typeDefs = gql`
     description: String
     category: String
     members: [String]
-    maxMembers: Int
+    maxMembers: String
     image: String
-    zipCode: Int
-    price: Float
-    spotsAvailable: Int
+    zipCode: String
+    price: String
+    spotsAvailable: String
     notifications: String
     messages: [String]
   }
@@ -41,6 +41,17 @@ const typeDefs = gql`
     _id: ID
     purchaseDate: String
     clubs: [Club]
+  }
+
+  input UserInput {
+    name: String
+    email: String
+    myClubs: [String]
+    myEvents: [String]
+    participants: [String]
+    image: String
+    address: String
+    geocode: String
   }
 
   type User {
@@ -78,19 +89,6 @@ const typeDefs = gql`
     user: User
   }
 
-  input UserInput {
-    name: String
-    email: String
-    myClubs: [String]
-    myEvents: [String]
-    participants: [String]
-    image: String
-    address: String
-    geocode: String
-  }
-
-
-
   input EventInput {
     clubId: String
     title: String
@@ -121,7 +119,7 @@ const typeDefs = gql`
     updateUser(user: UserInput): User
     buyMembership(_id: ID!, spotsAvailable: Int!): Club
     login(email: String!, password: String!): Auth
-    createClub(club: ClubInput): Club
+    createClub(adminId: String, title: String!, description: String, maxMembers: Int, image: String, price: Float, category: String, zipCode: Int): Club
     addEvent(event: EventInput, clubId: ID!): Event
     updateEvent(eventId: ID!, event: EventInput): Event
     updateClub(clubId: ID!, club: ClubInput): Club
