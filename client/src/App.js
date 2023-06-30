@@ -22,6 +22,7 @@ import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
 import UpdateProfile from './components/UpdateProfile';
+import ClubDetail from './components/ClubDetail';
 
 
 const httpLink = createHttpLink({
@@ -48,7 +49,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          {/* <StoreProvider> */}
+          <StoreProvider>
             <Nav />
             <Routes>
               <Route
@@ -84,11 +85,15 @@ function App() {
                 element={<Detail />}
               />
               <Route
+                path="/clubs/club/:id"
+                element={<ClubDetail />}
+              />
+              <Route
                 path="*"
                 element={<NoMatch />}
               />
             </Routes>
-          {/* </StoreProvider> */}
+          </StoreProvider>
         </div>
       </Router>
     </ApolloProvider>

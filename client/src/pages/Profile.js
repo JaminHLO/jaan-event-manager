@@ -10,9 +10,6 @@ import Auth from '../utils/auth';
 const Profile = () => {
     const { loading, data } = useQuery(QUERY_ME);
     const user = data?.me || {};
-    console.log(user)
-    console.log('clubs', user.myClubs)
-    console.log('events', user.myEvents)
 
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
