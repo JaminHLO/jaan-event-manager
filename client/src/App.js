@@ -18,7 +18,7 @@ import Profile from './pages/Profile'
 import Detail from './pages/Detail';
 import NoMatch from './pages/NoMatch';
 import Nav from './components/Nav';
-// import { StoreProvider } from './utils/GlobalState';
+import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
 import UpdateProfile from './components/UpdateProfile';
