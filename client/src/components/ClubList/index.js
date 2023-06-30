@@ -19,9 +19,9 @@ const ClubList = ({ clubs }) => {
             </h4>
               <Link
               className="btn btn-primary btn-block btn-squared"
-              to={`/clubs/${club._id}`}
+              to={`/clubs/club/${club._id}`}
               >
-              More...
+              More detail...
             </Link>
           </div>
         ))}
