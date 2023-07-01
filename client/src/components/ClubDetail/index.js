@@ -7,21 +7,21 @@ import { ADD_EVENT } from "../../utils/mutations";
 import auth from "../../utils/auth";
 
 const ClubDetail = () => {
+
     const [showModal, setShowModal] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState();
     const [addEvent, { error }] = useMutation(ADD_EVENT);
     const [eventFormState, setEventFormState] = useState(
         {
             title: "",
             address: "",
-            date: "",
+            dateTime: "",
             description: "",
         })
 
-
-    const { id: clubId } = useParams();
+    const { id: clubIdParam } = useParams();
     const { loading, data } = useQuery(QUERY_CLUB, {
-        variables: { id: clubId }
+        variables: { id: clubIdParam }
     });
 
     const clubData = data?.club || {};
@@ -33,11 +33,11 @@ const ClubDetail = () => {
     useEffect(() => {
         if (userData._id === clubData.adminId) {
             setIsAdmin(true)
+        } else {
+            setIsAdmin(false);
         }
-    }, [])
-    console.log(userData._id)
-    console.log(clubData.adminId)
-    console.log(isAdmin)
+    })
+
     if (loading || meLoading) {
         return <div>Loading...</div>
     }
@@ -50,15 +50,23 @@ const ClubDetail = () => {
         })
     }
 
+    const token = auth.loggedIn() ? auth.getToken() : null;
+    if (!token) {
+        return false;
+    }
+
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+        console.log("click")
         try {
             const { data } = await addEvent({
-                variables: {
-                    clubId: clubData._id,
-                    event: { ...eventFormState }
+                variables:{
+                    event: eventFormState,
+                    clubId: clubIdParam,
                 }
+
             })
+            return data;
         } catch (error) {
             console.error(error)
         }
@@ -102,12 +110,12 @@ const ClubDetail = () => {
                             />
                         </div>
                         <div className="flex-row space-between my-2">
-                            <label htmlFor="date">Date:</label>
+                            <label htmlFor="dateTime">Date:</label>
                             <input
                                 placeholder="Choose a date for your event"
-                                name="date"
+                                name="dateTime"
                                 type="text"
-                                id="date"
+                                id="dateTime"
                                 onChange={handleChange}
                                 value={eventFormState.date}
                             />
@@ -122,11 +130,12 @@ const ClubDetail = () => {
                         </div>
                         <div>
                             <button
-                                onClick={() => {
-                                    handleFormSubmit();
+                                onClick={(event) => {
+                                    handleFormSubmit(event);
                                     setShowModal(false);
                                 }}
-                            >Submit</button>
+                                type="submit"
+                            >Submit</button>{" "}
                             <button
                                 onClick={() => { setShowModal(false) }}
                             >Exit</button>
