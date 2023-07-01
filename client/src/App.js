@@ -24,6 +24,7 @@ import OrderHistory from './pages/OrderHistory';
 import UpdateProfile from './components/UpdateProfile';
 import CreateClub from './components/CreateClub';
 import ClubDetail from './components/ClubDetail';
+import EventDetail from './components/EventDetail';
 
 
 
@@ -93,6 +94,10 @@ function App() {
               <Route
                 path="/clubs/club/:id"
                 element={<ClubDetail />}
+              />
+              <Route
+                path="/events/event/:id"
+                element={<EventDetail />}
               />
               <Route
                 path="*"

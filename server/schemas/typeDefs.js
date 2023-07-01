@@ -112,7 +112,7 @@ const typeDefs = gql`
     order(_id: ID!): Order
     checkout(clubs: [ID]!): Checkout
     myEvents(user: ID): User
-    eventById(_id:ID!): Event
+    event(_id:ID!): Event
     me: User
   }
 

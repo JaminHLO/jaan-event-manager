@@ -107,7 +107,7 @@ const resolvers = {
       }
       throw new AuthenticationError('Please log in first')
     },
-    eventById: async (parent, { _id }) => {
+    event: async (parent, { _id }) => {
       return Event.findById(_id)
     }
   },
