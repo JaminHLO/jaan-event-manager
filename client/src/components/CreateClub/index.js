@@ -32,7 +32,28 @@ const CreateClub = (props) => {
     }  
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
+        let { name, value } = event.target;
+        console.log(`clicked name is: ${name}`)
+        switch (name) {
+            case 'title': 
+            case 'description':
+            case 'image':
+                value = value.toString().trim();
+                break;
+            case 'maxMembers':
+            case 'zipCode':
+                if (value !== '') {
+                    value=  parseInt(value);
+                } 
+                break;
+            case 'price':
+                if (value !== '') {
+                    value = parseFloat(value);
+                }
+                break;
+            default:
+                break;
+        }
         setClub({
           ...club,
           [name]: value,
@@ -41,38 +62,29 @@ const CreateClub = (props) => {
 
       const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log("inside handleFormSubmit")
-        console.log(club)
+        // console.log("inside handleFormSubmit")
+        // console.log(club)
     
-        // const newClub =  {club: {...club}};
-        // console.log("newClub is", newClub);
-
         try {
-            const { data } = await createClub({
-                variables: {
-                    title: club.title,
-                    description: club.description,
-                    // maxMembers: club.maxMembers,
-                    // image: club.image,
-                    // price: club.price,
-                    // // category: club.category,
-                    // zipCode: club.zipCode
-                },
-            });
-          console.log("data.createClub._id is")
-          console.log(data.createClub._id)
-        //   const clubId = data?.createClub._id;
-        //   const adminId = data?.createClub.adminId;
-        //   if (clubId && adminId) {
-        //     // const response = await updateUser({
-        //     //     user: { }
-        //     // })
-        //   }
+        //   const { data } = 
+          await createClub({
+            variables: {
+                title: club.title,
+                description: club.description,
+                maxMembers: club.maxMembers,
+                image: club.image,
+                price: club.price,
+                // // category: club.category,
+                zipCode: club.zipCode
+            },
+        });
+        //   console.log("createClub data is")
+        //   console.log(data)
+
         } catch (error) {
           console.error(error)
         }
       };
-
 
     return (
         <div className="container my-1">
