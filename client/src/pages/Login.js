@@ -32,7 +32,7 @@ function Login(props) {
 
   return (
     <div className="login-logout flex justify-center items-center text-white text-xl">
-      <div className="login-container bg-black opacity-50 rounded-2xl h-auto w-2/5 text-center">
+      <div className="login-container transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70 rounded-2xl h-auto w-2/5 text-center">
         <h2 className='text-4xl m-4'>Login</h2>
         <form onSubmit={handleFormSubmit} className='m-5'>
           <div className="flex-row space-between my-2">
@@ -64,7 +64,7 @@ function Login(props) {
           ) : null}
           <div className="flex-row flex-end">
             <button
-              className='bg-red-900 cursor-pointer rounded-2xl p-2 m-3'
+              className='transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-2xl p-2 m-3 hover:bg-rose-950'
               type="submit"
               disabled={!(formState.email && formState.password)}
             >Submit
