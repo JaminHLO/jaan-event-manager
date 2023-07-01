@@ -74,8 +74,8 @@ mutation CreateClub($adminId: String, $title: String!, $description: String, $ma
 `
 
 export const ADD_EVENT = gql`
-mutation AddEvent($clubId: ID!, $event: EventInput) {
-  addEvent(clubId: $clubId, event: $event) {
+mutation AddEvent($event: EventInput, $clubId: ID!) {
+  addEvent(event: $event, clubId: $clubId) {
     _id
     club {
       _id
