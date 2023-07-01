@@ -169,6 +169,14 @@ const resolvers = {
         const newClub = await Club.create(
           { ...club, adminId: context.user._id }
           )
+        
+          if (newClub) {
+            const updatedUser = await User.findOneAndUpdate(
+              { _id: context.user._id },
+              { $addToSet: { myClubs: newClub._id } },
+              { new: true}
+            )
+          }
         return newClub
       }
       throw new AuthenticationError('Incorrect credentials');
