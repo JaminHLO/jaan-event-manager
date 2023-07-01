@@ -91,3 +91,30 @@ mutation AddEvent($clubId: ID!, $event: EventInput) {
   }
 }
 `
+
+export const JOIN_CLUB = gql`
+mutation JoinClub($clubId: ID!) {
+  joinClub(clubId: $clubId) {
+    name
+    myClubs {
+      title
+      _id
+    }
+  }
+}`
+
+export const JOIN_EVENT = gql`
+mutation JoinEvent($eventId: ID!) {
+  joinEvent(eventId: $eventId) {
+    name
+    _id
+    myEvents {
+      _id
+      club {
+        _id
+        title
+      }
+      title
+    }
+  }
+}`

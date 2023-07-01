@@ -140,7 +140,7 @@ query Me {
 
 export const QUERY_EVENT = gql`
 query EventById($id: ID!) {
-  eventById(_id: $id) {
+  event(_id: $id) {
     _id
     club {
       title
