@@ -4,12 +4,12 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_EVENT, QUERY_ME } from "../../utils/queries";
 import { JOIN_EVENT } from "../../utils/mutations";
 import Auth from "../../utils/auth";
-let signedUp = true    
+// let signedUp = false    
 
 const EventDetail = () => {
 
     const [joinEvent, { error }] = useMutation(JOIN_EVENT);
-    // const [signedUp, setSignedUp] = useState(false)
+    const [signedUp, setSignedUp] = useState(false)
 
     const { id: eventId } = useParams();
     console.log(eventId)
@@ -29,12 +29,15 @@ const EventDetail = () => {
     }
     console.log(eventData)
 
-    // Check if user has already sign for the event
-    if (myEventsId.includes(eventId)) {
-        // setSignedUp(true)
-        signedUp = true    
-    }
+    // Check if user has already signed up for the event
+    useEffect(() => {
+        if (myEventsId.includes(eventId)) {
+            setSignedUp(true)
+        } else {
+            setSignedUp(false)
+        }
         console.log(signedUp)
+    })
     
     if (loading || meLoading) {
         return <div>Loading...</div>
@@ -45,18 +48,17 @@ const EventDetail = () => {
 
     const handleJoinEvent = async (event) => {
         // event.preventDefault();
-        // try {
-            console.log('clicked')
-            // const { data } = await addEvent({
-            //     variables: {
-            //         id: eventId,
-            //     }
-            }
-            // )
-        // } catch (error) {
-            // console.error(error)
-        // }
-    // };
+        console.log('clicked')
+        try {
+            const { data } = await joinEvent({
+                variables: { eventId: eventId }
+            })
+        } catch (error) {
+            console.error(data)
+        }
+        console.log(data)
+    };
+    
 
 
     return (
@@ -64,7 +66,7 @@ const EventDetail = () => {
             <div key={eventData._id} className="max-w-sm rounded overflow-hidden shadow-lg">
               { !eventData.image ? (
                 <img className="w-full" 
-                    src= './images/event_default.jpg' />
+                src= './images/event_default.jpg' />
                 ) : (
                     <img className="w-full" 
                     src= {eventData.image} />
@@ -91,7 +93,7 @@ const EventDetail = () => {
                 <button
                     className="bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => { handleJoinEvent(true) }}
+                    onClick={() => { handleJoinEvent() }}
                     >Join Event 
                 </button>
                 )
