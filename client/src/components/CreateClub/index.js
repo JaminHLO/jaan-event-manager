@@ -23,8 +23,7 @@ const CreateClub = (props) => {
         maxMembers: 1,
         image: "",
         zipCode: 0,
-        price: 0,
-        geocode: {}
+        price: 0
     });
 
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -56,10 +55,10 @@ const CreateClub = (props) => {
             default:
                 break;
         }
-        setClub({
+        setClub(club => ({
           ...club,
-          [name]: value,
-        });
+          [name]: value
+        }));
       };
 
       const handleFormSubmit = async (event) => {
@@ -67,20 +66,24 @@ const CreateClub = (props) => {
         // console.log("inside handleFormSubmit")
         // console.log(club)
     
+        let geoJSONString = ""
+
         try {
             if (club.zipCode){
                 const zipCodeString = club.zipCode.toString()
                 const googleGeocode = await getGeocode(zipCodeString);
                 // .then((googleGeocode) => {
-                console.log("googleGeocode is:", googleGeocode);
-                // let geoName = 'geocode'
-                setClub({
-                    ...club, 
-                    geocode: {googleGeocode}
-                });
+                // console.log("googleGeocode is:", googleGeocode);
+                geoJSONString = JSON.stringify(googleGeocode);
+                // console.log("geoJSONString is:", geoJSONString);
+
+                // setClub((club) => ({
+                //     ...club, 
+                //     geocode: geoJSONString
+                // }));
                 // });
             }
-            console.log("club is", club);
+            // console.log("club is", club);
         //   const { data } = 
             await createClub({
                 variables: {
@@ -90,9 +93,9 @@ const CreateClub = (props) => {
                     image: club.image,
                     price: club.price,
                     // // category: club.category,
+                    geocode: geoJSONString,
                     zipCode: club.zipCode,
-                    geocode: club.geocode
-                },
+            },
         });
         //   console.log("createClub data is")
         //   console.log(data)

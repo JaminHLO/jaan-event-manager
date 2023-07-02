@@ -23,6 +23,7 @@ query getClubs($category: ID) {
     messages
     price
     spotsAvailable
+    geocode
   }
 }
 `;
@@ -41,6 +42,7 @@ export const QUERY_CLUB = gql`
       image
       address
       isAvailable
+      geocode
     }
     title
     description
@@ -51,6 +53,7 @@ export const QUERY_CLUB = gql`
     messages
     price
     spotsAvailable
+    geocode
   }
 }`
 
@@ -106,6 +109,7 @@ query MyEvents {
       }
       address
       isAvailable
+      geocode
     }
   }
 }`
@@ -134,6 +138,7 @@ query Me {
       messages
       price
       spotsAvailable
+      geocode
     }
   }
 }`
@@ -156,6 +161,7 @@ query EventById($id: ID!) {
     image
     address
     isAvailable
+    geocode
   }
 }`
 
