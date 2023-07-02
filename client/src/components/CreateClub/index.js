@@ -4,6 +4,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { CREATE_CLUB, UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
+import { getGeocode } from '../../utils/helpers';
 
 
 const CreateClub = (props) => {
@@ -16,13 +17,14 @@ const CreateClub = (props) => {
   
 
     const [club, setClub] = useState({  
-        title: " ",
-        description: " ",
-        category: " ",
+        title: "",
+        description: "",
+        category: "",
         maxMembers: 1,
-        image: " ",
+        image: "",
         zipCode: 0,
-        price: 0
+        price: 0,
+        geocode: {}
     });
 
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -38,7 +40,7 @@ const CreateClub = (props) => {
             case 'title': 
             case 'description':
             case 'image':
-                value = value.toString().trim();
+                value = value.toString();
                 break;
             case 'maxMembers':
             case 'zipCode':
@@ -66,17 +68,31 @@ const CreateClub = (props) => {
         // console.log(club)
     
         try {
+            if (club.zipCode){
+                const zipCodeString = club.zipCode.toString()
+                const googleGeocode = await getGeocode(zipCodeString);
+                // .then((googleGeocode) => {
+                console.log("googleGeocode is:", googleGeocode);
+                // let geoName = 'geocode'
+                setClub({
+                    ...club, 
+                    geocode: {googleGeocode}
+                });
+                // });
+            }
+            console.log("club is", club);
         //   const { data } = 
-          await createClub({
-            variables: {
-                title: club.title,
-                description: club.description,
-                maxMembers: club.maxMembers,
-                image: club.image,
-                price: club.price,
-                // // category: club.category,
-                zipCode: club.zipCode
-            },
+            await createClub({
+                variables: {
+                    title: club.title,
+                    description: club.description,
+                    maxMembers: club.maxMembers,
+                    image: club.image,
+                    price: club.price,
+                    // // category: club.category,
+                    zipCode: club.zipCode,
+                    geocode: club.geocode
+                },
         });
         //   console.log("createClub data is")
         //   console.log(data)

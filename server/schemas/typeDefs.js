@@ -20,6 +20,7 @@ const typeDefs = gql`
     spotsAvailable: String
     notifications: String
     messages: [String]
+    geocode: String
   }
 
   type Club {
@@ -37,6 +38,7 @@ const typeDefs = gql`
     notifications: String
     messages: [String]
     events: [Event]
+    geocode: String
   }
 
   type Order {
@@ -80,6 +82,7 @@ const typeDefs = gql`
     image: String
     address: String
     isAvailable: Boolean
+    geocode: String
   }
 
   type Checkout {
@@ -102,6 +105,7 @@ const typeDefs = gql`
     address: String
     participants: [String]
     isAvailable: Boolean
+    geocode: String
   }
 
   type Query {
@@ -122,7 +126,7 @@ const typeDefs = gql`
     updateUser(user: UserInput): User
     buyMembership(_id: ID!, spotsAvailable: Int!): Club
     login(email: String!, password: String!): Auth
-    createClub(adminId: String, title: String!, description: String, maxMembers: Int, image: String, price: Float, category: String, zipCode: Int): Club
+    createClub(adminId: String, title: String!, description: String, maxMembers: Int, image: String, price: Float, category: String, zipCode: Int, geocode: String): Club
     addEvent(event: EventInput, clubId: ID!): Event
     updateEvent(eventId: ID!, event: EventInput): Event
     updateClub(clubId: ID!, club: ClubInput): Club

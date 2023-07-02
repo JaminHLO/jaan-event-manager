@@ -40,6 +40,9 @@ const eventSchema = new Schema({
   isAvailable: {
     type: Boolean,
     default: true
+  },
+  geocode: {
+    type: String,
   }
 });
 
