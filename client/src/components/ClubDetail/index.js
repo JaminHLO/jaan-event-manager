@@ -32,8 +32,8 @@ const ClubDetail = () => {
     const userData = meData?.me || {};
 
     // if (clubData.geocode) {
-        console.log(clubData);
-        const mapCenter = clubData.geocode?.json();
+        console.log('cludData is', clubData);
+        const mapCenter = clubData.geocode//.json();
         console.log(mapCenter);
     // }
 

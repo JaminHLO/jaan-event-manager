@@ -19,10 +19,12 @@ import { GoogleMap, useJsApiLoader, Marker} from "@react-google-maps/api"; //
 export default function JaanMap(args) {
     // hardcoded overwrite for test purposes
     console.log('center is', args.center)
-    const center = { 
-        lat: 33.7722,
-        lng: -84.3902
-    };
+    const center = JSON.parse(args.center);
+    
+    // const center = { 
+    //     lat: 33.7722,
+    //     lng: -84.3902
+    // };
 
     // const address = "1837 Glendmere Drive, Birmingham, AL 35223";
     // geoCode = geocode(address)
