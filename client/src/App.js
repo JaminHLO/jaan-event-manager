@@ -25,6 +25,7 @@ import UpdateProfile from './components/UpdateProfile';
 import CreateClub from './components/CreateClub';
 import ClubDetail from './components/ClubDetail';
 import EventDetail from './components/EventDetail';
+import Clubs from './components/Clubs';
 
 
 
@@ -74,6 +75,10 @@ function App() {
               <Route
                 path="/profile/update"
                 element={<UpdateProfile />}
+              />
+              <Route
+                path="/clubs"
+                element={<Clubs />}
               />
               <Route
                 path="/clubs/create"
