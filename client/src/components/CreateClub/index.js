@@ -4,6 +4,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { CREATE_CLUB, UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
+import { getGeocode } from '../../utils/helpers';
 
 
 const CreateClub = (props) => {
@@ -16,11 +17,11 @@ const CreateClub = (props) => {
   
 
     const [club, setClub] = useState({  
-        title: " ",
-        description: " ",
-        category: " ",
+        title: "",
+        description: "",
+        category: "",
         maxMembers: 1,
-        image: " ",
+        image: "",
         zipCode: 0,
         price: 0
     });
@@ -38,7 +39,7 @@ const CreateClub = (props) => {
             case 'title': 
             case 'description':
             case 'image':
-                value = value.toString().trim();
+                value = value.toString();
                 break;
             case 'maxMembers':
             case 'zipCode':
@@ -54,10 +55,10 @@ const CreateClub = (props) => {
             default:
                 break;
         }
-        setClub({
+        setClub(club => ({
           ...club,
-          [name]: value,
-        });
+          [name]: value
+        }));
       };
 
       const handleFormSubmit = async (event) => {
@@ -65,17 +66,35 @@ const CreateClub = (props) => {
         // console.log("inside handleFormSubmit")
         // console.log(club)
     
+        let geoJSONString = ""
+
         try {
+            if (club.zipCode){
+                const zipCodeString = club.zipCode.toString()
+                const googleGeocode = await getGeocode(zipCodeString);
+                // .then((googleGeocode) => {
+                // console.log("googleGeocode is:", googleGeocode);
+                geoJSONString = JSON.stringify(googleGeocode);
+                // console.log("geoJSONString is:", geoJSONString);
+
+                // setClub((club) => ({
+                //     ...club, 
+                //     geocode: geoJSONString
+                // }));
+                // });
+            }
+            // console.log("club is", club);
         //   const { data } = 
-          await createClub({
-            variables: {
-                title: club.title,
-                description: club.description,
-                maxMembers: club.maxMembers,
-                image: club.image,
-                price: club.price,
-                // // category: club.category,
-                zipCode: club.zipCode
+            await createClub({
+                variables: {
+                    title: club.title,
+                    description: club.description,
+                    maxMembers: club.maxMembers,
+                    image: club.image,
+                    price: club.price,
+                    // // category: club.category,
+                    geocode: geoJSONString,
+                    zipCode: club.zipCode,
             },
         });
         //   console.log("createClub data is")

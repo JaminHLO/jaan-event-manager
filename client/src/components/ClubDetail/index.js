@@ -5,6 +5,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_CLUB, QUERY_ME } from "../../utils/queries";
 import { ADD_EVENT } from "../../utils/mutations";
 import auth from "../../utils/auth";
+import JaanMap from "../JaanMap";
 
 const ClubDetail = () => {
 
@@ -29,6 +30,12 @@ const ClubDetail = () => {
     const { loading: meLoading, data: meData } = useQuery(QUERY_ME);
 
     const userData = meData?.me || {};
+
+    // if (clubData.geocode) {
+        console.log('cludData is', clubData);
+        const mapCenter = clubData.geocode//.json();
+        console.log(mapCenter);
+    // }
 
     useEffect(() => {
         if (userData._id === clubData.adminId) {
@@ -78,11 +85,12 @@ const ClubDetail = () => {
         <div>
             <h3>{clubData.title}</h3>
             <p>{clubData.description}</p>
+            <JaanMap center={mapCenter} />
             {auth.loggedIn() && isAdmin ? (
                 <button
                     onClick={() => { setShowModal(true) }}
                 >Create an event</button>
-            ) : null}
+             ) : null}
 
             {showModal &&
                 <div>

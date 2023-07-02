@@ -60,6 +60,9 @@ const clubSchema = new Schema({
   isAvailable: {
     type: Boolean,
     default: true
+  },
+  geocode: {
+    type: String,
   }
 });
 
