@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_CLUBS, QUERY_ME, QUERY_CATEGORIES } from "../../utils/queries";
-import auth from "../../utils/auth";
+import { QUERY_CLUBS, QUERY_ME, QUERY_CATEGORIES } from "../utils/queries";
+import auth from "../utils/auth";
+import ClubByCategory from '../components/ClubByCategory'
 
 const Clubs = () => {
     const [categoryId, setCategoryId] = useState('')
@@ -19,15 +20,8 @@ const Clubs = () => {
         console.log('categoryId', id)
         setCategoryId(id)
     };
-    console.log('category clicked', categoryId)
 
-    const { loading: loadingClubs, data: dataClubs } = useQuery(QUERY_CLUBS, {
-        variables: { category: categoryId }
-    });
-    const clubsData = dataClubs?.club || {};
-    console.log(clubsData)
-    
-    if (loading || meLoading || loadingClubs) {
+    if (loading || meLoading) {
         return <div>Loading...</div>
     }
 
@@ -51,7 +45,7 @@ const Clubs = () => {
                 </button>
             )
             )}
-
+            < ClubByCategory categoryId={categoryId}/>
         </div>
     )
 }
