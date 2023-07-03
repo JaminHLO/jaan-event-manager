@@ -1,7 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Club, Event, Category, Order } = require('../models');
 const { signToken } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const stripe = require('stripe')('sk_test_51NNi4mBTDevFCiGQDfSeVUSvfxZMJcfmiFWDqydSc1tsNQboBAHhqVqWAbZdvUucicOYARzKtjplgKatONL4hxpf00AEUi6nB1');
 
 const resolvers = {
   Query: {
@@ -67,7 +67,7 @@ const resolvers = {
 
       for (let i = 0; i < clubs.length; i++) {
         const club = await stripe.clubs.create({
-          name: clubs[i].name,
+          title: clubs[i].title,
           description: clubs[i].description,
           images: [`${url}/images/${clubs[i].image}`]
         });
