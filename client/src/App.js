@@ -25,9 +25,7 @@ import UpdateProfile from './components/UpdateProfile';
 import CreateClub from './components/CreateClub';
 import ClubDetail from './components/ClubDetail';
 import EventDetail from './components/EventDetail';
-import Clubs from './components/Clubs';
-
-
+import Clubs from './pages/Clubs';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3001/graphql',
