@@ -85,7 +85,7 @@ const ClubDetail = () => {
         <div>
             <h3>{clubData.title}</h3>
             <p>{clubData.description}</p>
-            <JaanMap center={mapCenter} />
+            {/* <JaanMap center={mapCenter} /> */}
             {auth.loggedIn() && isAdmin ? (
                 <button
                     onClick={() => { setShowModal(true) }}

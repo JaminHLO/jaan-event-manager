@@ -17,18 +17,31 @@ import { GoogleMap, useJsApiLoader, Marker} from "@react-google-maps/api"; //
 
 
 export default function JaanMap(args) {
-    // hardcoded overwrite for test purposes
-    console.log('center is', args.center)
-    const center = JSON.parse(args.center);
+
+    const latLngArray = args.latLngArray;
+    console.log('latLngArray is', latLngArray)
+    // const center = JSON.parse(args?.center);
     
+
+    // let positions = [];
+    // if (args?.positions){
+    //     positions = args.positions;
+    //     console.log("marker positions:", positions);
+    // }
+
+    // hardcoded positions for testing
+    // positions = [
+    //     {
+    //         lat: 33.8722,
+    //         lng: -84.4902
+    //     }
+    // ]
+
+    // hardcoded for testing
     // const center = { 
     //     lat: 33.7722,
     //     lng: -84.3902
     // };
-
-    // const address = "1837 Glendmere Drive, Birmingham, AL 35223";
-    // geoCode = geocode(address)
-    // console.log("geoCode in EventMap is", geoCode)
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -38,13 +51,23 @@ export default function JaanMap(args) {
     //process.env.REACT_APP_GOOGLE_MAPS_API_KEY // not secure
 
     const zoom = 10;
-
     const [map, setMap] = useState(null);
 
-    const onLoad =  (map) => {
-        // const bounds = new window.google.maps.LatLngBounds(center);
-        // map.fitBounds(bounds);
-        map.setZoom(zoom);
+    const onLoad = (map) => {
+        // if (args) { // should be 1
+            const bounds = new window.google.maps.LatLngBounds(); // center
+            latLngArray.map((location) => bounds.extend(location));
+            // bounds.extend(center); // getPosition()
+            // bounds.extend(positions[0])
+            map.fitBounds(bounds);
+        // } 
+        // else {
+        //     map.setZoom(zoom);
+        // }
+        if(map.getZoom() > 10){
+            map.setZoom(10);
+        }
+        // map.setZoom(map.getZoom()-2);
         setMap(map);
     }
 
@@ -56,11 +79,26 @@ export default function JaanMap(args) {
         isLoaded ? (
             <GoogleMap
                 mapContainerStyle={containerStyle}
-                center={center}
-                zoom={zoom}
+                center={latLngArray[0]}
                 onLoad={onLoad}
                 onUnmount={onUnmount}
-            ></GoogleMap>)
+            >
+                <Marker 
+                    icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
+                    position={latLngArray[0]}
+
+                />
+                {latLngArray.slice(1).map((item, index) => {
+                    return (
+                        <Marker 
+                            key={index}
+                            label={(index+1).toString()}
+                            position={item}
+                        />
+                    )
+                })}
+                
+            </GoogleMap>)
             : <> </>
     )
 
