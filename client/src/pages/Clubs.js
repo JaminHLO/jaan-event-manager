@@ -4,9 +4,11 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_CLUBS, QUERY_ME, QUERY_CATEGORIES } from "../utils/queries";
 import auth from "../utils/auth";
 import ClubByCategory from '../components/ClubByCategory'
+import ClubList from "../components/ClubList";
 
 const Clubs = () => {
     const [categoryId, setCategoryId] = useState('')
+    const [updateClubs, setUpdateClubs] = useState('')
 
     const { loading, data } = useQuery(QUERY_CATEGORIES);
     const categoryData = data?.categories || {}
@@ -16,9 +18,22 @@ const Clubs = () => {
     const userData = meData?.me || {};
     console.log(userData)
 
+    const { loading: clubLoading, data: clubData } = useQuery(QUERY_CLUBS);
+    const clubs = clubData?.clubs || {};
+    console.log(clubs)
+
     const handleClick = (id) => {
         console.log('categoryId', id)
         setCategoryId(id)
+
+        const filteredClubs = []
+        for(let i=0; i<clubs.length; i++) {
+            if ((clubs[i].category?._id) === id) {
+                filteredClubs.push(clubs[i])
+            }
+        }
+        setUpdateClubs(filteredClubs)
+        console.log('filtered', filteredClubs)
     };
 
     if (loading || meLoading) {
@@ -45,7 +60,9 @@ const Clubs = () => {
                 </button>
             )
             )}
-            < ClubByCategory categoryId={categoryId}/>
+            {/* Use Club By Category if can filter from backend */}
+            {/* < ClubByCategory categoryId={categoryId}/> */}
+            <ClubList clubs={updateClubs} />)
         </div>
     )
 }

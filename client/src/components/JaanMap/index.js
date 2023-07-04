@@ -21,6 +21,7 @@ export default function JaanMap(args) {
     const latLngArray = args.latLngArray;
     console.log('latLngArray is', latLngArray)
     // const center = JSON.parse(args?.center);
+
     
 
     // let positions = [];

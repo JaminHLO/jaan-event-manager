@@ -9,17 +9,17 @@ function Success() {
 
   useEffect(() => {
     async function saveOrder() {
-      const cart = await idbPromise('cart', 'get');
-      const products = cart.map((item) => item._id);
+      const clubs = await idbPromise('clubs', 'get');
+      // const products = cart.map((item) => item._id);
 
-      if (products.length) {
-        const { data } = await addOrder({ variables: { products } });
-        const productData = data.addOrder.products;
+      // if (products.length) {
+        const { data } = await addOrder({ variables: { clubs } });
+        const clubData = data.addOrder.clubs;
 
-        productData.forEach((item) => {
-          idbPromise('cart', 'delete', item);
+        clubData.forEach((club) => {
+          idbPromise('cart', 'delete', club);
         });
-      }
+      // }
 
       setTimeout(() => {
         window.location.assign('/');
@@ -34,6 +34,7 @@ function Success() {
       <Jumbotron>
         <h1>Success!</h1>
         <h2>Thank you for your purchase!</h2>
+        <h2>Welcome to the club!</h2>
         <h2>You will now be redirected to the home page</h2>
       </Jumbotron>
     </div>

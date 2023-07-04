@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from "react";
 
 import { Link, useParams } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_CLUB, QUERY_ME } from "../../utils/queries";
+import { loadStripe } from "@stripe/stripe-js";
+import { useQuery, useMutation, useLazyQuery } from "@apollo/client";
+import { QUERY_CLUB, QUERY_ME, QUERY_CHECKOUT } from "../../utils/queries";
 import { ADD_EVENT } from "../../utils/mutations";
+import Cart from "../Cart";
 import auth from "../../utils/auth";
 import JaanMap from "../JaanMap";
+import { idbPromise } from "../../utils/helpers";
+
+const stripePromise = loadStripe('pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
 
 const ClubDetail = () => {
 
     const [showModal, setShowModal] = useState(false);
     const [isAdmin, setIsAdmin] = useState();
+    const [isMember, setIsMember] = useState();
     const [addEvent, { error }] = useMutation(ADD_EVENT);
+    const [getCheckout, { data: checkoutData }] = useLazyQuery(QUERY_CHECKOUT);
     const [eventFormState, setEventFormState] = useState(
         {
             title: "",
@@ -19,6 +26,7 @@ const ClubDetail = () => {
             dateTime: "",
             description: "",
         })
+
 
     const { id: clubIdParam } = useParams();
     const { loading, data } = useQuery(QUERY_CLUB, {
@@ -32,10 +40,19 @@ const ClubDetail = () => {
     const userData = meData?.me || {};
 
     // if (clubData.geocode) {
-        console.log('cludData is', clubData);
-        const mapCenter = clubData.geocode//.json();
-        console.log(mapCenter);
+    // console.log('cludData is', clubData);
+    const mapCenter = clubData.geocode//.json();
+    // console.log(mapCenter);
     // }
+    console.log(checkoutData)
+    useEffect(() => {
+        if (checkoutData) {
+            stripePromise.then((res) => {
+                res.redirectToCheckout({ sessionId: checkoutData.checkout.session })
+                // window.location.href = checkoutData.checkout.url ;
+            })
+        }
+    }, [checkoutData]);
 
     useEffect(() => {
         if (userData._id === clubData.adminId) {
@@ -64,10 +81,10 @@ const ClubDetail = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log("click")
+        // console.log("click")
         try {
             const { data } = await addEvent({
-                variables:{
+                variables: {
                     event: eventFormState,
                     clubId: clubIdParam,
                 }
@@ -79,18 +96,33 @@ const ClubDetail = () => {
         }
     };
 
-
+    function submitCheckout() {
+        console.log("clicked on purchase")
+        const clubIds = [clubData._id];
+        console.log("checkout", clubIds)
+        getCheckout({
+            variables: { clubs: clubIds }
+        });
+        idbPromise("clubs", "put", clubData);
+        console.log(checkoutData);
+    }
 
     return (
         <div>
             <h3>{clubData.title}</h3>
-            <p>{clubData.description}</p>
+
+            <p>About: {clubData.description}</p>
+            <p>Membership Price: ${clubData.price}</p>
+            <p>Spot Available: {clubData.spotsAvailable}</p>
+            <button onClick={submitCheckout}>Purchase membership</button>
             {/* <JaanMap center={mapCenter} /> */}
+            {/* <Cart /> */}
+
             {auth.loggedIn() && isAdmin ? (
                 <button
                     onClick={() => { setShowModal(true) }}
                 >Create an event</button>
-             ) : null}
+            ) : null}
 
             {showModal &&
                 <div>
