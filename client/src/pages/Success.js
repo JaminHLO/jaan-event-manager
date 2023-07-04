@@ -1,26 +1,39 @@
 import React, { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import Jumbotron from '../components/Jumbotron';
-import { ADD_ORDER } from '../utils/mutations';
+import { ADD_ORDER, JOIN_CLUB } from '../utils/mutations';
 import { idbPromise } from '../utils/helpers';
 
 function Success() {
   const [addOrder] = useMutation(ADD_ORDER);
+  const [joinClub] = useMutation(JOIN_CLUB);
 
   useEffect(() => {
     async function saveOrder() {
-      const clubs = await idbPromise('clubs', 'get');
-      // const products = cart.map((item) => item._id);
+      const clubsData = await idbPromise('clubs', 'get');
+      const clubs = clubsData.map((club) => club._id);
+      console.log(clubs)
 
-      // if (products.length) {
-        const { data } = await addOrder({ variables: { clubs } });
-        const clubData = data.addOrder.clubs;
 
-        clubData.forEach((club) => {
-          idbPromise('cart', 'delete', club);
+      try {
+        const { data: orderData } = await addOrder({
+          variables: { clubs }
         });
-      // }
-
+        const { data: joinData } = await clubs.map((clubId) => {
+          console.log(clubId)
+          joinClub({
+            variables: { clubId }
+          })
+        })
+        console.log(orderData)
+        const checkoutClubsData = orderData.addOrder.clubs
+        checkoutClubsData.forEach((club) => {
+          idbPromise("clubs", "delete", club)
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    
       setTimeout(() => {
         window.location.assign('/');
       }, 3000);

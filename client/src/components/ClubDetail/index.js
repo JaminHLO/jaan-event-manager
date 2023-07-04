@@ -11,7 +11,8 @@ import JaanMap from "../JaanMap";
 import { idbPromise } from "../../utils/helpers";
 import EventDetailModal from "../EventDetailModal";
 
-const stripePromise = loadStripe('pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
+const stripePromise = loadStripe(
+    'pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
 
 const ClubDetail = () => {
     const [showEventModal, setShowEventModal] = useState(false)
@@ -47,21 +48,16 @@ const ClubDetail = () => {
 
     const userData = meData?.me || {};
 
-
-
     console.log('userData is', userData)
     console.log('clubData is', clubData);
     // const mapCenter = clubData.geocode//.json();
     const latLngArray = [];
     if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
     if (clubData?.geocode) latLngArray.push(JSON.parse(clubData.geocode));
-
-    console.log(checkoutData)
     useEffect(() => {
         if (checkoutData) {
             stripePromise.then((res) => {
                 res.redirectToCheckout({ sessionId: checkoutData.checkout.session })
-                // window.location.href = checkoutData.checkout.url ;
             })
         }
     }, [checkoutData]);
@@ -72,7 +68,7 @@ const ClubDetail = () => {
         } else {
             setIsAdmin(false);
         }
-    })
+    }, [userData._id, clubData.adminId])
 
     if (loading || meLoading) {
         return <div>Loading...</div>
@@ -93,7 +89,6 @@ const ClubDetail = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        // console.log("click")
         try {
             const { data } = await addEvent({
                 variables: {
@@ -109,14 +104,12 @@ const ClubDetail = () => {
     };
 
     function submitCheckout() {
-        console.log("clicked on purchase")
+        console.log("clicked")
         const clubIds = [clubData._id];
-        console.log("checkout", clubIds)
         getCheckout({
             variables: { clubs: clubIds }
         });
         idbPromise("clubs", "put", clubData);
-        console.log(checkoutData);
     }
 
     return (

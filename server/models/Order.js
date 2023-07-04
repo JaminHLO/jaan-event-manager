@@ -7,12 +7,10 @@ const orderSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  clubs: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Club'
-    }
-  ]
+  clubs: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Club'
+  }]
 });
 
 const Order = mongoose.model('Order', orderSchema);

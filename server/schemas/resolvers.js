@@ -82,7 +82,6 @@ const resolvers = {
           quantity: 1
         });
       }
-      // console.log("line 88", line_items)
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items,
@@ -90,8 +89,7 @@ const resolvers = {
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`
       });
-      // console.log(session)
-      return { session: session.id, url: session.url };
+      return { session: session.id };
     },
     // Update args
     myEvents: async (parent, args, context) => {
@@ -113,10 +111,8 @@ const resolvers = {
       return { token, user };
     },
     addOrder: async (parent, { clubs }, context) => {
-      console.log(context);
       if (context.user) {
         const order = new Order({ clubs });
-
         await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
 
         return order;
