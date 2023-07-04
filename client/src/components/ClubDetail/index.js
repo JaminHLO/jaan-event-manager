@@ -110,11 +110,12 @@ const ClubDetail = () => {
     return (
         <div>
             <h3>{clubData.title}</h3>
+
             <p>About: {clubData.description}</p>
             <p>Membership Price: ${clubData.price}</p>
             <p>Spot Available: {clubData.spotsAvailable}</p>
             <button onClick={submitCheckout}>Purchase membership</button>
-            <JaanMap center={mapCenter} />
+            {/* <JaanMap center={mapCenter} /> */}
             {/* <Cart /> */}
 
             {auth.loggedIn() && isAdmin ? (
