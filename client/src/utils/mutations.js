@@ -20,7 +20,6 @@ export const ADD_ORDER = gql`
         title
         description
         price
-        quantity
         category {
           name
         }

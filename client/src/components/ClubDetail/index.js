@@ -10,7 +10,8 @@ import auth from "../../utils/auth";
 import JaanMap from "../JaanMap";
 import { idbPromise } from "../../utils/helpers";
 
-const stripePromise = loadStripe('pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
+const stripePromise = loadStripe(
+    'pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
 
 const ClubDetail = () => {
 
@@ -44,12 +45,10 @@ const ClubDetail = () => {
     const mapCenter = clubData.geocode//.json();
     // console.log(mapCenter);
     // }
-    console.log(checkoutData)
     useEffect(() => {
         if (checkoutData) {
             stripePromise.then((res) => {
                 res.redirectToCheckout({ sessionId: checkoutData.checkout.session })
-                // window.location.href = checkoutData.checkout.url ;
             })
         }
     }, [checkoutData]);
@@ -60,7 +59,7 @@ const ClubDetail = () => {
         } else {
             setIsAdmin(false);
         }
-    })
+    }, [userData._id, clubData.adminId])
 
     if (loading || meLoading) {
         return <div>Loading...</div>
@@ -81,7 +80,6 @@ const ClubDetail = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        // console.log("click")
         try {
             const { data } = await addEvent({
                 variables: {
@@ -97,14 +95,12 @@ const ClubDetail = () => {
     };
 
     function submitCheckout() {
-        console.log("clicked on purchase")
+        console.log("clicked")
         const clubIds = [clubData._id];
-        console.log("checkout", clubIds)
         getCheckout({
             variables: { clubs: clubIds }
         });
         idbPromise("clubs", "put", clubData);
-        console.log(checkoutData);
     }
 
     return (
