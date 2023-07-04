@@ -124,7 +124,7 @@ const resolvers = {
 
       throw new AuthenticationError('Not logged in');
     },
-    updateUser: async (parent, { user }, context) => {
+    updateUser: async (parent, user, context) => { // was { users}
       if (context.user) {
         return await User.findByIdAndUpdate(
           context.user._id,

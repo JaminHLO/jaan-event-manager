@@ -13,6 +13,7 @@ query getClubs($category: ID) {
       image
       address
       isAvailable
+      geocode
     }
     title
     description
@@ -72,6 +73,7 @@ query Query {
       description
       location
       dateTime
+      geocode
     }
     participants
     image
@@ -89,6 +91,7 @@ query Query {
       messages
       price
       spotsAvailable
+      geocode
     }
   }
 }`

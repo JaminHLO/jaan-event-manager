@@ -4,6 +4,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
+import { getGeocode } from '../../utils/helpers';
 
 const UpdateProfile = (props) => {
   const { loading, data } = useQuery(QUERY_ME)
@@ -13,7 +14,7 @@ const UpdateProfile = (props) => {
   const userData = data?.me || {}
   const participants = userData.participants
   // Populate form with current user data
-  const [formState, setFormState] = useState({ name: `${userData?.name}`, image: ``, address: `${userData?.address}`, participants: `${userData?.participants}`, image: `${userData?.image}` });
+  const [formState, setFormState] = useState({ name: `${userData?.name}`, image: ``, address: `${userData?.address}`, participants: `${userData?.participants}`, image: `${userData?.image}`, geocode: `${getGeocode(userData?.address)}` });
   const [newParticipant, setNewParticipant] = useState({ newParticipantName: '' })
 
   const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -41,9 +42,22 @@ const UpdateProfile = (props) => {
     event.preventDefault();
 
     try {
-      const { data } = await updateUser({
+      let geoJSONString = ""
+      if (formState.address) {
+        const addressString = formState.address.toString()
+        const googleGeocode = await getGeocode(addressString);
+        geoJSONString = JSON.stringify(googleGeocode);
+        setFormState({...formState, geocode: geoJSONString});
+        console.log('geocode is:', formState.geocode);
+      }
+
+      await updateUser({
         variables: {
-          user: { ...formState }
+          // user: { ...formState }
+          name: formState.name,
+          image: formState.image,
+          address: formState.address,
+          geocode: formState.geocode
         },
       });
     } catch (error) {

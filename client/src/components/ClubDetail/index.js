@@ -39,11 +39,45 @@ const ClubDetail = () => {
 
     const userData = meData?.me || {};
 
+    console.log("userData.myClubs.geocode is:", userData.myClubs);
+    
+    let latLngArray = [];
+    let meCenter = false;
+    console.log('userData is', userData);
+    if (meData?.geocode) {
+        meCenter = JSON.parse(userData.geocode); // const
+        console.log(meCenter);
+        latLngArray.push(meCenter);
+    }
+    // temp hardcoded userData since address and geocode arent populating in user
+    meCenter = {
+        lat: 33.7722,
+        lng: -84.3902
+    };
+    latLngArray.push(meCenter);
+    //
+    console.log('clubData is', clubData);
+    if (clubData?.geocode) {
+        const clubCenter = JSON.parse(clubData.geocode);
+        console.log(clubCenter);
+        latLngArray.push(clubCenter);
+    }
+
+
+    // userData.myClubs.map((club) => latLngArray.push(club.geocode));
+    
+    // latLngArray.push(clubData.geocode);
+    // console.log("latLngArray is", latLngArray);
+
     // if (clubData.geocode) {
     // console.log('cludData is', clubData);
     const mapCenter = clubData.geocode//.json();
     // console.log(mapCenter);
     // }
+
+
+
+
     console.log(checkoutData)
     useEffect(() => {
         if (checkoutData) {
@@ -115,7 +149,7 @@ const ClubDetail = () => {
             <p>Membership Price: ${clubData.price}</p>
             <p>Spot Available: {clubData.spotsAvailable}</p>
             <button onClick={submitCheckout}>Purchase membership</button>
-            {/* <JaanMap center={mapCenter} /> */}
+            <JaanMap latLngArray={latLngArray} />
             {/* <Cart /> */}
 
             {auth.loggedIn() && isAdmin ? (

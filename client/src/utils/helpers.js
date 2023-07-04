@@ -33,6 +33,9 @@ export async function getGeocode(address) {
 
   const APIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
+  if (!address) {
+    return '';
+  }
   const geoArray = address.toString().trim().split(' ');
   const geoString = geoArray.join("+");
   console.log("geoString is:", geoString);

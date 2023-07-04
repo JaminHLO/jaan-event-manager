@@ -3,16 +3,16 @@ import { Link } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { CREATE_CLUB, UPDATE_USER } from '../../utils/mutations';
-import { QUERY_ME } from '../../utils/queries';
+// import { QUERY_ME } from '../../utils/queries';
 import { getGeocode } from '../../utils/helpers';
 
 
 const CreateClub = (props) => {
-    const { loading, data } = useQuery(QUERY_ME)
+    // const { loading, data } = useQuery(QUERY_ME)
     const [createClub, { error }] = useMutation(CREATE_CLUB);
     const [updateUser, { error2 }] = useMutation(UPDATE_USER);
 
-    const userData = data?.me || {}
+    // const userData = data?.me || {}
     // console.log(userData)
 
 
