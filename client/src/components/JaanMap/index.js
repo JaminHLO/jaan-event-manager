@@ -1,48 +1,24 @@
 import {useCallback, useState} from "react"; //
 import { GoogleMap, useJsApiLoader, Marker} from "@react-google-maps/api"; //
 
-// import fetch from "node-fetch"; // npm i node-fetch
+const options = {
+    disableDefaultUI: true
+};
 
-
- const containerStyle = {
+const containerStyle = {
     width: '300px',
     height: '300px'
- };
-
-//  const center = {
-//     lat: 33.7722,
-//     lng: -84.3902
-//  };
-
-
+};
 
 export default function JaanMap(args) {
 
-    const latLngArray = args.latLngArray;
-    console.log('latLngArray is', latLngArray)
-    // const center = JSON.parse(args?.center);
 
-    
-
-    // let positions = [];
-    // if (args?.positions){
-    //     positions = args.positions;
-    //     console.log("marker positions:", positions);
-    // }
-
-    // hardcoded positions for testing
-    // positions = [
-    //     {
-    //         lat: 33.8722,
-    //         lng: -84.4902
-    //     }
-    // ]
-
-    // hardcoded for testing
-    // const center = { 
-    //     lat: 33.7722,
-    //     lng: -84.3902
-    // };
+    let latLngArray = [];
+    if (args?.latLngArray) {
+        latLngArray = args.latLngArray;
+        console.log('latLngArray is', latLngArray)
+        // const center = JSON.parse(args?.center);
+    }
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -60,6 +36,7 @@ export default function JaanMap(args) {
             latLngArray.map((location) => bounds.extend(location));
             // bounds.extend(center); // getPosition()
             // bounds.extend(positions[0])
+            console.log("map is", map);
             map.fitBounds(bounds);
         // } 
         // else {
@@ -76,18 +53,23 @@ export default function JaanMap(args) {
         setMap(null);
     }, []);
 
+    // const onClick = (event) => {
+    //     console.log('clicked:', event);
+    // }
+
     return (
         isLoaded ? (
             <GoogleMap
                 mapContainerStyle={containerStyle}
+                options={options}
                 center={latLngArray[0]}
                 onLoad={onLoad}
                 onUnmount={onUnmount}
             >
                 <Marker 
-                    icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
+                    icon={'/images/blue-dot.png'}
                     position={latLngArray[0]}
-
+                    // icon={'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'}
                 />
                 {latLngArray.slice(1).map((item, index) => {
                     return (
@@ -95,6 +77,7 @@ export default function JaanMap(args) {
                             key={index}
                             label={(index+1).toString()}
                             position={item}
+                            // onClick={onClick}
                         />
                     )
                 })}

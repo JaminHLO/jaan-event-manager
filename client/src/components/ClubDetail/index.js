@@ -47,11 +47,15 @@ const ClubDetail = () => {
 
     const userData = meData?.me || {};
 
-    // if (clubData.geocode) {
-    // console.log('cludData is', clubData);
-    const mapCenter = clubData.geocode//.json();
-    // console.log(mapCenter);
-    // }
+
+
+    console.log('userData is', userData)
+    console.log('clubData is', clubData);
+    // const mapCenter = clubData.geocode//.json();
+    const latLngArray = [];
+    if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
+    if (clubData?.geocode) latLngArray.push(JSON.parse(clubData.geocode));
+
     console.log(checkoutData)
     useEffect(() => {
         if (checkoutData) {
@@ -124,7 +128,7 @@ const ClubDetail = () => {
             <p>Spot Available: {clubData.spotsAvailable}</p>
             <button onClick={submitCheckout}>Purchase membership</button>
 
-            {/* <JaanMap center={mapCenter} /> */}
+            <JaanMap latLngArray={latLngArray} />
             <h2>See the list of events</h2>
                 {clubData.events.length !== 0 ? (
                 clubEvents.map((singleEvent) => (
@@ -139,8 +143,6 @@ const ClubDetail = () => {
                 )
                 }
             <EventDetailModal showEventModal={showEventModal} singleEventData={modalEventData} setShowEventModal={setShowEventModal} />
-
-            
 
             {/* <Cart /> */}
 

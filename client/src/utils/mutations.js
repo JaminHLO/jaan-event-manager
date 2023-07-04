@@ -49,6 +49,7 @@ mutation updateUser($user: UserInput) {
     participants
     image
     address
+    geocode
   }
 }`;
 
