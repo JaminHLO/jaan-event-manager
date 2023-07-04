@@ -24,6 +24,9 @@ query getClubs($category: ID) {
     price
     spotsAvailable
     geocode
+    category {
+      _id
+    }
   }
 }
 `;
