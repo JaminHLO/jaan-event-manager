@@ -33,15 +33,17 @@ export async function getGeocode(address) {
 
   const APIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
+  if (!address) return null;
+
   const geoArray = address.toString().trim().split(' ');
   const geoString = geoArray.join("+");
   console.log("geoString is:", geoString);
   try {
     // console.log(`About to fetch: https://maps.googleapis.com/maps/api/geocode/json?address=${geoString}&key=${APIKey}`)
     const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${geoString}&key=${APIKey}`);
-    const jsonData = await response.json();
-    const geoCode = jsonData.results[0].geometry.location;
-    // console.log("geoCode in getGeoCode2 is:", geoCode)
+    // console.log("response is", response);
+    const jsonData =  await response.json();
+    const geoCode = JSON.stringify(jsonData.results[0].geometry.location);
     return geoCode;
   } catch(err) {
     // throw new Error (err)

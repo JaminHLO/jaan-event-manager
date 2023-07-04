@@ -10,7 +10,7 @@ import { getGeocode } from '../../utils/helpers';
 const CreateClub = (props) => {
     const { loading, data } = useQuery(QUERY_ME)
     const [createClub, { error }] = useMutation(CREATE_CLUB);
-    const [updateUser, { error2 }] = useMutation(UPDATE_USER);
+    // const [updateUser, { error2 }] = useMutation(UPDATE_USER);
 
     const userData = data?.me || {}
     // console.log(userData)
@@ -71,17 +71,12 @@ const CreateClub = (props) => {
         try {
             if (club.zipCode) {
                 const zipCodeString = club.zipCode.toString()
-                const googleGeocode = await getGeocode(zipCodeString);
+                 geoJSONString = await getGeocode(zipCodeString);
                 // .then((googleGeocode) => {
                 // console.log("googleGeocode is:", googleGeocode);
-                geoJSONString = JSON.stringify(googleGeocode);
+                // geoJSONString = JSON.stringify(googleGeocode);
                 // console.log("geoJSONString is:", geoJSONString);
 
-                // setClub((club) => ({
-                //     ...club, 
-                //     geocode: geoJSONString
-                // }));
-                // });
             }
             // console.log("club is", club);
             //   const { data } = 
