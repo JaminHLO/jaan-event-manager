@@ -24,7 +24,6 @@ import OrderHistory from './pages/OrderHistory';
 import UpdateProfile from './components/UpdateProfile';
 import CreateClub from './components/CreateClub';
 import ClubDetail from './components/ClubDetail';
-// import EventDetail from './components/EventDetail';
 import Clubs from './pages/Clubs';
 
 const httpLink = createHttpLink({
@@ -98,10 +97,6 @@ function App() {
                 path="/clubs/club/:id"
                 element={<ClubDetail />}
               />
-              {/* <Route
-                path="/events/event/:id"
-                element={<EventDetail />}
-              /> */}
               <Route
                 path="*"
                 element={<NoMatch />}
