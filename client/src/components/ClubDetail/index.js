@@ -9,10 +9,16 @@ import Cart from "../Cart";
 import auth from "../../utils/auth";
 import JaanMap from "../JaanMap";
 import { idbPromise } from "../../utils/helpers";
+import EventDetailModal from "../EventDetailModal";
 
 const stripePromise = loadStripe('pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
 
 const ClubDetail = () => {
+    const [showEventModal, setShowEventModal] = useState(false)
+    const openEventModal = () => {
+        setShowEventModal(showEventModal=>!showEventModal)
+    }
+    const [modalEventData, setModalEventData] = useState(null);
 
     const [showModal, setShowModal] = useState(false);
     const [isAdmin, setIsAdmin] = useState();
@@ -34,6 +40,8 @@ const ClubDetail = () => {
     });
 
     const clubData = data?.club || {};
+    console.log(clubData)
+    const clubEvents = clubData.events
 
     const { loading: meLoading, data: meData } = useQuery(QUERY_ME);
 
@@ -119,7 +127,23 @@ const ClubDetail = () => {
             <p>Membership Price: ${clubData.price}</p>
             <p>Spot Available: {clubData.spotsAvailable}</p>
             <button onClick={submitCheckout}>Purchase membership</button>
+
             <JaanMap latLngArray={latLngArray} />
+            <h2>See the list of events</h2>
+                {clubData.events.length !== 0 ? (
+                clubEvents.map((singleEvent) => (
+                    <>
+                        <button key={singleEvent._id} className="block" onClick={()=> {
+                            openEventModal()
+                            setModalEventData(singleEvent._id)
+                        }}>{singleEvent.title}, {singleEvent._id}</button>
+                    </>
+                ))) : (
+                    <p>No events have been listed for this club</p>
+                )
+                }
+            <EventDetailModal showEventModal={showEventModal} singleEventData={modalEventData} setShowEventModal={setShowEventModal} />
+
             {/* <Cart /> */}
 
             {auth.loggedIn() && isAdmin ? (
