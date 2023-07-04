@@ -8,7 +8,6 @@ const ClubList = ({ clubs }) => {
 
   return (
     <div>
-      <h3>My Clubs</h3>
         {clubs &&
         clubs.map((club) => (
           <div key={club._id} className="max-w-sm rounded overflow-hidden shadow-lg">

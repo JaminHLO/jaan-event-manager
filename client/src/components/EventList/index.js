@@ -8,7 +8,7 @@ const EventList = ({ events }) => {
 
   return (
     <div>
-      <h3>My Events</h3>
+      {/* <h3>My Events</h3> */}
         {events &&
         events.map((singleEvent) => (
           <div key={singleEvent._id} className="max-w-sm rounded overflow-hidden shadow-lg">
