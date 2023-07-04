@@ -118,11 +118,13 @@ const ClubDetail = () => {
     return (
         <div>
             <h3>{clubData.title}</h3>
+
             <p>About: {clubData.description}</p>
             <p>Membership Price: ${clubData.price}</p>
             <p>Spot Available: {clubData.spotsAvailable}</p>
             <button onClick={submitCheckout}>Purchase membership</button>
-            <JaanMap center={mapCenter} />
+
+            {/* <JaanMap center={mapCenter} /> */}
             <h2>See the list of events</h2>
                 {clubData.events.length !== 0 ? (
                 clubEvents.map((singleEvent) => (
@@ -137,6 +139,8 @@ const ClubDetail = () => {
                 )
                 }
             <EventDetailModal showEventModal={showEventModal} singleEventData={modalEventData} setShowEventModal={setShowEventModal} />
+
+            
 
             {/* <Cart /> */}
 
