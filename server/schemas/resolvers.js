@@ -66,14 +66,13 @@ const resolvers = {
       const { clubs } = await order.populate('clubs');
 
       for (let i = 0; i < clubs.length; i++) {
-        const club = await stripe.clubs.create({
-          title: clubs[i].title,
+        const singleClub = await stripe.products.create({
+          name: clubs[i].title,
           description: clubs[i].description,
-          images: [`${url}/images/${clubs[i].image}`]
+          images: [`${url}/image/${clubs[i].image}`]
         });
-
         const price = await stripe.prices.create({
-          club: club.id,
+          product: singleClub.id,
           unit_amount: clubs[i].price * 100,
           currency: 'usd',
         });
@@ -83,7 +82,7 @@ const resolvers = {
           quantity: 1
         });
       }
-
+      // console.log("line 88", line_items)
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items,
@@ -91,8 +90,8 @@ const resolvers = {
         success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${url}/`
       });
-
-      return { session: session.id };
+      // console.log(session)
+      return { session: session.id, url: session.url };
     },
     // Update args
     myEvents: async (parent, args, context) => {

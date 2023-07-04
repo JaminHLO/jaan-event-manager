@@ -18,7 +18,7 @@ import { GoogleMap, useJsApiLoader, Marker} from "@react-google-maps/api"; //
 
 export default function JaanMap(args) {
     // hardcoded overwrite for test purposes
-    console.log('center is', args.center)
+    // console.log('center is', args.center)
     const center = JSON.parse(args.center);
     
     // const center = { 

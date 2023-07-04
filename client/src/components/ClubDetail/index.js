@@ -40,15 +40,16 @@ const ClubDetail = () => {
     const userData = meData?.me || {};
 
     // if (clubData.geocode) {
-    console.log('cludData is', clubData);
+    // console.log('cludData is', clubData);
     const mapCenter = clubData.geocode//.json();
-    console.log(mapCenter);
+    // console.log(mapCenter);
     // }
-
+    console.log(checkoutData)
     useEffect(() => {
         if (checkoutData) {
             stripePromise.then((res) => {
                 res.redirectToCheckout({ sessionId: checkoutData.checkout.session })
+                // window.location.href = checkoutData.checkout.url ;
             })
         }
     }, [checkoutData]);
@@ -80,7 +81,7 @@ const ClubDetail = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log("click")
+        // console.log("click")
         try {
             const { data } = await addEvent({
                 variables: {
@@ -96,11 +97,14 @@ const ClubDetail = () => {
     };
 
     function submitCheckout() {
+        console.log("clicked on purchase")
         const clubIds = [clubData._id];
+        console.log("checkout", clubIds)
         getCheckout({
-            variables: {clubs: clubIds}
+            variables: { clubs: clubIds }
         });
         idbPromise("clubs", "put", clubData);
+        console.log(checkoutData);
     }
 
     return (
