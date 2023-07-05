@@ -21,10 +21,10 @@ const resolvers = {
         };
       }
 
-      return await Club.find(params).populate('category');
+      return await Club.find(params).populate('category').populate('events');
     },
     club: async (parent, { _id }) => {
-      return await Club.findById(_id).populate('category');
+      return await Club.findById(_id).populate('category').populate('events');
     },
     user: async (parent, args, context) => {
       if (context.user) {

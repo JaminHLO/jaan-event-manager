@@ -89,6 +89,9 @@ query Query {
       messages
       price
       spotsAvailable
+      events {
+        _id
+      }
     }
   }
 }`

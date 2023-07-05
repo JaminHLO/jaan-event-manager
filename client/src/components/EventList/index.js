@@ -1,7 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import EventDetailModal from "../EventDetailModal";
 
 const EventList = ({ events }) => {
+  const [showEventModal, setShowEventModal] = useState(false)
+    const openEventModal = () => {
+        setShowEventModal(showEventModal=>!showEventModal)
+    }
+    const [modalEventData, setModalEventData] = useState(null);
+  
   if (!events?.length) {
     return <h3>No Upcoming Events</h3>;
   }
@@ -34,15 +40,17 @@ const EventList = ({ events }) => {
             </div>
             <div class="px-6 pt-4 pb-2">
                 <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                    <Link
-                    to={`/events/event/${singleEvent._id}`}
-                    >
-                    More...
-                    </Link>
+                <button key={singleEvent._id} className="block" onClick={()=> {
+                            openEventModal()
+                            setModalEventData(singleEvent._id)
+                            }}>More...
+                  </button>
                 </span>
           </div>
         </div>
         ))}
+        <EventDetailModal showEventModal={showEventModal} singleEventData={modalEventData} setShowEventModal={setShowEventModal} />
+
     </div>
   );
 };
