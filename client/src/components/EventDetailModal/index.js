@@ -4,7 +4,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_EVENT, QUERY_ME } from "../../utils/queries";
 import { JOIN_EVENT } from "../../utils/mutations";
 import Auth from "../../utils/auth";
-import Modal from 'react'
+// import Modal from 'react'
 
 const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) => {
     console.log('props', showEventModal, setShowEventModal, singleEventData)
@@ -18,6 +18,7 @@ const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) 
 
     const [joinEvent, { error }] = useMutation(JOIN_EVENT);
     const [signedUp, setSignedUp] = useState(false)
+    const [userInClub, setUserInClub] = useState(false)
 
     const eventId = singleEventData;
     console.log('event ID', singleEventData)
@@ -47,6 +48,24 @@ const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) 
         console.log(signedUp)
     })
     
+    let myClubsEvents = []
+    for (let i=0; i < userData.myClubs?.length; i++) {
+        for (let j=0; j < userData.myClubs[i].events?.length; j++) {
+            myClubsEvents.push(userData.myClubs[i].events[j]._id)
+        }
+    }
+    console.log('my clubs events:', myClubsEvents)
+
+    // Check if user belongs to the club of the event he wants to join
+    useEffect(() => {
+        if(myClubsEvents.includes(singleEventData)){
+            setUserInClub(true)
+        } else {
+            setUserInClub(false)
+        }
+        console.log(userInClub)
+    })
+
     if (loading || meLoading) {
         return <div>Loading...</div>
     }
@@ -67,8 +86,6 @@ const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) 
         console.log(data)
     };
     
-
-
     return (
         <>
         {showEventModal ? (
@@ -115,16 +132,20 @@ const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) 
                                 : <li>Not Available</li>}
                         </ul>
                         {token ? (
-                        signedUp ? (
-                            <p>You're already signed up for his event!</p>
-                            ) : (
-                        <button
-                            className="bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            type="button"
-                            onClick={() => { handleJoinEvent() }}
-                            >Join Event 
-                        </button>
-                        )
+                            userInClub ? (
+                                signedUp ? (
+                                    <p>You're already signed up for his event!</p>
+                                  ) : (
+                                    <button
+                                        className="bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        type="button"
+                                        onClick={() => { handleJoinEvent() }}
+                                        >Join Event 
+                                    </button>
+                                ) 
+                                ) : (
+                                    <p>Join the club to add this event</p>
+                                )
                         ) : 
                         <p>Log in to Join!</p>}
                         </div>

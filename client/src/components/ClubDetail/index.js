@@ -129,7 +129,7 @@ const ClubDetail = () => {
                         <button key={singleEvent._id} className="block" onClick={()=> {
                             openEventModal()
                             setModalEventData(singleEvent._id)
-                        }}>{singleEvent.title}, {singleEvent._id}</button>
+                        }}>{singleEvent.title}</button>
                     </>
                 ))) : (
                     <p>No events have been listed for this club</p>
