@@ -71,7 +71,7 @@ const CreateClub = (props) => {
         try {
             if (club.zipCode) {
                 const zipCodeString = club.zipCode.toString()
-                 geoJSONString = await getGeocode(zipCodeString);
+                geoJSONString = await getGeocode(zipCodeString);
                 // .then((googleGeocode) => {
                 // console.log("googleGeocode is:", googleGeocode);
                 // geoJSONString = JSON.stringify(googleGeocode);
@@ -102,9 +102,7 @@ const CreateClub = (props) => {
 
     return (
         <div className="profile my-1  flex justify-center items-center min-h-[90vh]">
-            <div className='bg-black opacity-50 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70'>
-
-
+            <div className='p-5 bg-black opacity-50 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70'>
                 <h2 className='text-white text-3xl m-3'>Create a Club</h2>
                 <form onSubmit={handleFormSubmit}>
                     <div className="flex-row space-between my-2">
@@ -182,7 +180,8 @@ const CreateClub = (props) => {
                             className='login-input rounded-2xl m-3 w-72'
                             placeholder="Zip Code"
                             name="zipCode"
-                            type="number"
+                            type="text"
+                            inputMode="numeric"
                             max="99999"
                             id="zipCode"
                             onChange={handleChange}

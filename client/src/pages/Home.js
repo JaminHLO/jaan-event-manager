@@ -8,11 +8,7 @@ import teamwork from "../images/teamwork.png";
 
 const Home = () => {
   return (
-    <div className="container">
-      {/* <CategoryMenu /> */}
-      {/* <ProductList /> */}
-      {/* <Cart />  */}
-
+    <div className="home">
       <div className="hero flex items-center pl-40">
         <div className="bg-slate-100 h-80 w-80 rounded-full flex justify-center items-center">
           <div className="flex flex-col text-center">
@@ -21,7 +17,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="mid-page bg-slate-100 w-screen flex flex-row">
+      <div className="mid-page bg-slate-100 flex flex-row">
         <div className="w-1/2 max-w-5xl flex flex-col items-center justify-center">
           <div className="flex justify-center m-8">
             <p className="w-1/2 text-3xl">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sollicitudin erat id eros fermentum, vel tincidunt felis vestibulum.</p>

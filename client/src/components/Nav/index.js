@@ -8,14 +8,9 @@ function Nav() {
   function showNavigation() {
     if (Auth.loggedIn()) {
       return (
-        <div className="flex flex-row justify-between p-4 bg-slate-950 w-screen">
+        <div className="flex flex-row justify-between p-4 bg-slate-950">
           <h1 className="text-2xl text-white p-3">Sports Connect</h1>
           <ul className=" flex flex-row">
-            {/* <li className="mx-1">
-            <Link to="/orderHistory">
-              Order History
-            </Link>
-          </li> */}
             <li className="text-white p-3">
               <a href="/profile">
                 Profile
@@ -32,7 +27,7 @@ function Nav() {
       );
     } else {
       return (
-        <div className="flex flex-row justify-between p-4 bg-slate-950 w-screen">
+        <div className="flex flex-row justify-between p-4 bg-slate-950">
           <h1 className="text-2xl text-white">Sports Connect</h1>
           <ul className="flex flex-row">
             <li className="mx-1">
@@ -57,13 +52,6 @@ function Nav() {
 
   return (
     <header className="flex-row">
-      {/* <h1>
-        <Link to="/">
-          <span role="img" aria-label="shopping bag">🛍️</span>
-          Sports Connect
-        </Link>
-      </h1> */}
-
       <nav>
         {showNavigation()}
       </nav>
