@@ -36,9 +36,9 @@ const Profile = () => {
     return (
         <div className='profile w-full h-full'>
             <div>
-                <h2 className="text-white col-span-9 h-[3.75rem] bg-dark text-light p-3 text-4xl flex flex-row justify-center">
+                <h2 className="profile-header text-white col-span-9 h-[3.75rem] bg-dark text-light p-6 text-4xl flex flex-row justify-center">
                     {/* Viewing {user ? `${user.name}'s` : 'your'} profile. */}
-                    Hello {`${user.name}`} <img className="h-16 ml-3" src={sportsIcon}></img>
+                    Hello {`${user.name}`}
                 </h2>
             </div>
 

@@ -10,13 +10,16 @@
 }
 
 /* home styles */
+.home {
+    overflow: hidden;
+}
+
 .hero {
     background-image: url('./images/hero-red.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     min-height: 60vh;
-    width: 100vw;
 }
 
 .mid-page {
@@ -40,8 +43,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    min-height: 100vh;
-    width: 100vw;
+    min-height: 92.5vh;
     margin: 0;
 }
 
@@ -60,11 +62,14 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    min-height: 100vh;
-    width: 100vw;
+    min-height: 91vh;
     margin: 0;
 }
 
 .club-event-profile {
     min-width: 60vw;
+}
+
+.profile-header {
+    font-family: 'Fasthand', cursive;
 }

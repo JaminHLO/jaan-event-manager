@@ -42,7 +42,7 @@ const UpdateProfile = (props) => {
     event.preventDefault();
 
     try {
-//////vv Jamin vv
+      //////vv Jamin vv
       const value = await getGeocode(formState.address);
       console.log("value is", value)
       // setTimeout(()=>{}, 5000);
@@ -51,7 +51,7 @@ const UpdateProfile = (props) => {
         geocode: value,
       });
       console.log('formState.geocode is', formState.geocode);
-////// ^^ Jamin ^^
+      ////// ^^ Jamin ^^
       const { data } = await updateUser({
         variables: {
           user: { ...formState }
@@ -81,7 +81,7 @@ const UpdateProfile = (props) => {
 
   return (
     <div className="profile my-1  flex justify-center items-center min-h-[90vh]">
-      <div className='bg-black opacity-50 w-1/2 h-96 rounded-2xl text-center transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70'>
+      <div className='p-5 bg-black opacity-50 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70'>
         <h2 className='text-white text-3xl text-center'>Update your Profile</h2>
         <form onSubmit={handleFormSubmit} encType='multipart/form-data'>
 
