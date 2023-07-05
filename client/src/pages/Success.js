@@ -12,20 +12,16 @@ function Success() {
     async function saveOrder() {
       const clubsData = await idbPromise('clubs', 'get');
       const clubs = clubsData.map((club) => club._id);
-      console.log(clubs)
-
 
       try {
         const { data: orderData } = await addOrder({
           variables: { clubs }
         });
         const { data: joinData } = await clubs.map((clubId) => {
-          console.log(clubId)
           joinClub({
             variables: { clubId }
           })
         })
-        console.log(orderData)
         const checkoutClubsData = orderData.addOrder.clubs
         checkoutClubsData.forEach((club) => {
           idbPromise("clubs", "delete", club)
@@ -40,7 +36,7 @@ function Success() {
     }
 
     saveOrder();
-  }, [addOrder]);
+  }, [addOrder, joinClub]);
 
   return (
     <div>
