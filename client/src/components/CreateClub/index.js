@@ -3,28 +3,52 @@ import { Link } from 'react-router-dom'
 import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { CREATE_CLUB, UPDATE_USER } from '../../utils/mutations';
-import { QUERY_ME } from '../../utils/queries';
+import { QUERY_ME, QUERY_CATEGORIES } from '../../utils/queries';
 import { getGeocode } from '../../utils/helpers';
 
 
 const CreateClub = (props) => {
     const { loading, data } = useQuery(QUERY_ME)
-    const [createClub, { error }] = useMutation(CREATE_CLUB);
+    const [createClub, { error }] = useMutation(CREATE_CLUB, {
+        refetchQueries : [
+          {
+            query: QUERY_ME
+          }
+        ]
+    });
     // const [updateUser, { error2 }] = useMutation(UPDATE_USER);
 
-    const userData = data?.me || {}
-    // console.log(userData)
+    const [success, setMessage] = React.useState(false);
 
+    const userData = data?.me || {}
+    console.log(userData)
+
+    const { loading: loadingCats, data: dataCat } = useQuery(QUERY_CATEGORIES);
+    const categoryData = dataCat?.categories || {}
+    console.log('categories', categoryData)
+
+    const [optionCat, setOptionCat] = useState("");
+    const handleCat = (e) => {
+      console.log(e.target.value);
+      setOptionCat(e.target.value);
+    };
 
     const [club, setClub] = useState({
         title: "",
         description: "",
-        category: "",
         maxMembers: 1,
         image: "",
         zipCode: 0,
         price: 0
     });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setClub({
+            ...club,
+            [name]: value,
+        })
+    }
 
     const token = Auth.loggedIn() ? Auth.getToken() : null;
     // console.log(token)
@@ -32,40 +56,13 @@ const CreateClub = (props) => {
         return false;
     }
 
-    const handleChange = (event) => {
-        let { name, value } = event.target;
-        console.log(`clicked name is: ${name}`)
-        switch (name) {
-            case 'title':
-            case 'description':
-            case 'image':
-                value = value.toString();
-                break;
-            case 'maxMembers':
-            case 'zipCode':
-                if (value !== '') {
-                    value = parseInt(value);
-                }
-                break;
-            case 'price':
-                if (value !== '') {
-                    value = parseFloat(value);
-                }
-                break;
-            default:
-                break;
-        }
-        setClub(club => ({
-            ...club,
-            [name]: value
-        }));
-    };
-
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         // console.log("inside handleFormSubmit")
         // console.log(club)
-
+        console.log("club is", club);
+        console.log("cat", optionCat)
+        console.log("adminId", userData._id)
         let geoJSONString = ""
 
         try {
@@ -78,32 +75,66 @@ const CreateClub = (props) => {
                 // console.log("geoJSONString is:", geoJSONString);
 
             }
-            // console.log("club is", club);
-            //   const { data } = 
+
+              const { data } = 
             await createClub({
                 variables: {
-                    title: club.title,
-                    description: club.description,
-                    maxMembers: club.maxMembers,
-                    image: club.image,
-                    price: club.price,
-                    // // category: club.category,
+                    adminId: userData._id.toString(),
+                    title: club.title.toString(),
+                    description: club.description.toString(),
+                    maxMembers: parseInt(club.maxMembers),
+                    image: club.image.toString(),
+                    price: parseFloat(club.price),
+                    category: optionCat,
                     geocode: geoJSONString,
-                    zipCode: club.zipCode,
+                    zipCode: parseInt(club.zipCode),
                 },
             });
-            //   console.log("createClub data is")
-            //   console.log(data)
-
+              console.log("createClub data is")
+              console.log(data)
+              setClub({        
+                title: "",
+                description: "",
+                maxMembers: 1,
+                image: "",
+                zipCode: 0,
+                price: 0
+            })
+            setOptionCat('')
+            if(data) {
+                setMessage(true)
+            }
         } catch (error) {
             console.error(error)
         }
     };
 
+    
+    if (loading || loadingCats) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className="profile my-1  flex justify-center items-center min-h-[90vh]">
             <div className='p-5 bg-black opacity-50 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70'>
                 <h2 className='text-white text-3xl m-3'>Create a Club</h2>
+                <h3
+                style={
+                    success
+                    ? {
+                        display: "block",
+                        backgroundColor: "#5ced73",
+                        textAlign: "center",
+                        fontWeight: "lighter",
+                        borderRadius: "5px",
+                        }
+                    : { display: "none" }
+                }
+                >
+                Successfully created Club!
+                <br></br>
+                <Link to="/profile" >← Back to Profile</Link>
+                </h3>  
                 <form onSubmit={handleFormSubmit}>
                     <div className="flex-row space-between my-2">
                         <label htmlFor="title" className='text-white'></label>
@@ -129,24 +160,20 @@ const CreateClub = (props) => {
                             value={club.description}
                         />
                     </div>
-                    {/* <div className="flex-row space-between my-2">
-            <label htmlFor="category">Category:</label>
-            <select id="category" name="category" type="category">
-                <option > --Please Select--</option>
-                <option value={club.category}>Soccer</option>
-                <option value={club.category}>Football</option>
-                <option value={club.category}>Basketball</option>
-                <option value={club.category}>Baseball</option>
-                <option value={club.category}>Gymnastics</option>
-                <option value={club.category}>Cardio</option>
-                <option value={club.category}>Yoga</option>
-                <option value={club.category}>Swimming</option>
-                <option value={club.category}>Weight Lifting</option>
-                <option value={club.category}>Tennis</option>
-                <option value={club.category}>Cycling</option>
-                <option value={club.category}>Martial Arts</option>
-            </select>
-            </div> */}
+                    <div className="flex-row space-between my-2">
+                        <label htmlFor="description" className='text-white'>Category</label>
+                        <select  className="flex-row space-between my-2"
+                            id="Category"
+                            onChange={handleCat}
+                            value={club.category}
+                        >
+                            {categoryData?.map((cat) => (
+                                <option className='rounded-2xl m-3 w-72' value={cat._id}
+                                    >{cat.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <div className="flex-row space-between my-2">
                         <label htmlFor="maxMembers" className='text-white'></label>
                         <input
@@ -156,7 +183,6 @@ const CreateClub = (props) => {
                             type="text"
                             id="maxMembers"
                             inputMode="numeric"
-                            // accept="image/*"
                             onChange={handleChange}
                             value={club.maxMembers}
                         />
@@ -165,11 +191,10 @@ const CreateClub = (props) => {
                         <label htmlFor="img" className='text-white'></label>
                         <input
                             className='login-input rounded-2xl m-3 w-72'
-                            placeholder="Image"
+                            placeholder="Image link"
                             name="image"
-                            // type="file"
+                            type="text"
                             id="image"
-                            // accept="image/*"
                             onChange={handleChange}
                             value={club.image}
                         />
@@ -206,8 +231,6 @@ const CreateClub = (props) => {
                             type="submit"
                         >Submit
                         </button>
-                        <br></br>
-                        <Link to="/profile" className='text-white'>← Back to Profile</Link>
                     </div>
                 </form>
             </div>
