@@ -5,33 +5,39 @@ export function pluralize(name, count) {
   return name + 's';
 }
 
-//initial approach works within EventMap
-// export function getGeocodeThen(address) {
+// jaanSearch - sorts array of clubs or events by distance from user
+// jaanArray - input array of objects with User first, followed by 
+// either Club or Event objects
+export async function jaanSearch(jaanArray) {
+  const APIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY;
+  
+  if (!jaanArray) return null;
 
-//   const APIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+  // const jaanArray = ''
 
-//   const geoArray = address.trim().split(' ');
-//   const geoString = geoArray.join("+");
-//   console.log("geoString is:", geoString);
-//   fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${geoString}&key=${APIKey}`)
-//   .then((response) => {
-//       return response.json();
-//   }).then(jsonData => {
-//       // return jsonData.results[0].geometry.location
-//     const geoCode = jsonData.results[0].geometry.location;
-//       console.log('geoCode is', geoCode);
-//       return geoCode;
+  const originGeocode = `33.8423839%2C-84.511287`; // %2C is comma
+  let destinationGeocodes = '33.7700012%2C-84.3811458'; // %7C is |
+  // jaanArray.slice(1).map((geoString) => {
+  //   const geo = JSON.parse(geoString);
+  //   destinationGeocodes += (geo.lat).toString();
+  //   destinationGeocodes += (geo.lng).toString();
+  //   return destinationGeocodes;
+  // });
 
-//   })
-//   .catch(err => {
-//       throw new Error(err);
-//   })
-// }
+  try {
+    const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originGeocode}&destinations=${destinationGeocodes}&units=imperial&key=${APIKey}`);
+    const jsonData = await response.json();
+    console.log('jaanSearch result is', jsonData);
+  } catch (err) {
+    // throw new Error (err)
+  }
+
+}
 
 // alternate cleaner approach
 export async function getGeocode(address) {
 
-  const APIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+  const APIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY;
 
   if (!address) return null;
 
