@@ -4,18 +4,17 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_EVENT, QUERY_ME } from "../../utils/queries";
 import { JOIN_EVENT } from "../../utils/mutations";
 import Auth from "../../utils/auth";
-// import Modal from 'react'
+import { saveEventIds, getSavedEventsIds } from "../../utils/localStorage";
 
 const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) => {
     console.log('props', showEventModal, setShowEventModal, singleEventData)
     const modalRef = useRef()
-    // const [showModal, setShowModal] = useState(props.show);
      const closeEventModal = e => {
         if(modalRef.current === e.target) {
             setShowEventModal(false)
         }
      }
-
+    const [savedEventIds, setSavedEventIds] = useState(getSavedEventsIds());
     const [joinEvent, { error }] = useMutation(JOIN_EVENT);
     const [signedUp, setSignedUp] = useState(false)
     const [userInClub, setUserInClub] = useState(false)
@@ -46,7 +45,7 @@ const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) 
             setSignedUp(false)
         }
         console.log(signedUp)
-    })
+    }, [eventId])
     
     let myClubsEvents = []
     for (let i=0; i < userData.myClubs?.length; i++) {
@@ -64,7 +63,11 @@ const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) 
             setUserInClub(false)
         }
         console.log(userInClub)
-    })
+    }, [myClubsEvents, singleEventData])
+
+    useEffect(() => {
+        return () => saveEventIds(savedEventIds);
+      });
 
     if (loading || meLoading) {
         return <div>Loading...</div>
@@ -78,8 +81,9 @@ const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) 
         console.log('clicked')
         try {
             const { data } = await joinEvent({
-                variables: { eventId: eventId }
+                variables: { eventId }
             })
+            setSavedEventIds([...savedEventIds, eventId]);
         } catch (error) {
             console.error(data)
         }
@@ -137,10 +141,13 @@ const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) 
                                     <p>You're already signed up for his event!</p>
                                   ) : (
                                     <button
+                                        disabled={savedEventIds?.some((savedEventId) => savedEventId === eventId)}
                                         className="bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
-                                        onClick={() => { handleJoinEvent() }}
-                                        >Join Event 
+                                        onClick={() => { handleJoinEvent() }}>
+                                        {savedEventIds?.some((savedEventId) => savedEventId === eventId)
+                                        ? 'You have joined this event!'
+                                        : 'Join event!'}     
                                     </button>
                                 ) 
                                 ) : (
