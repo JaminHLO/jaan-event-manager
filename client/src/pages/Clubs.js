@@ -27,7 +27,7 @@ const Clubs = () => {
         setCategoryId(id)
 
         const filteredClubs = []
-        for(let i=0; i<clubs.length; i++) {
+        for (let i = 0; i < clubs.length; i++) {
             if ((clubs[i].category?._id) === id) {
                 filteredClubs.push(clubs[i])
             }
@@ -46,23 +46,31 @@ const Clubs = () => {
     }
 
     return (
-        <div>
-            <h3>Choose a Category</h3>
-            {categoryData.map((category) => (
-                <button
-                    className="hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                    key={category.id}
-                    onClick={() => {
-                        handleClick(category._id)
-                    }}
-                >
-                    {category.name}
-                </button>
-            )
-            )}
-            {/* Use Club By Category if can filter from backend */}
-            {/* < ClubByCategory categoryId={categoryId}/> */}
-            <ClubList clubs={updateClubs} />)
+        <div className="profile">
+            <div>
+                <h3 className="text-white text-3xl text-center p-4">Choose a Category</h3>
+                <div className="bg-black opacity-80 min-h-[22rem] rounded-2xl m-4 flex flex-wrap justify-center">
+                    {categoryData.map((category) => (
+                        <button
+                            className="w-44 bg-red-900 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-xl m-4"
+                            key={category.id}
+                            onClick={() => {
+                                handleClick(category._id)
+                            }}
+                        >
+                            {category.name}
+                        </button>
+                    )
+                    )}
+                </div>
+                {/* Use Club By Category if can filter from backend */}
+                {/* < ClubByCategory categoryId={categoryId}/> */}
+                <div className="bg-black opacity-80 min-h-[22rem] rounded-2xl m-4 flex justify-center items-center overflow-auto">
+                    <p className="text-white text-2xl">
+                        <ClubList clubs={updateClubs} />
+                    </p>
+                </div>
+            </div>
         </div>
     )
 }
