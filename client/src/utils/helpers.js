@@ -10,19 +10,24 @@ export function pluralize(name, count) {
 // either Club or Event objects
 export async function jaanSearch(jaanArray) {
   const APIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY;
-  
   if (!jaanArray) return null;
-
   // const jaanArray = ''
 
+  // hardcoded input for testing
   const originGeocode = `33.8423839%2C-84.511287`; // %2C is comma
-  let destinationGeocodes = '33.7700012%2C-84.3811458'; // %7C is |
-  // jaanArray.slice(1).map((geoString) => {
+  const destinationGeocodes = '33.7700012%2C-84.3811458'; // %7C is |
+  
+  // const originGeocode = JSON.parse(jaanArray[0]);
+  // let destinationGeocodes;
+  // jaanArray.slice(1).map((geoString, index) => {
+  //   if (index !== 0) destinationGeocodes += '%7C';
   //   const geo = JSON.parse(geoString);
   //   destinationGeocodes += (geo.lat).toString();
   //   destinationGeocodes += (geo.lng).toString();
   //   return destinationGeocodes;
   // });
+
+  console.log(`URL to fetch is: https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originGeocode}&destinations=${destinationGeocodes}&units=imperial&key=${APIKey}`)
 
   try {
     const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originGeocode}&destinations=${destinationGeocodes}&units=imperial&key=${APIKey}`);
