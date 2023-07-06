@@ -1,22 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
-import { getGeocode } from '../../utils/helpers'; //
+import { getGeocode } from '../../utils/helpers'; 
+ 
 
 const UpdateProfile = (props) => {
   const { loading, data } = useQuery(QUERY_ME)
-  const [updateUser, { error }] = useMutation(UPDATE_USER);
+  const [updateUser, { error }] = useMutation(UPDATE_USER, {
+    refetchQueries : [
+      {
+        query: QUERY_ME
+      }
+    ]
+  })
+
   const [showModal, setShowModal] = React.useState(false);
   const [success, setMessage] = React.useState(false);
 
   const userData = data?.me || {}
   const participants = userData.participants
   // Populate form with current user data
-  const [formState, setFormState] = useState({ name: `${userData?.name}`, address: `${userData?.address}`, participants: `${userData?.participants}`, image: `${userData?.image}` });
-  const [newParticipant, setNewParticipant] = useState({ newParticipantName: '' })
+  const [formState, setFormState] = useState({ name: `${userData?.name}`, address: `${userData?.address}`, image: `${userData?.image}` });
+  const [newParticipant, setNewParticipant] = useState('')
 
   const token = Auth.loggedIn() ? Auth.getToken() : null;
   if (!token) {
@@ -55,10 +63,7 @@ const UpdateProfile = (props) => {
       ////// ^^ Jamin ^^
       const { data } = await updateUser({
         variables: {
-          user: { ...formState },
-          refetchQueries: [
-          { query: QUERY_ME }
-        ],
+          user: { ...formState }
       }});
       if(data) {
         setMessage(true)
@@ -103,6 +108,8 @@ const UpdateProfile = (props) => {
           }
         >
         Successfully updated account information!
+        <br></br>
+        <Link to="/profile" >← Back to Profile</Link>
       </h3>
         <form onSubmit={handleFormSubmit} encType='multipart/form-data'>
           <div className="flex-row space-between my-2">
@@ -161,7 +168,6 @@ const UpdateProfile = (props) => {
           Add participant
         </button>
         <br></br>
-        <Link to="/profile" className='text-white'>← Back to Profile</Link>
         {showModal ? (
           <>
             <div

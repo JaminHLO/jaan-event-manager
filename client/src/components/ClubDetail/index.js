@@ -20,11 +20,19 @@ const ClubDetail = () => {
         setShowEventModal(showEventModal=>!showEventModal)
     }
     const [modalEventData, setModalEventData] = useState(null);
+    const { id: clubIdParam } = useParams();
 
     const [showModal, setShowModal] = useState(false);
     const [isAdmin, setIsAdmin] = useState();
     const [isMember, setIsMember] = useState();
-    const [addEvent, { error }] = useMutation(ADD_EVENT);
+    const [addEvent, { error }] = useMutation(ADD_EVENT, {
+        refetchQueries : [
+            {
+              query: QUERY_CLUB,
+              variables: { id: clubIdParam }
+            }
+          ]
+    });
     const [getCheckout, { data: checkoutData }] = useLazyQuery(QUERY_CHECKOUT);
     const [eventFormState, setEventFormState] = useState(
         {
@@ -34,8 +42,6 @@ const ClubDetail = () => {
             description: "",
         })
 
-
-    const { id: clubIdParam } = useParams();
     const { loading, data } = useQuery(QUERY_CLUB, {
         variables: { id: clubIdParam }
     });
