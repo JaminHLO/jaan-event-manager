@@ -1,43 +1,46 @@
 import React, { useState } from "react";
 
-import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { QUERY_SEARCH_EVENTS } from "../../utils/queries";
 
 const SearchEvents = () => {
     const [eventQuery, setEventQuery] = useState("");
-    const { loading, data } = useQuery(QUERY_SEARCH_EVENTS);
-    const events = data?.searchEvents || {};
-    console.log("line 10", events)
-    const getFilteredEvents = (eventQuery, events) => {
-        if (!eventQuery) {
-            return [];
-        }
-        return events.filter((event) => event.title.includes(eventQuery));
-    }
+    const [getQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_EVENTS);
 
-    const filteredEvents = getFilteredEvents(eventQuery, events);
-    console.log("line 19", filteredEvents)
+    const events = data?.searchEvents || {};
 
     const handleChange = (event) => {
         setEventQuery(event.target.value)
-    };
+    }
 
-    if (loading) {
-        return <div>Loading...</div>;
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        getQuery({
+            variables: { eventQuery }
+        })
     }
 
     return (
         <div>
             <h2>Search for an event:</h2>
             <div>
-                <label>Search:</label>
-                <input type="text" onChange={handleChange} placeholder="Find an event here"></input>
+                <form onSubmit={handleSubmit}>
+                    <label>Search for an event:</label>
+                    <input
+                        type="text"
+                        placeholder="Find an event here"
+                        onChange={handleChange}
+                        name="eventQuery"
+                        value={eventQuery}
+                    ></input>
+                    <button type="submit">Search</button>
+                </form>
             </div>
             <div>
                 <h3>Results:</h3>
-                {filteredEvents.length ? (
-                    filteredEvents.map((event) => (
-                        <div>
+                {events.length ? (
+                    events.map((event) => (
+                        <div key={event._id}>
                             <p>{event.title}</p>
                             <button>View Details</button>
                         </div>

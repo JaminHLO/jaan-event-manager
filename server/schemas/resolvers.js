@@ -103,14 +103,21 @@ const resolvers = {
     },
     searchEvents: async (parent, { eventQuery }, context) => {
       const filteredEvents = await Event.find({ title: { $regex: eventQuery } })
-        .populate({path: "clubId",
+        .populate({
+          path: "clubId",
           populate: {
             path: "category"
-          }})
-
-      console.log(filteredEvents)
+          }
+        })
       return filteredEvents;
-    }
+    },
+    searchClubs: async (parent, { clubQuery }, context) => {
+      const filteredClubs = await Club.find({ title: { $regex: clubQuery } })
+        .populate({
+          path: "category"
+        })
+      return filteredClubs;
+    },
   },
 
   Mutation: {

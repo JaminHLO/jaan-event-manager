@@ -228,20 +228,34 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_SEARCH_EVENTS = gql`
-  query SearchEvents {
-    searchEvents {
+  query SearchEvents($eventQuery: String!) {
+    searchEvents(eventQuery: $eventQuery) {
       _id
       title
-      description
+      dateTime
+      geocode
       club {
-        _id
-        title
         geocode
+        _id
         category {
-          name
           _id
+          name
         }
       }
     }
   }
+`;
+
+export const QUERY_SEARCH_CLUBS = gql`
+  query SearchEvents($clubQuery: String!) {
+   searchClubs(clubQuery: $clubQuery) {
+      _id
+      title
+      geocode
+      category {
+        _id
+        name
+      }
+  }
+}
 `;
