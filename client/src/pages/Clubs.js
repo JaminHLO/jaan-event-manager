@@ -36,14 +36,14 @@ const Clubs = () => {
         console.log('filtered', filteredClubs)
     };
 
-    if (loading || meLoading) {
+    if (loading || meLoading || clubLoading) {
         return <div>Loading...</div>
     }
 
     const token = auth.loggedIn() ? auth.getToken() : null;
-    if (!token) {
-        return false;
-    }
+    // if (!token) {
+    //     return false;
+    // }
 
     return (
         <div className="profile">
@@ -64,7 +64,7 @@ const Clubs = () => {
                     )}
                 </div>
                 {/* Use Club By Category if can filter from backend */}
-                {/* < ClubByCategory categoryId={categoryId}/> */}
+                < ClubByCategory categoryId={categoryId}/>
                 <div className="bg-black opacity-80 min-h-[22rem] rounded-2xl m-4 flex justify-center items-center overflow-auto">
                     <p className="text-white text-2xl">
                         <ClubList clubs={updateClubs} />

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import EventDetailModal from "../EventDetailModal";
-import sadIcon from '../../images/sad-face-icon.png';
+import { Link } from 'react-router-dom';
+
+// import EventDetailModal from "../EventDetailModal";
 
 const EventList = ({ events }) => {
-  const [showEventModal, setShowEventModal] = useState(false)
-  const openEventModal = () => {
-    setShowEventModal(showEventModal => !showEventModal)
-  }
-  const [modalEventData, setModalEventData] = useState(null);
+  // const [showEventModal, setShowEventModal] = useState(false)
+  //   const openEventModal = () => {
+  //       setShowEventModal(showEventModal=>!showEventModal)
+  //   }
+  //   const [modalEventData, setModalEventData] = useState(null);
 
   if (!events?.length) {
     return (
@@ -44,19 +45,19 @@ const EventList = ({ events }) => {
               </ul>
 
             </div>
-            <div class="">
-              <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                <button key={singleEvent._id} className="block" onClick={() => {
-                  openEventModal()
-                  setModalEventData(singleEvent._id)
-                }}>More Info...
-                </button>
-              </span>
-            </div>
+            <div class="px-6 pt-4 pb-2">
           </div>
-        ))}
-      <EventDetailModal showEventModal={showEventModal} singleEventData={modalEventData} setShowEventModal={setShowEventModal} />
 
+
+          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+          <Link
+            to={`/events/event/${singleEvent._id}`}
+          >
+            More...
+          </Link>
+        </span>
+        </div>        
+        ))}
     </div>
   );
 };
