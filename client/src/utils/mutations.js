@@ -53,7 +53,7 @@ mutation updateUser($user: UserInput) {
 }`;
 
 export const UPDATE_EVENT = gql`
-mutation editEvent($eventId: ID!, $event: EventInput) {
+mutation updatedEvent($eventId: ID!, $event: EventInput) {
   updateEvent(eventId: $eventId, event: $event) {
     title
     description

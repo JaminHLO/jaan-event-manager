@@ -10,11 +10,16 @@ import { getGeocode } from '../../utils/helpers';
 
 const EventDetail = () => {
   const { id: eventId } = useParams();
+  const [eventEditform, setEventEditForm] = useState({ title: ``, address: ``, description:``, dateTime:'', image: ''});
   const { loading, data } = useQuery(QUERY_EVENT, {
       variables: { id: eventId }
   });
 
   const eventData = data?.event || {};
+
+  useEffect(() => {
+  setEventEditForm({ title: `${eventData?.title}`, address: `${eventData?.address}`, dateTime: `${eventData?.dateTime}`, image:`${eventData?.image}`, description:`${eventData?.description}`});
+  }, [eventData])
   console.log('club id', eventData.clubId)
 
   const { loading: meLoading, data: meData } = useQuery(QUERY_ME);
@@ -24,21 +29,17 @@ const EventDetail = () => {
   const [userInClub, setUserInClub] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
   const [showModal, setShowModal] = useState(false);
-  const [success, setMessage] = useState(false);
-  const [eventEditform, setEventEditForm] = useState({ title: `${eventData?.title}`, address: `${eventData?.address}`, date: `${eventData?.dateTime}`, image:`${eventData?.image}`, description:`${eventData?.description}`, geocode: ``});
+  // const [eventEditform, setEventEditForm] = useState({ title: `${eventData?.title}`, address: `${eventData?.address}`, date: `${eventData?.dateTime}`, image:`${eventData?.image}`, description:`${eventData?.description}`, geocode: ``});
   const [savedEventIds, setSavedEventIds] = useState(getSavedEventsIds());
   const [joinEvent, { error }] = useMutation(JOIN_EVENT, {
     refetchQueries : [
-      {
-        query: QUERY_ME
-      }
+      { query: QUERY_ME }
       ]
       })
-      const [editEvent, { err }] = useMutation(UPDATE_EVENT, {
+      const [updateEvent, { err }] = useMutation(UPDATE_EVENT, {
         refetchQueries : [
-          {
-            query: QUERY_EVENT
-          }
+          { query: QUERY_EVENT,
+          variables: { id: eventId } }
         ]
       })
 
@@ -135,22 +136,19 @@ const EventDetail = () => {
 
                 setEventEditForm({
                 ...eventEditform,
-                // geocode: value,
+                geocode: value,
                 });
             
-            const { data } = await editEvent({
+            const { data } = await updateEvent({
                 variables: {
-                eventId: { eventId: eventId },
+                eventId: eventId,
                 event: { ...eventEditform
-                  // , geocode: value
+                  , geocode: value
                  }
               }})
-            if (data) {
-                setMessage(true)
-            }
             console.log('updated event', data)
-            setEventEditForm({ title: `${eventData?.title}`, address: `${eventData?.address}`, date: `${eventData?.dateTime}`, image:`${eventData?.image}`, description:`${eventData?.description}`, geocode: ``});
-            } catch (error) {
+            setEventEditForm({ title: `${eventData?.title}`, address: `${eventData?.address}`, dateTime: `${eventData?.dateTime}`, image:`${eventData?.image}`, description:`${eventData?.description}`});
+          } catch (error) {
                 console.error(error)
             }
         }
@@ -224,21 +222,6 @@ const EventDetail = () => {
                     <h3 className="text-3xl font-semibold">
                         Update Event
                     </h3>
-                    <h3
-                        style={
-                            success
-                            ? {
-                                display: "block",
-                                backgroundColor: "#5ced73",
-                                textAlign: "center",
-                                fontWeight: "lighter",
-                                borderRadius: "5px",
-                                }
-                            : { display: "none" }
-                        }
-                        >
-                        Successfully updated event!
-                    </h3>
                     <button
                       className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
                       onClick={() => setShowModal(false)}
@@ -258,6 +241,7 @@ const EventDetail = () => {
                           name="title"
                           type="text"
                           id="title"
+                          defaultValue={eventData?.title}
                           onChange={handleEditEventChange}
                           value={eventEditform.title}
                         />
@@ -281,7 +265,7 @@ const EventDetail = () => {
                                 type="text"
                                 id="dateTime"
                                 onChange={handleEditEventChange}
-                                value={eventEditform.date}
+                                value={eventEditform.dateTime}
                             />
                         </div>
                         <div className="flex-row space-between my-2">
