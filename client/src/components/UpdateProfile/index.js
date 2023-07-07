@@ -1,26 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
-import { getGeocode } from '../../utils/helpers'; //
+import { getGeocode } from '../../utils/helpers'; 
+ 
 
 const UpdateProfile = (props) => {
   const { loading, data } = useQuery(QUERY_ME)
-  const [updateUser, { error }] = useMutation(UPDATE_USER);
+  const [updateUser, { error }] = useMutation(UPDATE_USER, {
+    refetchQueries : [
+      {
+        query: QUERY_ME
+      }
+    ]
+  })
+
   const [showModal, setShowModal] = React.useState(false);
+  const [success, setMessage] = React.useState(false);
 
   const userData = data?.me || {}
   const participants = userData.participants
   // Populate form with current user data
-  const [formState, setFormState] = useState({ name: `${userData?.name}`, address: `${userData?.address}`, participants: `${userData?.participants}`, image: `${userData?.image}` });
-  const [newParticipant, setNewParticipant] = useState({ newParticipantName: '' })
+  const [formState, setFormState] = useState({ name: `${userData?.name}`, address: `${userData?.address}`, image: `${userData?.image}`, geocode: ``});
+  const [newParticipant, setNewParticipant] = useState('')
+
 
   const token = Auth.loggedIn() ? Auth.getToken() : null;
   if (!token) {
     return false;
   }
+
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -42,21 +54,24 @@ const UpdateProfile = (props) => {
     event.preventDefault();
 
     try {
-      //////vv Jamin vv
       const value = await getGeocode(formState.address);
       console.log("value is", value)
-      // setTimeout(()=>{}, 5000);
-      setFormState({
-        ...formState,
-        geocode: value,
-      });
-      console.log('formState.geocode is', formState.geocode);
-      ////// ^^ Jamin ^^
-      const { data } = await updateUser({
-        variables: {
-          user: { ...formState }
-        },
-      });
+
+        setFormState({
+          ...formState,
+          geocode: value,
+        });
+        
+        console.log('formState.geocode is', formState.geocode);
+        const { data } = await updateUser({
+          variables: {
+            user: { ...formState, geocode: value
+             }
+        }});
+        if(data) {
+          setMessage(true)
+        }
+
     } catch (error) {
       console.error(error)
     }
@@ -83,16 +98,32 @@ const UpdateProfile = (props) => {
     <div className="profile my-1  flex justify-center items-center min-h-[90vh]">
       <div className='p-5 bg-black opacity-50 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70'>
         <h2 className='text-white text-3xl text-center'>Update your Profile</h2>
+        <h3
+          style={
+            success
+              ? {
+                  display: "block",
+                  backgroundColor: "#5ced73",
+                  textAlign: "center",
+                  fontWeight: "lighter",
+                  borderRadius: "5px",
+                }
+              : { display: "none" }
+          }
+        >
+        Successfully updated account information!
+        <br></br>
+        <Link to="/profile" >← Back to Profile</Link>
+      </h3>
         <form onSubmit={handleFormSubmit} encType='multipart/form-data'>
-
           <div className="flex-row space-between my-2">
-            <label htmlFor="img" className='text-white'>Image:</label>
+            {/* <label htmlFor="img" className='text-white'>Image:</label> */}
             <input
+              className='login-input rounded-2xl m-3 w-72'
               placeholder="image link"
               name="image"
-              type="image"
+              type="text"
               id="image"
-              accept=".png, .jpg, jpeg*"
               onChange={handleChange}
               value={formState.image}
             />
@@ -132,15 +163,7 @@ const UpdateProfile = (props) => {
               </div>
             ))}
 
-          <div className="flex-row flex-end">
-            <button
-              type="submit"
-            >Submit
-            </button>
-          </div>
-        </form>
-
-        {/* Modal to Add Participant */}
+{/* Modal to Add Participant */}
         <button
           className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           type="button"
@@ -149,7 +172,6 @@ const UpdateProfile = (props) => {
           Add participant
         </button>
         <br></br>
-        <Link to="/profile" className='text-white'>← Back to Profile</Link>
         {showModal ? (
           <>
             <div
@@ -215,6 +237,17 @@ const UpdateProfile = (props) => {
             <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
           </>
         ) : null}
+
+          <div className="flex-row flex-end">
+            <button
+              className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="submit"
+            >Submit
+            </button>
+          </div>
+        </form>
+
+        
       </div>
     </div>
   );

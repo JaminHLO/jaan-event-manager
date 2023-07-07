@@ -99,7 +99,7 @@ const resolvers = {
       throw new AuthenticationError('Please log in first')
     },
     event: async (parent, { _id }) => {
-      return await Event.findById(_id)
+      return await Event.findById(_id).populate('clubId')
     },
     searchEvents: async (parent, { eventQuery }, context) => {
       const filteredEvents = await Event.find({ title: { $regex: eventQuery } })
