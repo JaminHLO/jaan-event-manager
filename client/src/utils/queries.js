@@ -236,7 +236,7 @@ export const QUERY_SEARCH_EVENTS = gql`
       title
       dateTime
       geocode
-      club {
+      clubId {
         geocode
         _id
         category {

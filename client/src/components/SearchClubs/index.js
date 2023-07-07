@@ -5,7 +5,7 @@ import { QUERY_SEARCH_CLUBS } from "../../utils/queries";
 
 const SearchClubs = () => {
     const [clubQuery, setClubQuery] = useState("");
-    const [getQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_CLUBS);
+    const [getClubQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_CLUBS);
 
     const clubs = data?.searchClubs || {}
 
@@ -15,7 +15,7 @@ const SearchClubs = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        getQuery({
+        getClubQuery({
             variables: { clubQuery }
         })
     }
