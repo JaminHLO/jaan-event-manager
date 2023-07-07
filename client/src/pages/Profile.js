@@ -79,7 +79,7 @@ const Profile = () => {
                                     <button className='w-48 bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-xl'>
                                         <Link
                                             className="btn btn-primary btn-block btn-squared"
-                                            to={`/events`}
+                                            to={`/searchEvents`}
                                         >
                                             Search for Events
                                         </Link>

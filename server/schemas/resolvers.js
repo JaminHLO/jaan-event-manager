@@ -54,7 +54,7 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('myClubs').populate('myEvents');
+        return await User.findOne({ _id: context.user._id }).populate('myClubs').populate('myEvents');
       }
       throw new AuthenticationError('You need to be logged in!');
     },
@@ -94,12 +94,22 @@ const resolvers = {
     // Update args
     myEvents: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('myEvents')
+        return await User.findOne({ _id: context.user._id }).populate('myEvents')
       }
       throw new AuthenticationError('Please log in first')
     },
     event: async (parent, { _id }) => {
-      return Event.findById(_id)
+      return await Event.findById(_id)
+    },
+    searchEvents: async (parent, { eventQuery }, context) => {
+      const filteredEvents = await Event.find({ title: { $regex: eventQuery } })
+        .populate({path: "clubId",
+          populate: {
+            path: "category"
+          }})
+
+      console.log(filteredEvents)
+      return filteredEvents;
     }
   },
 
@@ -153,19 +163,19 @@ const resolvers = {
 
       return { token, user };
     },
-    createClub: async (parent, club , context) => {
+    createClub: async (parent, club, context) => {
       if (context.user) {
         const newClub = await Club.create(
           { ...club, adminId: context.user._id }
+        )
+
+        if (newClub) {
+          const updatedUser = await User.findOneAndUpdate(
+            { _id: context.user._id },
+            { $addToSet: { myClubs: newClub._id } },
+            { new: true }
           )
-        
-          if (newClub) {
-            const updatedUser = await User.findOneAndUpdate(
-              { _id: context.user._id },
-              { $addToSet: { myClubs: newClub._id } },
-              { new: true}
-            )
-          }
+        }
         return newClub
       }
       throw new AuthenticationError('Incorrect credentials');

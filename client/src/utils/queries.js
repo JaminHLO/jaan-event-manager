@@ -226,3 +226,22 @@ export const QUERY_USER = gql`
     }
   }
 `;
+
+export const QUERY_SEARCH_EVENTS = gql`
+  query SearchEvents {
+    searchEvents {
+      _id
+      title
+      description
+      club {
+        _id
+        title
+        geocode
+        category {
+          name
+          _id
+        }
+      }
+    }
+  }
+`;
