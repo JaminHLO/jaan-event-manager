@@ -9,7 +9,7 @@ const ClubByCategory = (props) => {
     const category = props.categoryId
     
     const { loading, data } = useQuery(QUERY_CLUBS, {
-        variables: { category: category }
+        variables: { category }
     });
 
     const clubsData = data?.club || {};
@@ -21,7 +21,7 @@ const ClubByCategory = (props) => {
 
     return (
         <div>
-            <h3>list of clubs</h3>
+            {/* <h3>list of clubs</h3> */}
             {/* <ClubList/> */}
         </div>
     )

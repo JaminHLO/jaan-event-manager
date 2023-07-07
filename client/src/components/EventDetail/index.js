@@ -1,26 +1,26 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_EVENT, QUERY_ME } from "../../utils/queries";
 import { JOIN_EVENT } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 import { saveEventIds, getSavedEventsIds } from "../../utils/localStorage";
 
-const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) => {
-    console.log('props', showEventModal, setShowEventModal, singleEventData)
-    const modalRef = useRef()
-     const closeEventModal = e => {
-        if(modalRef.current === e.target) {
-            setShowEventModal(false)
-        }
-     }
+const EventDetail = () => {
+    const { id: eventId } = useParams();
+
     const [savedEventIds, setSavedEventIds] = useState(getSavedEventsIds());
-    const [joinEvent, { error }] = useMutation(JOIN_EVENT);
+    const [joinEvent, { error }] = useMutation(JOIN_EVENT, {
+        refetchQueries : [
+          {
+            query: QUERY_ME
+          }
+        ]
+      })
     const [signedUp, setSignedUp] = useState(false)
     const [userInClub, setUserInClub] = useState(false)
 
-    const eventId = singleEventData;
-    console.log('event ID', singleEventData)
+    console.log('event ID', eventId)
 
     const { loading, data } = useQuery(QUERY_EVENT, {
         variables: { id: eventId }
@@ -57,13 +57,13 @@ const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) 
 
     // Check if user belongs to the club of the event he wants to join
     useEffect(() => {
-        if(myClubsEvents.includes(singleEventData)){
+        if(myClubsEvents.includes(eventId)){
             setUserInClub(true)
         } else {
             setUserInClub(false)
         }
         console.log(userInClub)
-    }, [myClubsEvents, singleEventData])
+    }, [myClubsEvents])
 
     useEffect(() => {
         return () => saveEventIds(savedEventIds);
@@ -92,42 +92,16 @@ const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) 
     
     return (
         <>
-        {showEventModal ? (
-            <>
-            <div className="bg-zinc-50 justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <div className="relative w-auto my-6 mx-auto max-w-sm">
-                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                     {/*header*/}
-                        <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                            <h3 className="text-3xl font-semibold">
-                            Event details
-                            </h3>
-                            <button
-                            className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                            onClick={() => setShowEventModal(false)}
-                            >
-                            <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                                ×
-                            </span>
-                            </button>
-                        </div>
-                    </div>
-                    <div className="relative p-6 flex-auto">
-                        <div key={eventData._id} className="max-w-sm rounded overflow-hidden shadow-lg">
-                        { !eventData.image ? (
-                            <img className="w-full" 
-                            src= './images/event_default.jpg' />
-                            ) : (
-                                <img className="w-full" 
-                                src= {eventData.image} />
-                            )}
-                        </div>
-                        <div className="px-6 py-4">
-                            <div className='font-bold text-xl mb-2'>
-                            {eventData.title}
-                        <p className='text-gray-700 text-base'>
-                        {eventData.description}
-                        </p>
+            <Link to="/profile" >← Back to Profile</Link>
+            <h3>{eventData.title}</h3>
+                { !eventData.image ? (
+                    <img className="w-full" 
+                    src= './images/event_default.jpg' />
+                    ) : (
+                    <img className="w-full" 
+                    src= {eventData.image} />
+                    )}
+                    <p>{eventData.description}</p>
                         <ul className='text-gray-700 text-base'>
                             <li>Date and Time: {eventData.dateTime}</li>
                             <li>{eventData.address}</li>
@@ -155,25 +129,8 @@ const EventDetailModal = ({showEventModal, setShowEventModal, singleEventData}) 
                                 )
                         ) : 
                         <p>Log in to Join!</p>}
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                    <button
-                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowEventModal(false)}
-                    >
-                      Close
-                    </button>
-                </div>
-            </div>
-        <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
-        ) : null}
-      </>
     )
 }
 
-export default EventDetailModal
+export default EventDetail

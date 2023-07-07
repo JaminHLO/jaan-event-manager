@@ -7,7 +7,7 @@ export const getSavedEventsIds = () => {
 };
 
 export const saveEventIds = (eventIdArr) => {
-  if (eventIdArr.length) {
+  if (eventIdArr?.length) {
     localStorage.setItem('saved_events', JSON.stringify(eventIdArr));
   } else {
     localStorage.removeItem('saved_events');

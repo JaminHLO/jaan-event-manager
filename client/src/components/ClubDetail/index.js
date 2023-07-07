@@ -9,17 +9,11 @@ import Cart from "../Cart";
 import auth from "../../utils/auth";
 import JaanMap from "../JaanMap";
 import { idbPromise } from "../../utils/helpers";
-import EventDetailModal from "../EventDetailModal";
 
 const stripePromise = loadStripe(
     'pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
 
 const ClubDetail = () => {
-    const [showEventModal, setShowEventModal] = useState(false)
-    const openEventModal = () => {
-        setShowEventModal(showEventModal=>!showEventModal)
-    }
-    const [modalEventData, setModalEventData] = useState(null);
     const { id: clubIdParam } = useParams();
 
     const [showModal, setShowModal] = useState(false);
@@ -129,21 +123,19 @@ const ClubDetail = () => {
 
             <JaanMap latLngArray={latLngArray} />
             <h2>See the list of events</h2>
-                {clubData.events.length !== 0 ? (
+                <ul>
+                {clubData.events?.length !== 0 ? (
                 clubEvents.map((singleEvent) => (
-                    <>
-                        <button key={singleEvent._id} className="block" onClick={()=> {
-                            openEventModal()
-                            setModalEventData(singleEvent._id)
-                        }}>{singleEvent.title}</button>
-                    </>
+                    <li>
+                        <Link to={`/events/event/${singleEvent._id}`}> 
+                        {singleEvent.title}
+                        </Link>
+                    </li>
                 ))) : (
                     <p>No events have been listed for this club</p>
                 )
                 }
-            <EventDetailModal showEventModal={showEventModal} singleEventData={modalEventData} setShowEventModal={setShowEventModal} />
-
-            {/* <Cart /> */}
+                </ul>
 
             {auth.loggedIn() && isAdmin ? (
                 <button
