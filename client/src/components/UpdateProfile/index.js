@@ -23,13 +23,16 @@ const UpdateProfile = (props) => {
   const userData = data?.me || {}
   const participants = userData.participants
   // Populate form with current user data
-  const [formState, setFormState] = useState({ name: `${userData?.name}`, address: `${userData?.address}`, image: `${userData?.image}` });
+  const [formState, setFormState] = useState({ name: `${userData?.name}`, address: `${userData?.address}`, image: `${userData?.image}`, geocode: ``});
   const [newParticipant, setNewParticipant] = useState('')
+
 
   const token = Auth.loggedIn() ? Auth.getToken() : null;
   if (!token) {
     return false;
   }
+
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -54,20 +57,23 @@ const UpdateProfile = (props) => {
       //////vv Jamin vv
       const value = await getGeocode(formState.address);
       console.log("value is", value)
-      // setTimeout(()=>{}, 5000);
-      setFormState({
-        ...formState,
-        geocode: value,
-      });
-      console.log('formState.geocode is', formState.geocode);
-      ////// ^^ Jamin ^^
-      const { data } = await updateUser({
-        variables: {
-          user: { ...formState }
-      }});
-      if(data) {
-        setMessage(true)
-      }
+
+        setFormState({
+          ...formState,
+          geocode: value,
+        });
+        
+        console.log('formState.geocode is', formState.geocode);
+        ////// ^^ Jamin ^^
+        const { data } = await updateUser({
+          variables: {
+            user: { ...formState, geocode: value
+             }
+        }});
+        if(data) {
+          setMessage(true)
+        }
+
     } catch (error) {
       console.error(error)
     }

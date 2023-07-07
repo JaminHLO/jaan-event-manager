@@ -129,7 +129,7 @@ const ClubDetail = () => {
 
             <JaanMap latLngArray={latLngArray} />
             <h2>See the list of events</h2>
-                {clubData.events.length !== 0 ? (
+                {clubData.events?.length ? (
                 clubEvents.map((singleEvent) => (
                     <>
                         <button key={singleEvent._id} className="block" onClick={()=> {
