@@ -99,7 +99,7 @@ const resolvers = {
       throw new AuthenticationError('Please log in first')
     },
     event: async (parent, { _id }) => {
-      return Event.findById(_id)
+      return Event.findById(_id).populate('clubId')
     }
   },
 

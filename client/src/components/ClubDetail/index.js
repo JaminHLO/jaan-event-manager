@@ -34,6 +34,7 @@ const ClubDetail = () => {
             address: "",
             dateTime: "",
             description: "",
+            image: "",
             geocode: ""
         })
 
@@ -69,7 +70,7 @@ const ClubDetail = () => {
         } else {
             setIsAdmin(false);
         }
-    }, [userData._id, clubData.adminId])
+    }, [clubData.adminId])
 
     if (loading || meLoading) {
         return <div>Loading...</div>
@@ -127,7 +128,12 @@ const ClubDetail = () => {
     return (
         <div>
             <h3>{clubData.title}</h3>
-
+            {clubData.image ? (
+                <img src={clubData.image} width="300px"/>
+                
+            ):(
+                <img src='/images/club_default.jpg' width="300px"/>
+            )}
             <p>About: {clubData.description}</p>
             <p>Membership Price: ${clubData.price}</p>
             <p>Spot Available: {clubData.spotsAvailable}</p>
@@ -219,6 +225,15 @@ const ClubDetail = () => {
                                 value={eventFormState.description}
                             ></textarea>
                         </div>
+                        <label htmlFor="title">Image:</label>
+                            <input
+                                placeholder="Image link"
+                                name="image"
+                                type="text"
+                                id="image"
+                                onChange={handleChange}
+                                value={eventFormState.image}
+                            />
                         <div>
                             <button
                                 onClick={(event) => {

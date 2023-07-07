@@ -52,6 +52,20 @@ mutation updateUser($user: UserInput) {
   }
 }`;
 
+export const UPDATE_EVENT = gql`
+mutation editEvent($eventId: ID!, $event: EventInput) {
+  updateEvent(eventId: $eventId, event: $event) {
+    title
+    description
+    location
+    dateTime
+    image
+    address
+    isAvailable
+    geocode
+  }
+}`
+
 export const CREATE_CLUB = gql`
 mutation CreateClub($adminId: String, $title: String!, $description: String, $maxMembers: Int, $image: String, $price: Float, $category: String, $zipCode: Int, $geocode: String) {
   createClub(adminId: $adminId, title: $title, description: $description, maxMembers: $maxMembers, image: $image, price: $price, category: $category, zipCode: $zipCode, geocode: $geocode) {

@@ -72,6 +72,7 @@ query Query {
       description
       location
       dateTime
+      image
     }
     participants
     image
@@ -153,9 +154,10 @@ export const QUERY_EVENT = gql`
 query EventById($id: ID!) {
   event(_id: $id) {
     _id
-    club {
+    clubId {
       title
       _id
+      adminId
     }
     title
     description
