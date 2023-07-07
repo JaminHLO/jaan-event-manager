@@ -105,7 +105,7 @@ const Profile = () => {
             ) : null}
 
             <div className='flex flex-row mt-10'>
-                <div className="bg-black bg-opacity-60 w-1/4 rounded-2xl h-[40rem] ml-20">
+                <div className="bg-black bg-opacity-60  max-w-[25rem] rounded-2xl h-[45rem] ml-20">
                     <div className='flex justify-center flex-col items-center p-3'>
                         <div className="relative w-10/12 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                             {!user.image ? (
