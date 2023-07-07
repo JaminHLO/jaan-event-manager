@@ -8,7 +8,7 @@ import { ADD_EVENT } from "../../utils/mutations";
 import Cart from "../Cart";
 import auth from "../../utils/auth";
 import JaanMap from "../JaanMap";
-import { idbPromise } from "../../utils/helpers";
+import { idbPromise, getGeocode } from "../../utils/helpers";
 
 const stripePromise = loadStripe(
     'pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
@@ -34,6 +34,7 @@ const ClubDetail = () => {
             address: "",
             dateTime: "",
             description: "",
+            geocode: ""
         })
 
     const { loading, data } = useQuery(QUERY_CLUB, {
@@ -48,12 +49,12 @@ const ClubDetail = () => {
 
     const userData = meData?.me || {};
 
-    console.log('userData is', userData)
-    console.log('clubData is', clubData);
-    // const mapCenter = clubData.geocode//.json();
+    // console.log('userData is', userData)
+    // console.log('clubData is', clubData);
     const latLngArray = [];
     if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
     if (clubData?.geocode) latLngArray.push(JSON.parse(clubData.geocode));
+    
     useEffect(() => {
         if (checkoutData) {
             stripePromise.then((res) => {
@@ -90,13 +91,24 @@ const ClubDetail = () => {
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         try {
+            const geoEventAddress = await getGeocode(eventFormState.address);
+            const geoEventAddressString =  JSON.stringify(geoEventAddress);
+            console.log("geoEventAddress is:", geoEventAddressString);
             const { data } = await addEvent({
+                // was
+                // variables: {
+                //     event: eventFormState,
+                //     clubId: clubIdParam,
+                //     geocode: geoEventAddress
+                // }
                 variables: {
-                    event: eventFormState,
-                    clubId: clubIdParam,
+                    event: {
+                        ...eventFormState, 
+                        geocode: geoEventAddress
+                    },
+                    clubId: clubIdParam
                 }
-
-            })
+            });
             return data;
         } catch (error) {
             console.error(error)

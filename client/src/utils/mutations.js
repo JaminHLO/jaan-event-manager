@@ -89,6 +89,7 @@ mutation AddEvent($event: EventInput, $clubId: ID!) {
     image
     address
     isAvailable
+    geocode
   }
 }
 `
