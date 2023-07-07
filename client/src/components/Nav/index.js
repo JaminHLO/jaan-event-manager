@@ -30,6 +30,13 @@ function Nav() {
         <div className="flex flex-row justify-between p-4 bg-slate-950">
           <h1 className="text-2xl text-white">Sports Connect</h1>
           <ul className="flex flex-row">
+          <li className="mx-1">
+              <button className="bg-stone-900 hover:bg-stone-800 text-white font-bold py-2 px-4 rounded-2xl">
+                <Link to="/searchEventsClubs">
+                  Search
+                </Link>
+              </button>
+            </li>
             <li className="mx-1">
               <button className="bg-stone-900 hover:bg-stone-800 text-white font-bold py-2 px-4 rounded-2xl">
                 <Link to="/login">

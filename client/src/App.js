@@ -25,6 +25,9 @@ import UpdateProfile from './components/UpdateProfile';
 import CreateClub from './components/CreateClub';
 import ClubDetail from './components/ClubDetail';
 import Clubs from './pages/Clubs';
+import SearchEvents from './components/SearchEvents';
+import SearchClubs from './components/SearchClubs';
+import SearchEventsClubs from './components/SearchEventsClubs';
 import EventDetail from './components/EventDetail'; 
 
 const httpLink = createHttpLink({
@@ -105,6 +108,18 @@ function App() {
               <Route
                 path="*"
                 element={<NoMatch />}
+              />
+              <Route 
+                path='/searchEvents'
+                element={<SearchEvents />}
+              />
+              <Route 
+                path='/searchClubs'
+                element={<SearchClubs />}
+              />
+              <Route 
+                path='/searchEventsClubs'
+                element={<SearchEventsClubs />}
               />
             </Routes>
           </StoreProvider>

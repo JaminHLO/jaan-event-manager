@@ -228,3 +228,36 @@ export const QUERY_USER = gql`
     }
   }
 `;
+
+export const QUERY_SEARCH_EVENTS = gql`
+  query SearchEvents($eventQuery: String!) {
+    searchEvents(eventQuery: $eventQuery) {
+      _id
+      title
+      dateTime
+      geocode
+      club {
+        geocode
+        _id
+        category {
+          _id
+          name
+        }
+      }
+    }
+  }
+`;
+
+export const QUERY_SEARCH_CLUBS = gql`
+  query SearchEvents($clubQuery: String!) {
+   searchClubs(clubQuery: $clubQuery) {
+      _id
+      title
+      geocode
+      category {
+        _id
+        name
+      }
+  }
+}
+`;
