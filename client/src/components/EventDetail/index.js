@@ -73,7 +73,7 @@ const EventDetail = () => {
         console.log(signedUp)
       }, [eventId])
     
-    // Check if user belongs to the club of the event he wants to join
+    //  Check if user belongs to the club of the event he wants to join
     let myClubsIds = []
     for (let i=0; i < userData.myClubs?.length; i++) {
             myClubsIds.push(userData.myClubs[i]._id)
