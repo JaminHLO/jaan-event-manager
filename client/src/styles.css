@@ -95,3 +95,8 @@
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+/* club styles */
+.modal-input::placeholder {
+    color: white;
+}
