@@ -105,18 +105,18 @@ const Profile = () => {
             ) : null}
 
             <div className='flex flex-row mt-10'>
-                <div className="bg-black bg-opacity-60  max-w-[25rem] rounded-2xl h-[45rem] ml-20">
-                    <div className='flex justify-center flex-col items-center p-3'>
-                        <div className="relative w-10/12 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                <div className="bg-black bg-opacity-60 max-w-[25rem] rounded-2xl h-[45rem] ml-20">
+                    <div className='flex justify-center flex-col items-center p-3 h-full'>
+                        <div className="relative w-10/12 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 h-[50%]">
                             {!user.image ? (
-                                <img src='./images/profile.png' className="w-30 h-30" />
+                                <img src='./images/profile.png' className="h-full w-full profile-pic object-cover" />
                             ) : (
-                                <img src={user.image} />
+                                <img className="profile-pic h-full w-full object-cover" src={user.image} />
                             )}
                         </div>
-                        <div className='flex justify-center m-4'>
+                        <div className='flex justify-center items-center m-4 h-[50%]'>
                             <ul>
-                                <li className='m-3'>
+                                <li className='m-4'>
                                     <button className='w-48 bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-xl'>
                                         <Link
                                             className="btn btn-primary btn-block btn-squared"
@@ -127,7 +127,7 @@ const Profile = () => {
                                         </Link>
                                     </button>
                                 </li>
-                                <li className='m-3'>
+                                <li className='m-4'>
                                     <button className='w-48 bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-xl'>
                                         <Link
                                             className="btn btn-primary btn-block btn-squared"
@@ -137,7 +137,7 @@ const Profile = () => {
                                         </Link>
                                     </button>
                                 </li>
-                                <li className='m-3'>
+                                <li className='m-4'>
                                     <button className='w-48 bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-xl'>
                                         <Link
                                             className="btn btn-primary btn-block btn-squared"
@@ -147,7 +147,7 @@ const Profile = () => {
                                         </Link>
                                     </button>
                                 </li>
-                                <li className='m-3'>
+                                <li className='m-4'>
                                     <button className='w-48 bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-xl'>
                                         <Link
                                             className="btn btn-primary btn-block btn-squared"

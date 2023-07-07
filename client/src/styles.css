@@ -100,3 +100,34 @@
 .modal-input::placeholder {
     color: white;
 }
+
+/* create club styles */
+.create-club {
+    background-image: url('./images/sunset-sport.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 91vh;
+    overflow: auto;
+    margin: 0;
+}
+
+.clubs-category {
+    background-image: url('./images/sunset-bike.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 91vh;
+    overflow: auto;
+    margin: 0;
+}
+
+.club-details {
+    background-image: url('./images/martial-arts-sunset.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 91vh;
+    overflow: auto;
+    margin: 0;
+}
