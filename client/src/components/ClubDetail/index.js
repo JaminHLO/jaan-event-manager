@@ -125,6 +125,7 @@ const ClubDetail = () => {
             <h2>See the list of events</h2>
                 <ul>
                 {clubData.events?.length !== 0 ? (
+
                 clubEvents.map((singleEvent) => (
                     <li>
                         <Link to={`/events/event/${singleEvent._id}`}> 

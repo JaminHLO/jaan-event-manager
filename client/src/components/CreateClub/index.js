@@ -10,10 +10,10 @@ import { getGeocode } from '../../utils/helpers';
 const CreateClub = (props) => {
     const { loading, data } = useQuery(QUERY_ME)
     const [createClub, { error }] = useMutation(CREATE_CLUB, {
-        refetchQueries : [
-          {
-            query: QUERY_ME
-          }
+        refetchQueries: [
+            {
+                query: QUERY_ME
+            }
         ]
     });
     // const [updateUser, { error2 }] = useMutation(UPDATE_USER);
@@ -29,8 +29,8 @@ const CreateClub = (props) => {
 
     const [optionCat, setOptionCat] = useState("");
     const handleCat = (e) => {
-      console.log(e.target.value);
-      setOptionCat(e.target.value);
+        console.log(e.target.value);
+        setOptionCat(e.target.value);
     };
 
     const [club, setClub] = useState({
@@ -76,23 +76,23 @@ const CreateClub = (props) => {
 
             }
 
-              const { data } = 
-            await createClub({
-                variables: {
-                    adminId: userData._id.toString(),
-                    title: club.title.toString(),
-                    description: club.description.toString(),
-                    maxMembers: parseInt(club.maxMembers),
-                    image: club.image.toString(),
-                    price: parseFloat(club.price),
-                    category: optionCat,
-                    geocode: geoJSONString,
-                    zipCode: parseInt(club.zipCode),
-                },
-            });
-              console.log("createClub data is")
-              console.log(data)
-              setClub({        
+            const { data } =
+                await createClub({
+                    variables: {
+                        adminId: userData._id.toString(),
+                        title: club.title.toString(),
+                        description: club.description.toString(),
+                        maxMembers: parseInt(club.maxMembers),
+                        image: club.image.toString(),
+                        price: parseFloat(club.price),
+                        category: optionCat,
+                        geocode: geoJSONString,
+                        zipCode: parseInt(club.zipCode),
+                    },
+                });
+            console.log("createClub data is")
+            console.log(data)
+            setClub({
                 title: "",
                 description: "",
                 maxMembers: 1,
@@ -101,7 +101,7 @@ const CreateClub = (props) => {
                 price: 0
             })
             setOptionCat('')
-            if(data) {
+            if (data) {
                 setMessage(true)
             }
         } catch (error) {
@@ -109,7 +109,7 @@ const CreateClub = (props) => {
         }
     };
 
-    
+
     if (loading || loadingCats) {
         return <div>Loading...</div>;
     }
@@ -119,23 +119,38 @@ const CreateClub = (props) => {
             <div className='p-5 bg-black opacity-50 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70'>
                 <h2 className='text-white text-3xl m-3'>Create a Club</h2>
                 <h3
-                style={
-                    success
-                    ? {
-                        display: "block",
-                        backgroundColor: "#5ced73",
-                        textAlign: "center",
-                        fontWeight: "lighter",
-                        borderRadius: "5px",
-                        }
-                    : { display: "none" }
-                }
+                    style={
+                        success
+                            ? {
+                                display: "block",
+                                backgroundColor: "#5ced73",
+                                textAlign: "center",
+                                fontWeight: "lighter",
+                                borderRadius: "5px",
+                            }
+                            : { display: "none" }
+                    }
                 >
-                Successfully created Club!
-                <br></br>
-                <Link to="/profile" >← Back to Profile</Link>
-                </h3>  
+                    Successfully created Club!
+                    <br></br>
+                    <Link to="/profile" >← Back to Profile</Link>
+                </h3>
                 <form onSubmit={handleFormSubmit}>
+                    <div className="flex-row space-between my-2">
+                        <label htmlFor="description" className='text-white'>Category:</label>
+                        <select className="flex-row space-between my-2 rounded-2xl m-2"
+                            id="Category"
+                            onChange={handleCat}
+                            value={club.category}
+                        >
+                            <option selected="true" disabled="disabled">Select Category</option>
+                            {categoryData?.map((cat) => (
+                                <option className='rounded-2xl m-3 w-72' value={cat._id}
+                                >{cat.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                     <div className="flex-row space-between my-2">
                         <label htmlFor="title" className='text-white'></label>
                         <input
@@ -160,20 +175,7 @@ const CreateClub = (props) => {
                             value={club.description}
                         />
                     </div>
-                    <div className="flex-row space-between my-2">
-                        <label htmlFor="description" className='text-white'>Category</label>
-                        <select  className="flex-row space-between my-2"
-                            id="Category"
-                            onChange={handleCat}
-                            value={club.category}
-                        >
-                            {categoryData?.map((cat) => (
-                                <option className='rounded-2xl m-3 w-72' value={cat._id}
-                                    >{cat.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+
                     <div className="flex-row space-between my-2">
                         <label htmlFor="maxMembers" className='text-white'></label>
                         <input

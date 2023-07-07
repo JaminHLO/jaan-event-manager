@@ -63,6 +63,7 @@
     background-size: cover;
     background-position: center;
     min-height: 91vh;
+    overflow: auto;
     margin: 0;
 }
 
@@ -72,4 +73,25 @@
 
 .profile-header {
     font-family: 'Fasthand', cursive;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
