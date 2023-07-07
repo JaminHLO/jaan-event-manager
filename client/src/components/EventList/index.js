@@ -22,13 +22,12 @@ const EventList = ({ events }) => {
 
   return (
     <div className='w-[40rem]'>
-      {/* <h3>My Events</h3> */}
       {events &&
         events.map((singleEvent) => (
           <div key={singleEvent._id} className="border-solid border-2 rounded-xl flex flex-col items-center flex-wrap m-3 p-3">
             {!singleEvent.image ? (
               <img className="h-48 w-48 rounded-2xl"
-                src='./images/event_default.jpg' 
+                src="/images/event_default.jpg" 
                 alt='default event'/>
             ) : (
               <img className="h-48 w-48 rounded-2xl"

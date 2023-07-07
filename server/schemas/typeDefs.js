@@ -73,7 +73,7 @@ const typeDefs = gql`
 
   type Event {
     _id: ID!
-    club: Club
+    clubId: Club
     title: String
     description: String
     location: String

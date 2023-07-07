@@ -34,6 +34,7 @@ const ClubDetail = () => {
             address: "",
             dateTime: "",
             description: "",
+            image: "",
             geocode: ""
         })
 
@@ -69,7 +70,7 @@ const ClubDetail = () => {
         } else {
             setIsAdmin(false);
         }
-    }, [userData._id, clubData.adminId])
+    }, [clubData.adminId])
 
     if (loading || meLoading) {
         return <div>Loading...</div>
@@ -125,6 +126,7 @@ const ClubDetail = () => {
     }
 
     return (
+
         <div className="profile text-white flex justify-center items-center">
             <div className="transition ease-in-out delay-150 bg-black opacity-60 hover:opacity-70 max-w-[25rem] rounded-2xl h-[30rem] mr-[5rem]">
                 <div className="p-4">
@@ -172,6 +174,7 @@ const ClubDetail = () => {
                     </ul>
                 </div>
             </div>
+
 
 
             {showModal &&
@@ -253,6 +256,7 @@ const ClubDetail = () => {
                                 </form>
                             </div>
                         </div>
+
                     </div>
                 </div>
             }
