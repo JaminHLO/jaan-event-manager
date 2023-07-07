@@ -54,7 +54,6 @@ const UpdateProfile = (props) => {
     event.preventDefault();
 
     try {
-      //////vv Jamin vv
       const value = await getGeocode(formState.address);
       console.log("value is", value)
 
@@ -64,7 +63,6 @@ const UpdateProfile = (props) => {
         });
         
         console.log('formState.geocode is', formState.geocode);
-        ////// ^^ Jamin ^^
         const { data } = await updateUser({
           variables: {
             user: { ...formState, geocode: value

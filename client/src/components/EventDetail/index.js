@@ -4,6 +4,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_EVENT, QUERY_ME } from "../../utils/queries";
 import { JOIN_EVENT } from "../../utils/mutations";
 import Auth from "../../utils/auth";
+import JaanMap from "../JaanMap";
 import { saveEventIds, getSavedEventsIds } from "../../utils/localStorage";
 
 const EventDetail = () => {
@@ -31,6 +32,14 @@ const EventDetail = () => {
 
     const userData = meData?.me || {};
 
+    // prep eventData and userData for JaanMap
+    console.log('userData is', userData);
+    console.log('eventData is', eventData);
+    const latLngArray = [];
+    if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
+    if (eventData?.geocode) latLngArray.push(JSON.parse(eventData.geocode));
+
+    
     let myEventsId = []
     for (let i=0; i < userData.myEvents?.length; i++) {
         myEventsId.push(userData.myEvents[i]._id)
@@ -129,6 +138,7 @@ const EventDetail = () => {
                                 )
                         ) : 
                         <p>Log in to Join!</p>}
+                        <JaanMap latLngArray={latLngArray} />
         </>
     )
 }
