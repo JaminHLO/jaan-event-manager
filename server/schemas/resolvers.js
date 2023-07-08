@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Club, Event, Category, Order } = require('../models');
+const { User, Club, Event, Category, Order, Notification } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_51NNi4mBTDevFCiGQDfSeVUSvfxZMJcfmiFWDqydSc1tsNQboBAHhqVqWAbZdvUucicOYARzKtjplgKatONL4hxpf00AEUi6nB1');
 
@@ -102,6 +102,9 @@ const resolvers = {
       return await Event.findById(_id).populate('clubId')
     },
     searchEvents: async (parent, { eventQuery }, context) => {
+      if (eventQuery === "") {
+        return;
+      }
       const filteredEvents = await Event.find({ title: { $regex: eventQuery } })
         .populate({
           path: "clubId",
@@ -112,6 +115,9 @@ const resolvers = {
       return filteredEvents;
     },
     searchClubs: async (parent, { clubQuery }, context) => {
+      if (clubQuery === "") {
+        return;
+      }
       const filteredClubs = await Club.find({ title: { $regex: clubQuery } })
         .populate({
           path: "category"
@@ -265,6 +271,30 @@ const resolvers = {
       }
       throw new AuthenticationError('Incorrect credentials');
     },
+    createNotifications: async (parent, { message, clubId }, context) => {
+      if (context.user) {
+        const newNotification = await Notification.create({message});
+        const updatedClubNotification = await Club.findOneAndUpdate(
+          { _id: clubId },
+          { notifications: newNotification._id },
+          { new: true }
+        )
+        .populate("notifications")
+        return updatedClubNotification;
+      }
+      throw new AuthenticationError("Incorrect credentials");
+    },
+    removeNotifications: async (parent, { clubId }, context) => {
+      if (context.user) {
+        const updatedClubNotification = await Club.findOneAndUpdate(
+          {_id: clubId},
+          {notifications: null},
+          {new: true}
+        )
+        return updatedClubNotification;
+      }
+      throw new AuthenticationError("Incorrect credentials");
+    }
   }
 };
 
