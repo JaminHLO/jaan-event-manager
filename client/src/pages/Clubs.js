@@ -46,13 +46,14 @@ const Clubs = () => {
     // }
 
     return (
-        <div className="profile">
-            <div>
-                <h3 className="text-white text-3xl text-center p-4">Choose a Category</h3>
-                <div className="bg-black opacity-80 min-h-[22rem] rounded-2xl m-4 flex flex-wrap justify-center">
+        <div className="clubs-category">
+
+            <div className="flex justify-center">
+                <div className="overflow-auto w-[20rem] bg-black opacity-80 hover:opacity-90 min-h-[22rem] rounded-2xl m-4 flex flex-col flex-wrap justify-center">
+                    <h3 className="text-white text-3xl text-center p-4">Choose a Category</h3>
                     {categoryData.map((category) => (
                         <button
-                            className="w-44 bg-red-900 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-xl m-4"
+                            className="w-44 bg-red-900 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-xl m-4 w-[90%]"
                             key={category.id}
                             onClick={() => {
                                 handleClick(category._id)
@@ -64,8 +65,8 @@ const Clubs = () => {
                     )}
                 </div>
                 {/* Use Club By Category if can filter from backend */}
-                < ClubByCategory categoryId={categoryId}/>
-                <div className="bg-black opacity-80 min-h-[22rem] rounded-2xl m-4 flex justify-center items-center overflow-auto">
+                < ClubByCategory categoryId={categoryId} />
+                <div className="overflow-auto bg-black opacity-80 hover:opacity-90 min-h-[25rem] max-h-screen min-w-[70%] rounded-2xl m-4 flex justify-center items-center">
                     <p className="text-white text-2xl">
                         <ClubList clubs={updateClubs} />
                     </p>

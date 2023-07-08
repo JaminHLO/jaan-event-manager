@@ -35,7 +35,7 @@ const typeDefs = gql`
     zipCode: Int
     price: Float
     spotsAvailable: Int
-    notifications: String
+    notifications: Notification
     messages: [String]
     events: [Event]
     geocode: String
@@ -83,6 +83,12 @@ const typeDefs = gql`
     address: String
     isAvailable: Boolean
     geocode: String
+  }
+
+  type Notification {
+    _id: ID
+    message: String
+    dateCreated: String
   }
 
   type Checkout {
@@ -134,6 +140,8 @@ const typeDefs = gql`
     updateClub(clubId: ID!, club: ClubInput): Club
     joinClub(clubId: ID!): User
     joinEvent(eventId: ID!): User
+    createNotifications(message: String!, clubId: ID!): Club
+    removeNotifications(clubId: ID!): Club
   }
 `;
 

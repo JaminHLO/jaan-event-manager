@@ -115,8 +115,8 @@ const CreateClub = (props) => {
     }
 
     return (
-        <div className="profile my-1  flex justify-center items-center min-h-[90vh]">
-            <div className='p-5 bg-black opacity-50 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70'>
+        <div className="create-club my-1  flex justify-center items-center min-h-[90vh]">
+            <div className='p-5 bg-black opacity-50 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-80'>
                 <h2 className='text-white text-3xl m-3'>Create a Club</h2>
                 <h3
                     style={

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { QUERY_SEARCH_EVENTS, QUERY_ME } from "../../utils/queries";
@@ -19,8 +20,8 @@ const SearchEvents = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('eventQuery is', eventQuery)
-        await getEventQuery({
+
+        getEventQuery({
             variables: { eventQuery }
         })
     }
@@ -53,11 +54,14 @@ const SearchEvents = () => {
                 <JaanMap latLngArray={latLngArray} />
                 {events.length ? (
                     events.map((event) => (
-                            <div key={event._id}>
-                                <p>{event.title}</p>
-                                <button>View Details</button>
-                            </div>
-                        ))
+
+                        <div key={event._id}>
+                            <p>{event.title}</p>
+                            <Link
+                                to={`/events/event/${event._id}`}
+                            >View Details</Link>
+                        </div>
+                    ))
                 ) : (
                     <p>No matching event found</p>
                 )}
