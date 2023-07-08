@@ -92,7 +92,7 @@ export const ADD_EVENT = gql`
 mutation AddEvent($event: EventInput, $clubId: ID!) {
   addEvent(event: $event, clubId: $clubId) {
     _id
-    club {
+    clubId {
       _id
       title
     }

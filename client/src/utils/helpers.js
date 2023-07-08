@@ -11,6 +11,7 @@ export function pluralize(name, count) {
 export async function jaanSearch(jaanArray) {
   const APIKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY;
   if (!jaanArray) return null;
+  console.log('jaanArray is:', jaanArray);
   // const jaanArray = ''
 
   // hardcoded input for testing
@@ -33,6 +34,7 @@ export async function jaanSearch(jaanArray) {
     const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originGeocode}&destinations=${destinationGeocodes}&units=imperial&key=${APIKey}`);
     const jsonData = await response.json();
     console.log('jaanSearch result is', jsonData);
+    return jsonData
   } catch (err) {
     // throw new Error (err)
   }

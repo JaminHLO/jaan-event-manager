@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import { useLazyQuery } from "@apollo/client";
 import { QUERY_SEARCH_EVENTS } from "../../utils/queries";
+// import { jaanSearch } from "../../utils/helpers";
+import JaanMap from "../JaanMap";
 
 const SearchEvents = () => {
     const [eventQuery, setEventQuery] = useState("");
@@ -14,12 +16,13 @@ const SearchEvents = () => {
         setEventQuery(event.target.value)
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(eventQuery)
-        getEventQuery({
+        await getEventQuery({
             variables: { eventQuery }
         })
+        // await jaanSearch(events);
     }
 
     return (
@@ -40,13 +43,14 @@ const SearchEvents = () => {
             </div>
             <div>
                 <h3>Results:</h3>
+                {/* <JaanMap eventArray={events} /> */}
                 {events.length ? (
-                    events.map((event) => (
-                        <div key={event._id}>
-                            <p>{event.title}</p>
-                            <button>View Details</button>
-                        </div>
-                    ))
+                        events.map((event) => (
+                            <div key={event._id}>
+                                <p>{event.title}</p>
+                                <button>View Details</button>
+                            </div>
+                        ))
                 ) : (
                     <p>No matching event found</p>
                 )}

@@ -93,8 +93,8 @@ const ClubDetail = () => {
         event.preventDefault();
         try {
             const geoEventAddress = await getGeocode(eventFormState.address);
-            const geoEventAddressString = JSON.stringify(geoEventAddress);
-            console.log("geoEventAddress is:", geoEventAddressString);
+            // const geoEventAddressString = JSON.stringify(geoEventAddress);
+            console.log("geoEventAddress is:", geoEventAddress);
             const { data } = await addEvent({
                 // was
                 // variables: {
