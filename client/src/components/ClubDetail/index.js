@@ -129,11 +129,12 @@ const ClubDetail = () => {
     return (
 
         <div className="club-details text-white flex justify-center items-center">
+            <Notification clubData={clubData} />
+
             <div className="transition ease-in-out delay-150 bg-black opacity-60 hover:opacity-70 max-w-[25rem] rounded-2xl h-[30rem] mr-[5rem]">
                 <div className="p-4">
                     <JaanMap latLngArray={latLngArray} />
                 </div>
-                {/* <Notification clubId={clubIdParam}/> */}
                 <div className="text-center">
                     {auth.loggedIn() && isAdmin ? (
                         <button

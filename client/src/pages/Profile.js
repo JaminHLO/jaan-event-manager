@@ -12,6 +12,7 @@ import sadFace from '../images/sad-face-icon.png';
 const Profile = () => {
     const { loading, data } = useQuery(QUERY_ME);
     const user = data?.me || {};
+    console.log(user)
     const [showModal, setShowModal] = React.useState(false);
 
     useEffect(() => {

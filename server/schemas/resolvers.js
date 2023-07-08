@@ -105,7 +105,7 @@ const resolvers = {
       if (eventQuery === "") {
         return;
       }
-      const filteredEvents = await Event.find({ title: { $regex: eventQuery } })
+      const filteredEvents = await Event.find({ title: { $regex: eventQuery, $options: "i" } })
         .populate({
           path: "clubId",
           populate: {
@@ -118,7 +118,7 @@ const resolvers = {
       if (clubQuery === "") {
         return;
       }
-      const filteredClubs = await Club.find({ title: { $regex: clubQuery } })
+      const filteredClubs = await Club.find({ title: { $regex: clubQuery, $options: "i" } })
         .populate({
           path: "category"
         })

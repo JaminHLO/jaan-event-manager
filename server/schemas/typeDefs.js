@@ -88,7 +88,7 @@ const typeDefs = gql`
   type Notification {
     _id: ID
     message: String
-    postDate: String
+    dateCreated: String
   }
 
   type Checkout {
