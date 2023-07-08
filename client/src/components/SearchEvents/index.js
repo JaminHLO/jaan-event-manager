@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { useLazyQuery } from "@apollo/client";
 import { QUERY_SEARCH_EVENTS } from "../../utils/queries";
@@ -16,7 +17,6 @@ const SearchEvents = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(eventQuery)
         getEventQuery({
             variables: { eventQuery }
         })
@@ -44,7 +44,9 @@ const SearchEvents = () => {
                     events.map((event) => (
                         <div key={event._id}>
                             <p>{event.title}</p>
-                            <button>View Details</button>
+                            <Link
+                                to={`/events/event/${event._id}`}
+                            >View Details</Link>
                         </div>
                     ))
                 ) : (

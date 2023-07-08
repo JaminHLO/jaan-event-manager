@@ -38,7 +38,8 @@ const clubSchema = new Schema({
     type: String
   },
   notifications: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: "Notification",
   },
   zipCode: {
     type: Number

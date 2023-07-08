@@ -18,7 +18,9 @@ query getClubs($category: ID) {
     description
     maxMembers
     image
-    notifications
+    notifications {
+      _id
+    }
     zipCode
     messages
     price
@@ -51,7 +53,9 @@ export const QUERY_CLUB = gql`
     description
     maxMembers
     image
-    notifications
+    notifications {
+      _id
+    }
     zipCode
     messages
     price
@@ -85,7 +89,9 @@ query Query {
       description
       maxMembers
       image
-      notifications
+      notifications {
+        _id
+      }
       zipCode
       messages
       price
@@ -140,7 +146,9 @@ query Me {
       }
       maxMembers
       image
-      notifications
+      notifications {
+        _id
+      }
       zipCode
       messages
       price
