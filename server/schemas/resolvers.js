@@ -106,7 +106,7 @@ const resolvers = {
       return await Event.findById(_id).populate('clubId')
     },
     searchEvents: async (parent, { eventQuery }, context) => {
-      const filteredEvents = await Event.find({ title: { $regex: eventQuery } })
+      const filteredEvents = await Event.find({ title: { $regex: eventQuery, $options: "i" } })
         .populate({
           path: "clubId",
           populate: {
@@ -121,7 +121,7 @@ const resolvers = {
       return filteredEvents;
     },
     searchClubs: async (parent, { clubQuery }, context) => {
-      const filteredClubs = await Club.find({ title: { $regex: clubQuery } })
+      const filteredClubs = await Club.find({ title: { $regex: clubQuery, $options: "i" } })
         .populate({
           path: "category"
         })

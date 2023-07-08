@@ -10,7 +10,7 @@ const SearchEvents = () => {
     const [getEventQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_EVENTS);
 
     const events = data?.searchEvents || {};
-    console.log(events)
+    console.log('events are:', events)
 
     const handleChange = (event) => {
         setEventQuery(event.target.value)
@@ -18,7 +18,7 @@ const SearchEvents = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(eventQuery)
+        console.log('eventQuery is', eventQuery)
         await getEventQuery({
             variables: { eventQuery }
         })
@@ -43,11 +43,14 @@ const SearchEvents = () => {
             </div>
             <div>
                 <h3>Results:</h3>
-                {/* <JaanMap eventArray={events} /> */}
+                <JaanMap eventArray={events} />
                 {events.length ? (
                         events.map((event) => (
                             <div key={event._id}>
                                 <p>{event.title}</p>
+                                {event.distanceTxt ? (
+                                <p>{event.distanceTxt}</p>
+                                ) : <></>}
                                 <button>View Details</button>
                             </div>
                         ))
