@@ -20,9 +20,9 @@ export default function JaanMap(args) {
         // const center = JSON.parse(args?.center);
     }
 
-    if (args?.eventArray) {
-        args.eventArray.map((item) => latLngArray.push(JSON.parse(item.geocode)))
-    }
+    // if (args?.eventArray) {
+    //     args.eventArray.map((item) => latLngArray.push(JSON.parse(item.geocode)))
+    // }
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -31,7 +31,7 @@ export default function JaanMap(args) {
     });
     //process.env.REACT_APP_GOOGLE_MAPS_API_KEY // not secure
 
-    const zoom = 10;
+    // const zoom = 10;
     const [map, setMap] = useState(null);
 
     const onLoad = (map) => {
@@ -46,10 +46,10 @@ export default function JaanMap(args) {
         // else {
         //     map.setZoom(zoom);
         // }
-        if(map.getZoom() > 10){
-            map.setZoom(10);
-        }
-        // map.setZoom(map.getZoom()-2);
+        // if(map.getZoom() > 10){
+        //     map.setZoom(10);
+        // }
+        map.setZoom(map.getZoom()-2);
         setMap(map);
     }
 

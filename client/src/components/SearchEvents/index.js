@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 
-import { useLazyQuery } from "@apollo/client";
-import { QUERY_SEARCH_EVENTS } from "../../utils/queries";
-// import { jaanSearch } from "../../utils/helpers";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import { QUERY_SEARCH_EVENTS, QUERY_ME } from "../../utils/queries";
 import JaanMap from "../JaanMap";
 
 const SearchEvents = () => {
     const [eventQuery, setEventQuery] = useState("");
+    const { meLoading, meData } = useQuery(QUERY_ME)
     const [getEventQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_EVENTS);
 
     const events = data?.searchEvents || {};
     console.log('events are:', events)
+
 
     const handleChange = (event) => {
         setEventQuery(event.target.value)
@@ -22,7 +23,13 @@ const SearchEvents = () => {
         await getEventQuery({
             variables: { eventQuery }
         })
-        // await jaanSearch(events);
+    }
+
+    const userData = meData?.me || {}
+    const latLngArray = [];
+    if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
+    if (events?.length) {
+        events.map(event => latLngArray.push(JSON.parse(event.geocode)));
     }
 
     return (
@@ -43,14 +50,11 @@ const SearchEvents = () => {
             </div>
             <div>
                 <h3>Results:</h3>
-                <JaanMap eventArray={events} />
+                <JaanMap latLngArray={latLngArray} />
                 {events.length ? (
-                        events.map((event) => (
+                    events.map((event) => (
                             <div key={event._id}>
                                 <p>{event.title}</p>
-                                {event.distanceTxt ? (
-                                <p>{event.distanceTxt}</p>
-                                ) : <></>}
                                 <button>View Details</button>
                             </div>
                         ))
