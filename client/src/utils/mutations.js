@@ -145,3 +145,27 @@ mutation JoinEvent($eventId: ID!) {
     }
   }
 }`
+
+export const CREATE_NOTIFICATIONS = gql`
+  mutation Mutation($message: String!, $clubId: ID!) {
+  createNotifications(message: $message, clubId: $clubId) {
+    _id
+    notifications {
+      _id
+      message
+      postDate
+    }
+  }
+}
+`;
+
+export const REMOVE_NOTIFICATIONS = gql`
+  mutation RemoveNotifications($clubId: ID!) {
+  removeNotifications(clubId: $clubId) {
+    _id
+    notifications {
+      _id
+    }
+  }
+}
+`;

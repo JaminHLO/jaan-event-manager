@@ -8,6 +8,7 @@ import Cart from "../Cart";
 import auth from "../../utils/auth";
 import JaanMap from "../JaanMap";
 import { idbPromise, getGeocode } from "../../utils/helpers";
+import Notification from "../Notification";
 
 const stripePromise = loadStripe(
     'pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
@@ -108,8 +109,8 @@ const ClubDetail = () => {
         event.preventDefault();
         try {
             const geoEventAddress = await getGeocode(eventFormState.address);
-            const geoEventAddressString = JSON.stringify(geoEventAddress);
-            console.log("geoEventAddress is:", geoEventAddressString);
+            // const geoEventAddressString = JSON.stringify(geoEventAddress);
+            console.log("geoEventAddress is:", geoEventAddress);
             const { data } = await addEvent({
                 // was
                 // variables: {
@@ -164,6 +165,8 @@ const ClubDetail = () => {
     return (
 
         <div className="club-details text-white flex justify-center items-center">
+            <Notification clubData={clubData} />
+
             <div className="transition ease-in-out delay-150 bg-black opacity-60 hover:opacity-70 max-w-[25rem] rounded-2xl h-[30rem] mr-[5rem]">
                 <div className="p-4">
                     <JaanMap latLngArray={latLngArray} />
@@ -216,9 +219,7 @@ const ClubDetail = () => {
                     </ul>
                 </div>
             </div>
-
-
-            {/* Create Event Modal */}
+            
             {showModal &&
                 <div
                     className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50"

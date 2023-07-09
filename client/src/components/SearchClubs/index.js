@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { useLazyQuery } from "@apollo/client";
 import { QUERY_SEARCH_CLUBS } from "../../utils/queries";
@@ -41,7 +42,9 @@ const SearchClubs = () => {
                     clubs.map((club) => (
                         <div key={club._id}>
                             <p>{club.title}</p>
-                            <button>View Details</button>
+                            <Link
+                                to={`/clubs/club/${club._id}`}
+                            >View Details</Link>
                         </div>
                     ))
                 ) : (
