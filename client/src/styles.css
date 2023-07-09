@@ -131,3 +131,22 @@
     overflow: auto;
     margin: 0;
 }
+
+/* search events styles */
+.search-events {
+    background-image: url('./images/kayake-sunset.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 91vh;
+    overflow: auto;
+    margin: 0;
+}
+
+.search-event-input {
+    color: black;
+}
+
+.search-event-input::placeholder {
+    color: black;
+}
