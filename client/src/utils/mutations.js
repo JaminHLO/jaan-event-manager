@@ -153,7 +153,7 @@ export const CREATE_NOTIFICATIONS = gql`
     notifications {
       _id
       message
-      postDate
+      dateCreated
     }
   }
 }

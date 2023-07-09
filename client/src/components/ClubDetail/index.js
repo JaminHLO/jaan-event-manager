@@ -55,8 +55,6 @@ const ClubDetail = () => {
     const { loading: meLoading, data: meData } = useQuery(QUERY_ME);
     const userData = meData?.me || {};
 
-    // console.log('userData is', userData)
-    // console.log('clubData is', clubData);
     const latLngArray = [];
     if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
     if (clubData?.geocode) latLngArray.push(JSON.parse(clubData.geocode));
@@ -165,7 +163,7 @@ const ClubDetail = () => {
     return (
 
         <div className="club-details text-white flex justify-center items-center">
-            <Notification clubData={clubData} />
+            <Notification clubData={clubData} userData={userData}/>
 
             <div className="transition ease-in-out delay-150 bg-black opacity-60 hover:opacity-70 max-w-[25rem] rounded-2xl h-[30rem] mr-[5rem]">
                 <div className="p-4">

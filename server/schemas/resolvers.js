@@ -28,7 +28,8 @@ const resolvers = {
 
     },
     club: async (parent, { _id }) => {
-      return await Club.findById(_id).populate('category').populate('events');
+      return await Club.findById(_id).populate('category').populate('events')
+        .populate({ path: "notifications", populate: { path: "message"} });
     },
     user: async (parent, args, context) => {
       if (context.user) {
@@ -118,11 +119,11 @@ const resolvers = {
             path: "category"
           }
         })
-        if(context.user){
-          const user = await User.findById(context.user._id);
-          const sorted = jaanSort(user, filteredEvents);
-          return sorted;
-        }
+      if (context.user) {
+        const user = await User.findById(context.user._id);
+        const sorted = jaanSort(user, filteredEvents);
+        return sorted;
+      }
       return filteredEvents;
     },
     searchClubs: async (parent, { clubQuery }, context) => {
@@ -286,13 +287,13 @@ const resolvers = {
     },
     createNotifications: async (parent, { message, clubId }, context) => {
       if (context.user) {
-        const newNotification = await Notification.create({message});
+        const newNotification = await Notification.create({ message });
         const updatedClubNotification = await Club.findOneAndUpdate(
           { _id: clubId },
           { notifications: newNotification._id },
           { new: true }
         )
-        .populate("notifications")
+          .populate("notifications")
         return updatedClubNotification;
       }
       throw new AuthenticationError("Incorrect credentials");
@@ -300,9 +301,9 @@ const resolvers = {
     removeNotifications: async (parent, { clubId }, context) => {
       if (context.user) {
         const updatedClubNotification = await Club.findOneAndUpdate(
-          {_id: clubId},
-          {notifications: null},
-          {new: true}
+          { _id: clubId },
+          { notifications: null },
+          { new: true }
         )
         return updatedClubNotification;
       }

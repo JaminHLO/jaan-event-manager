@@ -55,6 +55,7 @@ export const QUERY_CLUB = gql`
     image
     notifications {
       _id
+      message
     }
     zipCode
     messages
@@ -148,6 +149,7 @@ query Me {
       image
       notifications {
         _id
+        message
       }
       zipCode
       messages
