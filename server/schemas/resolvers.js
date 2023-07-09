@@ -2,6 +2,7 @@ const { AuthenticationError } = require('apollo-server-express');
 const { User, Club, Event, Category, Order, Notification } = require('../models');
 const { signToken } = require('../utils/auth');
 const stripe = require('stripe')('sk_test_51NNi4mBTDevFCiGQDfSeVUSvfxZMJcfmiFWDqydSc1tsNQboBAHhqVqWAbZdvUucicOYARzKtjplgKatONL4hxpf00AEUi6nB1');
+const { jaanSort } = require('../utils/jaanSort');
 
 const resolvers = {
   Query: {
@@ -20,8 +21,11 @@ const resolvers = {
           $regex: title
         };
       }
-
+      // const response = await Club.find(params).populate('category').populate('events');
+      // const sorted = jaanSort(response?.data);
+      // return sorted;
       return await Club.find(params).populate('category').populate('events');
+
     },
     club: async (parent, { _id }) => {
       return await Club.findById(_id).populate('category').populate('events');
@@ -102,9 +106,11 @@ const resolvers = {
       return await Event.findById(_id).populate('clubId')
     },
     searchEvents: async (parent, { eventQuery }, context) => {
+
       if (eventQuery === "") {
         return;
       }
+
       const filteredEvents = await Event.find({ title: { $regex: eventQuery, $options: "i" } })
         .populate({
           path: "clubId",
@@ -112,12 +118,19 @@ const resolvers = {
             path: "category"
           }
         })
+        if(context.user){
+          const user = await User.findById(context.user._id);
+          const sorted = jaanSort(user, filteredEvents);
+          return sorted;
+        }
       return filteredEvents;
     },
     searchClubs: async (parent, { clubQuery }, context) => {
+
       if (clubQuery === "") {
         return;
       }
+
       const filteredClubs = await Club.find({ title: { $regex: clubQuery, $options: "i" } })
         .populate({
           path: "category"
