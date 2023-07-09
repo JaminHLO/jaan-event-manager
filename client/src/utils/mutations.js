@@ -66,6 +66,17 @@ mutation updatedEvent($eventId: ID!, $event: EventInput) {
   }
 }`
 
+export const UPDATE_CLUB = gql`
+mutation updateClub($clubId: ID!, $club: ClubInput) {
+  updateClub(clubId: $clubId, club: $club) {
+    title
+    description
+    maxMembers
+    image
+    price
+  }
+}`
+
 export const CREATE_CLUB = gql`
 mutation CreateClub($adminId: String, $title: String!, $description: String, $maxMembers: Int, $image: String, $price: Float, $category: String, $zipCode: Int, $geocode: String) {
   createClub(adminId: $adminId, title: $title, description: $description, maxMembers: $maxMembers, image: $image, price: $price, category: $category, zipCode: $zipCode, geocode: $geocode) {
@@ -92,7 +103,7 @@ export const ADD_EVENT = gql`
 mutation AddEvent($event: EventInput, $clubId: ID!) {
   addEvent(event: $event, clubId: $clubId) {
     _id
-    club {
+    clubId {
       _id
       title
     }
