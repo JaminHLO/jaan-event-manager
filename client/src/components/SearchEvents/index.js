@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { QUERY_SEARCH_EVENTS, QUERY_ME } from "../../utils/queries";
@@ -10,9 +11,19 @@ const SearchEvents = () => {
     const { meLoading, meData } = useQuery(QUERY_ME)
     const [getEventQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_EVENTS);
 
-    const events = data?.searchEvents || {};
-    console.log('events are:', events)
+    const [currentPage, setCurrentPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
 
+    const events = data?.searchEvents || [];
+
+    const itemsPerPage = 10;
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const subset = events.slice(startIndex, endIndex);
+
+    const paginate = (selectedPage) => {
+        setCurrentPage(selectedPage.selected)
+    }
 
     const handleChange = (event) => {
         setEventQuery(event.target.value)
@@ -65,6 +76,19 @@ const SearchEvents = () => {
                 ) : (
                     <p>No matching event found</p>
                 )}
+                {events.length ? (
+                    < ReactPaginate
+                        onPageChange={paginate}
+                        pageCount={Math.ceil(events.length / itemsPerPage)}
+                        previousLabel={'Prev'}
+                        nextLabel={'Next'}
+                        containerClassName={'pagination'}
+                        pageLinkClassName={'page-number'}
+                        previousLinkClassName={'page-number'}
+                        nextLinkClassName={'page-number'}
+                        activeLinkClassName={'active'}
+                    />
+                ) : null}
             </div>
         </div>
     )
