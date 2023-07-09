@@ -11,18 +11,18 @@ const SearchEvents = () => {
     const { meLoading, meData } = useQuery(QUERY_ME)
     const [getEventQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_EVENTS);
 
-    const [currentPage, setCurrentPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
 
     const events = data?.searchEvents || [];
 
     const itemsPerPage = 10;
-    const startIndex = currentPage * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const subset = events.slice(startIndex, endIndex);
+    const endOffset = itemOffset + itemsPerPage;
+    const currentItems = events.slice(itemOffset, endOffset)
+    const pageCount = Math.ceil(events.length / itemsPerPage)
 
-    const paginate = (selectedPage) => {
-        setCurrentPage(selectedPage.selected)
+    const paginate = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % events.length;
+        setItemOffset(newOffset);
     }
 
     const handleChange = (event) => {
@@ -64,8 +64,7 @@ const SearchEvents = () => {
                 <h3>Results:</h3>
                 <JaanMap latLngArray={latLngArray} />
                 {events.length ? (
-                    events.map((event) => (
-
+                    currentItems.map((event) => (
                         <div key={event._id}>
                             <p>{event.title}</p>
                             <Link
@@ -78,15 +77,13 @@ const SearchEvents = () => {
                 )}
                 {events.length ? (
                     < ReactPaginate
+                        breakLabel="..."
                         onPageChange={paginate}
-                        pageCount={Math.ceil(events.length / itemsPerPage)}
+                        pageCount={pageCount}
                         previousLabel={'Prev'}
                         nextLabel={'Next'}
-                        containerClassName={'pagination'}
-                        pageLinkClassName={'page-number'}
-                        previousLinkClassName={'page-number'}
-                        nextLinkClassName={'page-number'}
-                        activeLinkClassName={'active'}
+                        pageRangeDisplayed={5}
+                        renderOnZeroPageCount={null}
                     />
                 ) : null}
             </div>

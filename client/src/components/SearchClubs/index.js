@@ -9,18 +9,18 @@ const SearchClubs = () => {
     const [clubQuery, setClubQuery] = useState("");
     const [getClubQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_CLUBS);
 
-    const [currentPage, setCurrentPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
 
     const clubs = data?.searchClubs || []
 
     const itemsPerPage = 10;
-    const startIndex = currentPage * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const subset = clubs.slice(startIndex, endIndex);
+    const endOffset = itemOffset + itemsPerPage;
+    const currentItems = clubs.slice(itemOffset, endOffset)
+    const pageCount = Math.ceil(clubs.length / itemsPerPage)
 
-    const paginate = (selectedPage) => {
-        setCurrentPage(selectedPage.selected)
+    const paginate = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % clubs.length;
+        setItemOffset(newOffset);
     }
 
     const handleChange = (event) => {
@@ -53,7 +53,7 @@ const SearchClubs = () => {
             <div>
                 <h3>Results</h3>
                 {clubs.length ? (
-                    clubs.map((club) => (
+                    currentItems.map((club) => (
                         <div key={club._id}>
                             <p>{club.title}</p>
                             <Link
@@ -66,15 +66,13 @@ const SearchClubs = () => {
                 )}
                 {clubs.length ? (
                     < ReactPaginate
+                        breakLabel="..."
                         onPageChange={paginate}
-                        pageCount={Math.ceil(clubs.length / itemsPerPage)}
+                        pageCount={pageCount}
                         previousLabel={'Prev'}
                         nextLabel={'Next'}
-                        containerClassName={'pagination'}
-                        pageLinkClassName={'page-number'}
-                        previousLinkClassName={'page-number'}
-                        nextLinkClassName={'page-number'}
-                        activeLinkClassName={'active'}
+                        pageRangeDisplayed={5}
+                        renderOnZeroPageCount={null}
                     />
                 ) : null}
             </div>
