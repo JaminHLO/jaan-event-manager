@@ -108,9 +108,9 @@ const resolvers = {
     },
     searchEvents: async (parent, { eventQuery }, context) => {
 
-      if (eventQuery === "") {
-        return;
-      }
+      // if (eventQuery === "") {
+      //   return;
+      // }
 
       const filteredEvents = await Event.find({ title: { $regex: eventQuery, $options: "i" } })
         .populate({

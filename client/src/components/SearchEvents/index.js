@@ -7,14 +7,17 @@ import { QUERY_SEARCH_EVENTS, QUERY_ME } from "../../utils/queries";
 import JaanMap from "../JaanMap";
 
 const SearchEvents = () => {
+    const { loading: meLoading, data: meData } = useQuery(QUERY_ME);
     const [eventQuery, setEventQuery] = useState("");
-    const { meLoading, meData } = useQuery(QUERY_ME)
     const [getEventQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_EVENTS);
 
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
 
     const events = data?.searchEvents || [];
+
+    const userData = meData?.me || {}
+    // console.log('meData is', meData);
 
     const itemsPerPage = 10;
     const startIndex = currentPage * itemsPerPage;
@@ -29,16 +32,15 @@ const SearchEvents = () => {
         setEventQuery(event.target.value)
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-
         getEventQuery({
             variables: { eventQuery }
         })
     }
 
-    const userData = meData?.me || {}
     const latLngArray = [];
+    // console.log('userData in SearchEvents is:', userData);
     if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
     if (events?.length) {
         events.map(event => latLngArray.push(JSON.parse(event.geocode)));
@@ -49,7 +51,7 @@ const SearchEvents = () => {
             <h2>Search for an event:</h2>
             <div>
                 <form onSubmit={handleSubmit}>
-                    <label>Search for an event:</label>
+                    {/* <label>Search for an event:</label> */}
                     <input
                         type="text"
                         placeholder="Find an event here"
