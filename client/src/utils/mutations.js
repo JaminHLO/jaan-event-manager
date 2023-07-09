@@ -78,15 +78,14 @@ mutation updateClub($clubId: ID!, $club: ClubInput) {
 }`
 
 export const CREATE_CLUB = gql`
-mutation CreateClub($adminId: String, $title: String!, $description: String, $maxMembers: Int, $image: String, $price: Float, $category: String, $zipCode: Int, $geocode: String) {
-  createClub(adminId: $adminId, title: $title, description: $description, maxMembers: $maxMembers, image: $image, price: $price, category: $category, zipCode: $zipCode, geocode: $geocode) {
+mutation CreateClub($club: ClubInput) {
+  createClub(club: $club) {
     _id
     adminId
     title
     description
     maxMembers
     image
-    notifications
     zipCode
     messages
     price

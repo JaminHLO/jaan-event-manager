@@ -134,7 +134,7 @@ const typeDefs = gql`
     updateUser(user: UserInput): User
     buyMembership(_id: ID!, spotsAvailable: Int!): Club
     login(email: String!, password: String!): Auth
-    createClub(adminId: String, title: String!, description: String, maxMembers: Int, image: String, price: Float, category: String, zipCode: Int, geocode: String): Club
+    createClub(club: ClubInput): Club
     addEvent(event: EventInput, clubId: ID!): Event
     updateEvent(eventId: ID!, event: EventInput): Event
     updateClub(clubId: ID!, club: ClubInput): Club
