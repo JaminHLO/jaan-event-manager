@@ -137,7 +137,7 @@ mutation JoinEvent($eventId: ID!) {
     _id
     myEvents {
       _id
-      club {
+      clubId {
         _id
         title
       }

@@ -7,14 +7,17 @@ import { QUERY_SEARCH_EVENTS, QUERY_ME } from "../../utils/queries";
 import JaanMap from "../JaanMap";
 
 const SearchEvents = () => {
+    const { loading: meLoading, data: meData } = useQuery(QUERY_ME);
     const [eventQuery, setEventQuery] = useState("");
-    const { meLoading, meData } = useQuery(QUERY_ME)
     const [getEventQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_EVENTS);
 
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
 
     const events = data?.searchEvents || [];
+
+    const userData = meData?.me || {}
+    // console.log('meData is', meData);
 
     const itemsPerPage = 10;
     const startIndex = currentPage * itemsPerPage;
@@ -29,22 +32,22 @@ const SearchEvents = () => {
         setEventQuery(event.target.value)
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
         event.preventDefault();
-
         getEventQuery({
             variables: { eventQuery }
         })
     }
 
-    const userData = meData?.me || {}
     const latLngArray = [];
+    // console.log('userData in SearchEvents is:', userData);
     if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
     if (events?.length) {
         events.map(event => latLngArray.push(JSON.parse(event.geocode)));
     }
 
     return (
+
         <div className="search-events text-white flex flex-col items-center justify-center">
             <div className="bg-black opacity-70 hover:opacity-80 rounded-2xl w-1/2 text-center m-4">
                 <h2 className="text-3xl m-2">Search for an event</h2>
@@ -62,6 +65,7 @@ const SearchEvents = () => {
                         <button className="bg-red-900 hover:bg-rose-900 rounded-xl p-2 m-2" type="submit">Search</button>
                     </form>
                 </div>
+
             </div>
             <div className="bg-black opacity-70 hover:opacity-80 rounded-2xl m-4 w-1/2 flex flex-col items-center max-h-screen">
                 <div className="m-4 text-center">

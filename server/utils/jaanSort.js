@@ -10,6 +10,7 @@ module.exports = {
         console.log('APIKey is:', APIKey);
 
         // load and format user for google
+        console.log(`jaanArray.name is: ${jaanArray[0]?.title}, user is: ${user?.name}`)
         if (!jaanArray || !user) return null;
         const tmpOriginGeocode = JSON.parse(user.geocode);
         const originGeocode = `${tmpOriginGeocode.lat}%2C${tmpOriginGeocode.lng}`
@@ -29,7 +30,7 @@ module.exports = {
         // hardcoded input for testing
         // originGeocode = `33.8423839%2C-84.511287`; // %2C is comma
         // destinationGeocodes = '33.7700012%2C-84.3811458'; // %7C is |
-    
+
         const sortedArray = [];
         console.log(`URL to fetch is: https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originGeocode}&destinations=${destinationGeocodes}&units=imperial&key=${APIKey}`)
         try {

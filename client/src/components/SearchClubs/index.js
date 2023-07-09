@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
-import { useLazyQuery } from "@apollo/client";
-import { QUERY_SEARCH_CLUBS } from "../../utils/queries";
+import { useLazyQuery, useQuery } from "@apollo/client";
+import { QUERY_SEARCH_CLUBS, QUERY_ME } from "../../utils/queries";
+import JaanMap from "../JaanMap";
 
 const SearchClubs = () => {
+    const { loading: meLoading, data: meData } = useQuery(QUERY_ME);
     const [clubQuery, setClubQuery] = useState("");
     const [getClubQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_CLUBS);
 
@@ -13,6 +15,9 @@ const SearchClubs = () => {
     const [totalPages, setTotalPages] = useState(0);
 
     const clubs = data?.searchClubs || []
+
+    const userData = meData?.me || {}
+    // console.log('meData is', meData);
 
     const itemsPerPage = 10;
     const startIndex = currentPage * itemsPerPage;
@@ -34,12 +39,19 @@ const SearchClubs = () => {
         })
     }
 
+    const latLngArray = [];
+    console.log('userData in SearchClubs is:', userData);
+    if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
+    if (clubs?.length) {
+        clubs.map(event => latLngArray.push(JSON.parse(event.geocode)));
+    }
+
     return (
         <div>
             <h2>Search for a club:</h2>
             <div>
                 <form onSubmit={handleSubmit}>
-                    <label>Search for a club:</label>
+                    {/* <label>Search for a club:</label> */}
                     <input
                         type="text"
                         placeholder="Find an club here"
@@ -52,6 +64,7 @@ const SearchClubs = () => {
             </div>
             <div>
                 <h3>Results</h3>
+                <JaanMap latLngArray={latLngArray} />
                 {clubs.length ? (
                     clubs.map((club) => (
                         <div key={club._id}>
