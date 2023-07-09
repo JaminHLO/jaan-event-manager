@@ -11,8 +11,7 @@ const SearchEvents = () => {
     const [eventQuery, setEventQuery] = useState("");
     const [getEventQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_EVENTS);
 
-    const [currentPage, setCurrentPage] = useState(0);
-    const [totalPages, setTotalPages] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
 
     const events = data?.searchEvents || [];
 
@@ -20,12 +19,13 @@ const SearchEvents = () => {
     // console.log('meData is', meData);
 
     const itemsPerPage = 10;
-    const startIndex = currentPage * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const subset = events.slice(startIndex, endIndex);
+    const endOffset = itemOffset + itemsPerPage;
+    const currentItems = events.slice(itemOffset, endOffset)
+    const pageCount = Math.ceil(events.length / itemsPerPage)
 
-    const paginate = (selectedPage) => {
-        setCurrentPage(selectedPage.selected)
+    const paginate = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % events.length;
+        setItemOffset(newOffset);
     }
 
     const handleChange = (event) => {
@@ -67,14 +67,14 @@ const SearchEvents = () => {
                 </div>
 
             </div>
+
             <div className="bg-black opacity-70 hover:opacity-80 rounded-2xl m-4 w-1/2 flex flex-col items-center max-h-screen">
                 <div className="m-4 text-center">
                     <h3 className="text-3xl m-3">Results:</h3>
                     <JaanMap latLngArray={latLngArray} />
                     <div className="text-black bg-white max-w-full rounded-2xl m-3">
                         {events.length ? (
-                            events.map((event) => (
-
+                            currentItems.map((event) => (
                                 <div key={event._id}>
                                     <p className="text-2xl">List Of Events:</p>
                                     <p className="text-xl m-4">Title: {event.title} </p>
@@ -89,15 +89,13 @@ const SearchEvents = () => {
                     </div>
                     {events.length ? (
                         < ReactPaginate
-                            onPageChange={paginate}
-                            pageCount={Math.ceil(events.length / itemsPerPage)}
-                            previousLabel={'Prev'}
-                            nextLabel={'Next'}
-                            containerClassName={'pagination'}
-                            pageLinkClassName={'page-number'}
-                            previousLinkClassName={'page-number'}
-                            nextLinkClassName={'page-number'}
-                            activeLinkClassName={'active'}
+                        breakLabel="..."
+                        onPageChange={paginate}
+                        pageCount={pageCount}
+                        previousLabel={'Prev'}
+                        nextLabel={'Next'}
+                        pageRangeDisplayed={5}
+                        renderOnZeroPageCount={null}
                         />
                     ) : null}
                 </div>
