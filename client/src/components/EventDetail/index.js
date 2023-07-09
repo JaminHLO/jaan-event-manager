@@ -29,7 +29,6 @@ const EventDetail = () => {
   const [userInClub, setUserInClub] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
   const [showModal, setShowModal] = useState(false);
-  // const [eventEditform, setEventEditForm] = useState({ title: `${eventData?.title}`, address: `${eventData?.address}`, date: `${eventData?.dateTime}`, image:`${eventData?.image}`, description:`${eventData?.description}`, geocode: ``});
   const [savedEventIds, setSavedEventIds] = useState(getSavedEventsIds());
   const [joinEvent, { error }] = useMutation(JOIN_EVENT, {
     refetchQueries : [
