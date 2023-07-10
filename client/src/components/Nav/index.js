@@ -13,11 +13,6 @@ function Nav() {
           <img className="m-2 h-12" src={sportsConnect}></img>
           <ul className=" flex flex-row">
             <li className="text-white p-3">
-              {/* <button className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl">
-                <Link
-                  to={`/searchEventsClubs`}
-                >Search</Link>
-              </button> */}
               <SearchEventsClubs />
             </li>
             <li className="text-white p-3">
@@ -44,11 +39,7 @@ function Nav() {
           <button><Link to={`/`}><img className="h-12 mx-2" src={sportsConnect}></img></Link></button>
           <ul className="flex flex-row">
             <li className="m-2">
-              <button className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl">
-                <Link to="/searchEventsClubs">
-                  Search
-                </Link>
-              </button>
+              <SearchEventsClubs />
             </li>
             <li className="m-2">
               <button className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl">
