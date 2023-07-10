@@ -44,13 +44,8 @@ const Profile = () => {
 
 
     return (
-        <div className='profile w-full h-full'>
-            <div>
-                <h2 className="profile-header text-white col-span-9 h-[3.75rem] bg-dark text-light p-6 text-4xl flex flex-row justify-center">
-                    {/* Viewing {user ? `${user.name}'s` : 'your'} profile. */}
-                    Hello {`${user.name}`}
-                </h2>
-            </div>
+        <div className='profile'>
+
 
             {showModal ? (
                 <>
@@ -105,17 +100,23 @@ const Profile = () => {
                 </>
             ) : null}
 
-            <div className='flex flex-row mt-10'>
-                <div className="bg-black bg-opacity-60 max-w-[25rem] rounded-2xl h-[45rem] ml-20">
+            <div className='flex justify-center items-center min-h-[90vh]'>
+                <div className="bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 min-w-[25rem] max-w-[25rem] rounded-2xl h-[45rem]">
                     <div className='flex justify-center flex-col items-center p-3 h-full'>
-                        <div className="relative w-10/12 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 h-[50%]">
+                        <div className="w-10/12 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 h-[50%]">
                             {!user.image ? (
                                 <img src='./images/profile.png' className="h-full w-full profile-pic object-cover" />
                             ) : (
                                 <img className="profile-pic h-full w-full object-cover" src={user.image} />
                             )}
                         </div>
-                        <div className='flex justify-center items-center m-4 h-[50%]'>
+                        <div>
+                            <h2 className="profile-header text-white col-span-9 h-[3.75rem] bg-dark text-light p-6 text-4xl flex flex-row justify-center">
+                                {/* Viewing {user ? `${user.name}'s` : 'your'} profile. */}
+                                Hello {`${user.name}`}
+                            </h2>
+                        </div>
+                        <div className='flex justify-center items-center m-4 '>
                             <ul>
                                 <li className='m-4'>
                                     <button className='w-48 bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-xl'>
@@ -163,7 +164,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className='pl-10'>
-                    <div className="overflow-auto resize-y mb-4 club-event-profile text-white bg-black bg-opacity-60 rounded-xl h-[48.5%] max-h-[30rem]">
+                    <div className="overflow-auto mb-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl min-h-[20rem] max-h-[23rem]">
                         <p className='text-3xl text-center m-3'>Your Clubs</p>
                         <div className='flex justify-center flex-col items-center'>
                             <ClubList
@@ -172,7 +173,7 @@ const Profile = () => {
                         </div>
                     </div>
 
-                    <div className="overflow-auto resize-y mt-4 club-event-profile text-white bg-black bg-opacity-60 rounded-xl h-[48.5%] max-h-[30rem]">
+                    <div className="overflow-auto mt-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl min-h-[20rem] max-h-[23rem]">
                         <p className='text-3xl text-center m-3'>Your Events</p>
                         <div className='flex justify-center flex-col items-center'>
                             <EventList

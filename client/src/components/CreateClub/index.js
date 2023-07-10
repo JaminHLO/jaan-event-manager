@@ -80,16 +80,16 @@ const CreateClub = (props) => {
                 await createClub({
                     variables: {
                         club: {
-                        adminId: userData._id,
-                        title: club.title.toString(),
-                        description: club.description.toString(),
-                        maxMembers: parseInt(club.maxMembers),
-                        image: club.image.toString(),
-                        price: parseFloat(club.price),
-                        category: optionCat,
-                        geocode: geoJSONString,
-                        zipCode: parseInt(club.zipCode),
-                    }
+                            adminId: userData._id,
+                            title: club.title.toString(),
+                            description: club.description.toString(),
+                            maxMembers: parseInt(club.maxMembers),
+                            image: club.image.toString(),
+                            price: parseFloat(club.price),
+                            category: optionCat,
+                            geocode: geoJSONString,
+                            zipCode: parseInt(club.zipCode),
+                        }
                     },
                 });
             console.log("createClub data is")
@@ -118,7 +118,7 @@ const CreateClub = (props) => {
 
     return (
         <div className="create-club my-1  flex justify-center items-center min-h-[90vh]">
-            <div className='p-5 bg-black opacity-50 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-80'>
+            <div className='p-5 bg-black opacity-80 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 hover:opacity-90'>
                 <h2 className='text-white text-3xl m-3'>Create a Club</h2>
                 <h3
                     style={
