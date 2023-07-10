@@ -150,3 +150,14 @@
 .search-event-input::placeholder {
     color: black;
 }
+
+/* event page styles */
+.event-page {
+    background-image: url('./images/surfer-sunset.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 91vh;
+    overflow: auto;
+    margin: 0;
+}
