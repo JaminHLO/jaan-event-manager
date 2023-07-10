@@ -36,10 +36,10 @@ const CreateClub = (props) => {
     const [club, setClub] = useState({
         title: "",
         description: "",
-        maxMembers: 1,
+        maxMembers: null,
         image: "",
-        zipCode: 0,
-        price: 0
+        zipCode: null,
+        price: null
     });
 
     const handleChange = (event) => {
@@ -154,7 +154,7 @@ const CreateClub = (props) => {
                         </select>
                     </div>
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="title" className='text-white'>Title</label><br />
+                        <label htmlFor="title" className='text-white'></label><br />
                         <input
                             className='login-input rounded-2xl m-1 w-72'
                             placeholder="Club Name"
@@ -166,7 +166,7 @@ const CreateClub = (props) => {
                         />
                     </div>
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="description" className='text-white'>Description</label><br />
+                        <label htmlFor="description" className='text-white'></label><br />
                         <input
                             className='login-input rounded-2xl m-1 w-72'
                             placeholder="Description"
@@ -179,7 +179,7 @@ const CreateClub = (props) => {
                     </div>
 
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="maxMembers" className='text-white'>Max. Number of Members</label><br />
+                        <label htmlFor="maxMembers" className='text-white'></label><br />
                         <input
                             className='login-input rounded-2xl m-1 w-72'
                             placeholder="Maximum Members"
@@ -192,7 +192,7 @@ const CreateClub = (props) => {
                         />
                     </div>
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="img" className='text-white'>Image Link</label><br />
+                        <label htmlFor="img" className='text-white'></label><br />
                         <input
                             className='login-input rounded-2xl m-1 w-72'
                             placeholder="Image link"
@@ -204,7 +204,7 @@ const CreateClub = (props) => {
                         />
                     </div>
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="zipCode" className='text-white'>Zip Code</label><br />
+                        <label htmlFor="zipCode" className='text-white'></label><br />
                         <input
                             className='login-input rounded-2xl m-1 w-72'
                             placeholder="Zip Code"
@@ -218,7 +218,7 @@ const CreateClub = (props) => {
                         />
                     </div>
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="price" className='text-white'>Price</label><br />
+                        <label htmlFor="price" className='text-white'></label><br />
                         <input
                             className='login-input rounded-2xl m-1 w-72'
                             placeholder="Price to Join"
@@ -231,7 +231,7 @@ const CreateClub = (props) => {
                     </div>
                     <div className="flex-row flex-end">
                         <button
-                            className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            className=" m-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="submit"
                         >Submit
                         </button>
