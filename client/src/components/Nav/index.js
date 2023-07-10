@@ -12,20 +12,26 @@ function Nav() {
           <h1 className="text-2xl text-white p-3">Sports Connect</h1>
           <ul className=" flex flex-row">
             <li className="text-white p-3">
+              <button className="bg-stone-900 hover:bg-stone-800 text-white font-bold py-2 px-4 rounded-2xl">
               <Link
                 to={`/searchEventsClubs`}
               >Search</Link>
+              </button>
             </li>
             <li className="text-white p-3">
-              <a href="/profile">
+              <button className="bg-stone-900 hover:bg-stone-800 text-white font-bold py-2 px-4 rounded-2xl">
+                <a href="/profile">
                 Profile
-              </a>
+                </a>
+              </button>
             </li>
             <li className="text-white p-3">
               {/* this is not using the Link component to logout or user and then refresh the application to the start */}
-              <a href="/" onClick={() => Auth.logout()}>
+              <button className="bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-2xl">
+                <a href="/" onClick={() => Auth.logout()}>
                 Logout
-              </a>
+                </a>
+              </button>
             </li>
           </ul>
         </div>

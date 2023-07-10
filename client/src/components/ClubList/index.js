@@ -18,19 +18,19 @@ const ClubList = ({ clubs }) => {
         clubs.map((club) => (
           <div key={club._id} className="border-solid border-2 rounded-xl flex flex-col items-center flex-wrap m-3 p-3">
             {!club.image ? (
-              <img className="h-48 w-48 rounded-2xl"
+              <img className="h-48 w-48 rounded-2xl my-1"
                 src='./images/club_default.jpg' />
             ) : (
-              <img className="h-48 w-48 rounded-2xl"
+              <img className="h-48 w-48 rounded-2xl my-1"
                 src={club.image} />
             )}
             <div className="">
               <div className='font-bold text-xl'>
                 {club.title}
               </div>
-              <p className='text-gray-700 text-base'>
+              {/* <p className='text-gray-700 text-base'>
                 {club.description}
-              </p>
+              </p> */}
               <ul>
                 <li>{club.address}</li>
                 <li>{club.dateTime}</li>
@@ -42,7 +42,7 @@ const ClubList = ({ clubs }) => {
                 <Link
                   to={`/clubs/club/${club._id}`}
                 >
-                  More Info...
+                  More...
                 </Link>
               </span>
             </div>

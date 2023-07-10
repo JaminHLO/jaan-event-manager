@@ -5,7 +5,8 @@ import Auth from '../../utils/auth';
 import { UPDATE_USER } from '../../utils/mutations';
 import { QUERY_ME } from '../../utils/queries';
 import { getGeocode } from '../../utils/helpers'; 
- 
+let img = "" 
+let address = ""
 
 const UpdateProfile = (props) => {
   const { loading, data } = useQuery(QUERY_ME)
@@ -22,8 +23,10 @@ const UpdateProfile = (props) => {
 
   const userData = data?.me || {}
   const participants = userData.participants
+  !userData?.image ? img = "" : img= userData?.image
+  !userData?.address ? address = "" : address= userData?.address  
   // Populate form with current user data
-  const [formState, setFormState] = useState({ name: `${userData?.name}`, address: `${userData?.address}`, image: `${userData?.image}`, geocode: ``});
+  const [formState, setFormState] = useState({ name: `${userData?.name}`, address: `${address}`, image: `${img}`, geocode: ``});
   const [newParticipant, setNewParticipant] = useState('')
 
 
@@ -31,8 +34,6 @@ const UpdateProfile = (props) => {
   if (!token) {
     return false;
   }
-
-  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -117,9 +118,9 @@ const UpdateProfile = (props) => {
       </h3>
         <form onSubmit={handleFormSubmit} encType='multipart/form-data'>
           <div className="flex-row space-between my-2">
-            {/* <label htmlFor="img" className='text-white'>Image:</label> */}
+            <label htmlFor="img" className='text-white'>Image Link:</label>
             <input
-              className='login-input rounded-2xl m-3 w-72'
+              className='login-input rounded-2xl m-2 w-72'
               placeholder="image link"
               name="image"
               type="text"
@@ -129,9 +130,9 @@ const UpdateProfile = (props) => {
             />
           </div>
           <div className="flex-row space-between my-2">
-            <label htmlFor="Name" className='text-white'></label>
+            <label htmlFor="Name" className='text-white'>Name: </label>
             <input
-              className='login-input rounded-2xl m-3 w-72'
+              className='login-input rounded-2xl m-2 w-72'
               placeholder="Name"
               name="name"
               type="name"
@@ -142,9 +143,9 @@ const UpdateProfile = (props) => {
           </div>
 
           <div className="flex-row space-between my-2">
-            <label htmlFor="address" className='text-white'></label>
+            <label htmlFor="address" className='text-white'>Address: </label>
             <input
-              className='login-input rounded-2xl m-3 w-72'
+              className='login-input rounded-2xl m-2 w-72'
               placeholder="address"
               name="address"
               type="address"
@@ -153,11 +154,12 @@ const UpdateProfile = (props) => {
               value={formState.address}
             />
           </div>
-          <label htmlFor="participants" className='text-white'>Participants:</label>
+          <label htmlFor="participants" className='text-white px-2'>Participants:</label>
           {
             participants?.map((participant) => (
               <div className="flex-row space-between my-2">
                 <input readOnly
+                  className='login-input rounded-xl w-42'
                   value={(participant)}
                 />
               </div>
@@ -200,6 +202,7 @@ const UpdateProfile = (props) => {
                       <div className="flex-row space-between my-2">
                         <label htmlFor="newParticipantName">New participant:</label>
                         <input
+                          className='mx-3'
                           placeholder="Name"
                           name="newParticipantName"
                           type="name"
@@ -243,6 +246,11 @@ const UpdateProfile = (props) => {
               className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="submit"
             >Submit
+            </button>
+            <button
+              className="mb-3 mx-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button"
+            ><Link to={`/profile`}>Cancel</Link>
             </button>
           </div>
         </form>

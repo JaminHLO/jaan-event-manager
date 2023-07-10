@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_EVENT, QUERY_ME } from "../../utils/queries";
@@ -158,7 +158,9 @@ const EventDetail = () => {
 
     return (
         <>
+        { token ? 
             <Link to="/profile" >← Back to Profile</Link>
+          : null }
             <h3>{eventData.title}</h3>
                 { !eventData.image ? (
                     <img className="" src= '/images/event_default.jpg' width="300px" />
@@ -192,8 +194,8 @@ const EventDetail = () => {
                                     <p>Join the club to add this event</p>
                                 )
                         ) : (
-                            <p>Log in to Join!</p>
-                        )
+                          <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950"><Link to={`/login`}>Login to Join!</Link></button>
+                          )
                         }
                         {token ? (
                             isAdmin ? (
@@ -211,14 +213,13 @@ const EventDetail = () => {
         {/* Modal to Edit Event */}
             {showModal ? (
           <>
-            <div
-              className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-              <div className="relative w-auto my-6 mx-auto max-w-sm">
+           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative w-auto my-2 mx-auto max-w-sm">
                 {/*content*/}
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                   {/*header*/}
-                  <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                    <h3 className="text-3xl font-semibold">
+                  <div className="flex items-start justify-between p-3 border-b border-solid border-slate-200 rounded-t">
+                    <h3 className="text-3xl font-semibold text-black">
                         Update Event
                     </h3>
                     <button
@@ -236,6 +237,7 @@ const EventDetail = () => {
                       <div className="flex-row space-between my-2">
                         <label htmlFor="title">Title:</label>
                         <input
+                          className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                           placeholder="title"
                           name="title"
                           type="text"
@@ -248,6 +250,7 @@ const EventDetail = () => {
                       <div className="flex-row space-between my-2">
                             <label htmlFor="address">Location:</label>
                             <input
+                               className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                                 placeholder="Where is this event taking place?"
                                 name="address"
                                 type="text"
@@ -259,6 +262,7 @@ const EventDetail = () => {
                         <div className="flex-row space-between my-2">
                             <label htmlFor="dateTime">Date:</label>
                             <input
+                                className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                                 placeholder="Choose a date for your event"
                                 name="dateTime"
                                 type="text"
@@ -268,7 +272,9 @@ const EventDetail = () => {
                             />
                         </div>
                         <div className="flex-row space-between my-2">
+                            <label htmlFor="image">Description:</label>
                             <textarea
+                                className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                                 placeholder="Enter a short description of your event"
                                 name="description"
                                 onChange={handleEditEventChange}
@@ -277,6 +283,7 @@ const EventDetail = () => {
                         </div>
                             <label htmlFor="image">Image:</label>
                             <input
+                                className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                                 placeholder="Image link"
                                 name="image"
                                 type="text"

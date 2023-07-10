@@ -99,9 +99,9 @@ const ClubDetail = () => {
       };
 
     const token = auth.loggedIn() ? auth.getToken() : null;
-    if (!token) {
-        return false;
-    }
+    // if (!token) {
+    //     return false;
+    // }
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -150,7 +150,13 @@ const ClubDetail = () => {
             const { data } = await updateClub({
                 variables: {
                     clubId: clubIdParam,
-                    club: { ...clubEditform }
+                    club: { 
+                        title: clubEditform.title.toString(),
+                        maxMembers: parseInt(clubEditform.maxMembers),
+                        image: clubEditform.image.toString(),
+                        price: parseFloat(clubEditform.price),
+                        description: clubEditform.description.toString()
+                    }
               }})
             console.log('updated club', data)
             setClubEditForm({ title: `${clubData?.title}`, maxMembers: `${clubData?.maxMembers}`, price: `${clubData?.price}`, image:`${clubData?.image}`, description:`${clubData?.description}`});
@@ -195,23 +201,27 @@ const ClubDetail = () => {
                         <p className="text-xl m-2">About: {clubData.description}</p>
                         <p className="text-xl m-2">Membership Price: ${clubData.price}</p>
                         <p className="text-xl m-2">Spots Available: {clubData.spotsAvailable}</p>
+                        { token ? (
                         <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950" onClick={submitCheckout}>Purchase Membership</button>
+                        ) : (
+                        <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950"><Link to={`/login`}>Login to Join!</Link></button>
+                        )}
                     </div>
                 </div>
                 <div className="overflow-auto resize-y transition ease-in-out delay-150 bg-black opacity-60 hover:opacity-70 rounded-2xl w-[60rem] h-[18rem] mt-4">
                     <h2 className="text-3xl text-center m-4">List of Events</h2>
-                    <ul>
+                    <ul className="list-disc">
                         {clubData.events?.length !== 0 ? (
 
                             clubEvents.map((singleEvent) => (
-                                <li>
-                                    <Link to={`/events/event/${singleEvent._id}`}>
-                                        {singleEvent.title}
-                                        {singleEvent.dateTime}
+                                <li className="text-red-500">
+                                    <Link to={`/events/event/${singleEvent._id}`}
+                                    className="text-xl m-4 text-white">
+                                        <strong>{singleEvent.title} </strong>on <small>{singleEvent.dateTime}</small>
                                     </Link>
                                 </li>
                             ))) : (
-                            <p>No events have been listed for this club</p>
+                            <p className="m-3">No events have been listed for this club</p>
                         )
                         }
                     </ul>
@@ -261,6 +271,18 @@ const ClubDetail = () => {
                                             id="address"
                                             onChange={handleChange}
                                             value={eventFormState.address}
+                                        />
+                                    </div>
+                                    <div className="flex-row space-between my-2">
+                                        <label htmlFor="image"></label>
+                                        <input
+                                            className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+                                            placeholder="Image Link"
+                                            name="image"
+                                            type="text"
+                                            id="image"
+                                            onChange={handleChange}
+                                            value={eventFormState.image}
                                         />
                                     </div>
                                     <div className="flex-row space-between my-2">
@@ -329,7 +351,7 @@ const ClubDetail = () => {
                         onSubmit={handleEditClub}
                         >
                       <div className="flex-row space-between my-2">
-                        <label htmlFor="title">Title:</label>
+                        <label htmlFor="title"></label>
                         <input
                           className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                           placeholder="Title"
@@ -341,40 +363,41 @@ const ClubDetail = () => {
                         />
                       </div>
                       <div className="flex-row space-between my-2">
-                            <label htmlFor="maxMembers">Max. number of members:</label>
+                            <label htmlFor="maxMembers" className="text-black">Max. number of members:</label>
                             <input
                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                                 placeholder="Max number of members"
                                 name="maxMembers"
-                                type="text"
+                                type="integer"
                                 id="maxMembers"
                                 onChange={handleEditClubChange}
                                 value={clubEditform.maxMembers}
                             />
                         </div>
                         <div className="flex-row space-between my-2">
-                            <label htmlFor="price">Price:</label>
+                            <label htmlFor="price"className="text-black">Price:</label>
                             <input
                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                                 placeholder="Price"
                                 name="price"
-                                type="text"
+                                type="float"
                                 id="price"
                                 onChange={handleEditClubChange}
                                 value={clubEditform.price}
                             />
                         </div>
                         <div className="flex-row space-between my-2">
-                        <label htmlFor="price">Description:</label>
+                        <label htmlFor="price" className="text-black">Description:</label>
                             <textarea
                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"                                                                            
                                 placeholder="Short description of your club"
                                 name="description"
+                                type="float"
                                 onChange={handleEditClubChange}
                                 value={clubEditform.description}
                             ></textarea>
                         </div>
-                            <label htmlFor="image">Image:</label>
+                            <label htmlFor="image" className="text-black">Image:</label>
                             <input
                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"                                                                            
                                 placeholder="Image link"

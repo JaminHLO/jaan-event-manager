@@ -75,11 +75,12 @@ const CreateClub = (props) => {
                 // console.log("geoJSONString is:", geoJSONString);
 
             }
-
+            console.log('-------', club, userData._id, optionCat)
             const { data } =
                 await createClub({
                     variables: {
-                        adminId: userData._id.toString(),
+                        club: {
+                        adminId: userData._id,
                         title: club.title.toString(),
                         description: club.description.toString(),
                         maxMembers: parseInt(club.maxMembers),
@@ -88,6 +89,7 @@ const CreateClub = (props) => {
                         category: optionCat,
                         geocode: geoJSONString,
                         zipCode: parseInt(club.zipCode),
+                    }
                     },
                 });
             console.log("createClub data is")
@@ -152,9 +154,9 @@ const CreateClub = (props) => {
                         </select>
                     </div>
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="title" className='text-white'></label>
+                        <label htmlFor="title" className='text-white'>Title</label><br />
                         <input
-                            className='login-input rounded-2xl m-3 w-72'
+                            className='login-input rounded-2xl m-1 w-72'
                             placeholder="Club Name"
                             name="title"
                             type="title"
@@ -164,9 +166,9 @@ const CreateClub = (props) => {
                         />
                     </div>
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="description" className='text-white'></label>
+                        <label htmlFor="description" className='text-white'>Description</label><br />
                         <input
-                            className='login-input rounded-2xl m-3 w-72'
+                            className='login-input rounded-2xl m-1 w-72'
                             placeholder="Description"
                             name="description"
                             type="description"
@@ -177,9 +179,9 @@ const CreateClub = (props) => {
                     </div>
 
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="maxMembers" className='text-white'></label>
+                        <label htmlFor="maxMembers" className='text-white'>Max. Number of Members</label><br />
                         <input
-                            className='login-input rounded-2xl m-3 w-72'
+                            className='login-input rounded-2xl m-1 w-72'
                             placeholder="Maximum Members"
                             name="maxMembers"
                             type="text"
@@ -190,9 +192,9 @@ const CreateClub = (props) => {
                         />
                     </div>
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="img" className='text-white'></label>
+                        <label htmlFor="img" className='text-white'>Image Link</label><br />
                         <input
-                            className='login-input rounded-2xl m-3 w-72'
+                            className='login-input rounded-2xl m-1 w-72'
                             placeholder="Image link"
                             name="image"
                             type="text"
@@ -202,9 +204,9 @@ const CreateClub = (props) => {
                         />
                     </div>
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="zipCode" className='text-white'></label>
+                        <label htmlFor="zipCode" className='text-white'>Zip Code</label><br />
                         <input
-                            className='login-input rounded-2xl m-3 w-72'
+                            className='login-input rounded-2xl m-1 w-72'
                             placeholder="Zip Code"
                             name="zipCode"
                             type="text"
@@ -216,9 +218,9 @@ const CreateClub = (props) => {
                         />
                     </div>
                     <div className="flex-row space-between my-2">
-                        <label htmlFor="price" className='text-white'></label>
+                        <label htmlFor="price" className='text-white'>Price</label><br />
                         <input
-                            className='login-input rounded-2xl m-3 w-72'
+                            className='login-input rounded-2xl m-1 w-72'
                             placeholder="Price to Join"
                             name="price"
                             type="price"
