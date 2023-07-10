@@ -41,7 +41,8 @@ const SearchClubs = () => {
 
     const latLngArray = [];
     // console.log('userData in SearchClubs is:', userData);
-    const userGeocode = userData?.geocode || `{ "lat": 0, "lng": 0 }`
+    // const userGeocode = userData?.geocode || `{ "lat": 0, "lng": 0 }`
+    const userGeocode = userData?.geocode
     if (userGeocode) latLngArray.push(JSON.parse(userGeocode));
     if (clubs?.length) {
         clubs.map(club => {

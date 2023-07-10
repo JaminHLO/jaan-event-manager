@@ -16,7 +16,7 @@ const SearchEvents = () => {
 
     const events = data?.searchEvents || [];
     // if (auth.loggedIn()) {
-    //     const userData = meData?.me || {}
+        // const userData = meData?.me || {}
     // }
     // console.log('meData is', meData);
 

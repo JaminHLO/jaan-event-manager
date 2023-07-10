@@ -119,9 +119,10 @@ const resolvers = {
             path: "category"
           }
         })
+        .limit(20)
       const geoCheckEvents = filteredEvents.map(event => {
         if (!event.geocode) {
-          return { ...event, geocode: { "lat": 0, "lng": 0 } }
+          return { ...event._doc, geocode: `{"lat":33.753746,"lng":-84.386330}` }
         }
         return event;
       })
@@ -129,11 +130,16 @@ const resolvers = {
         const user = await User.findById(context.user._id);
         const geoCheckUser = (user) => {
           if (!user.geocode) {
-            return { ...user, geocode: { "lat": 0, "lng": 0 } };
+            return { ...user._doc, geocode: `{"lat":33.753746,"lng":-84.386330}` };
           };
         }
         const checkedUser = geoCheckUser(user);
-        console.log(checkedUser)
+        // console.log("line 136", checkedUser)
+        if (checkedUser) {
+          const sorted = jaanSort(checkedUser, geoCheckEvents);
+          return sorted
+        }
+        // console.log(geoCheckEvents)
         const sorted = jaanSort(user, geoCheckEvents);
         return sorted;
       }
