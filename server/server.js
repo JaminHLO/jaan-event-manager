@@ -13,6 +13,11 @@ const server = new ApolloServer({
   context: authMiddleware,
 });
 
+require('dotenv').config();
+// console.log('vvvvvvvvvvvvvvvvvvvvvvv')
+// console.log('api key is:', process.env.GOOGLE_MAPS_API_KEY)
+// console.log('^^^^^^^^^^^^^^^^^^^^^^^')
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
