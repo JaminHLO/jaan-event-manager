@@ -17,6 +17,5 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "react-calendar": "^4.3.0"
   }
 }
