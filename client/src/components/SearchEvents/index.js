@@ -16,7 +16,7 @@ const SearchEvents = () => {
 
     const events = data?.searchEvents || [];
     // if (auth.loggedIn()) {
-        // const userData = meData?.me || {}
+    // const userData = meData?.me || {}
     // }
     // console.log('meData is', meData);
 
@@ -59,7 +59,7 @@ const SearchEvents = () => {
     return (
 
         <div className="search-events text-white flex flex-col items-center justify-center">
-            <div className="bg-black opacity-70 hover:opacity-80 rounded-2xl w-1/2 text-center m-4">
+            <div className="bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl w-1/2 text-center m-4">
                 <h2 className="text-3xl m-2">Search for an event</h2>
                 <div className="m-4">
                     <form onSubmit={handleSubmit}>
@@ -78,20 +78,21 @@ const SearchEvents = () => {
 
             </div>
 
-            <div className="bg-black opacity-70 hover:opacity-80 rounded-2xl m-4 w-1/2 flex flex-col items-center max-h-screen">
+            <div className="overflow-auto bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl m-4 w-1/2 flex flex-col items-center max-h-[35rem]">
                 <div className="m-4 text-center">
                     <h3 className="text-3xl m-3">Results:</h3>
-                    <JaanMap latLngArray={latLngArray} />
-                    <div className="text-black bg-white max-w-full rounded-2xl m-3">
+                    <div className="flex justify-center">
+                        <JaanMap latLngArray={latLngArray} />
+                    </div>
+                    <div className="text-white max-w-full rounded-2xl m-3">
+                        <p className="text-2xl">List Of Events:</p>
                         {events.length ? (
                             currentItems.map((event) => (
-                                <div key={event._id}>
-                                    <p className="text-2xl">List Of Events:</p>
-                                    <p className="text-xl m-4">Title: {event.title} </p>
-                                    <button className="bg-red-900 rounded-xl p-2"><Link
+                                <ul key={event._id}>
+                                    <li className="text-xl border-solid border-2 border-white rounded-xl m-3 p-3"><span className="font-bold">Event:</span> {event.title} <button className="bg-red-900 hover:bg-rose-900 rounded-xl ml-3 p-1"><Link
                                         to={`/events/event/${event._id}`}
-                                    >View Details</Link></button>
-                                </div>
+                                    >View Details</Link></button></li>
+                                </ul>
                             ))
                         ) : (
                             <p>No matching event found</p>

@@ -1,7 +1,7 @@
 import React from "react";
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
-
+import sportsConnect from "../../images/sports-connect-logo.png";
 
 function Nav() {
 
@@ -9,27 +9,27 @@ function Nav() {
     if (Auth.loggedIn()) {
       return (
         <div className="flex flex-row justify-between p-4 bg-slate-950">
-          <h1 className="text-2xl text-white p-3">Sports Connect</h1>
+          <img className="m-2 h-12" src={sportsConnect}></img>
           <ul className=" flex flex-row">
             <li className="text-white p-3">
-              <button className="bg-stone-900 hover:bg-stone-800 text-white font-bold py-2 px-4 rounded-2xl">
-              <Link
-                to={`/searchEventsClubs`}
-              >Search</Link>
+              <button className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl">
+                <Link
+                  to={`/searchEventsClubs`}
+                >Search</Link>
               </button>
             </li>
             <li className="text-white p-3">
-              <button className="bg-stone-900 hover:bg-stone-800 text-white font-bold py-2 px-4 rounded-2xl">
+              <button className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl">
                 <a href="/profile">
-                Profile
+                  Profile
                 </a>
               </button>
             </li>
             <li className="text-white p-3">
               {/* this is not using the Link component to logout or user and then refresh the application to the start */}
-              <button className="bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-2xl">
+              <button className="bg-red-900 hover:bg-rose-900 text-white font-bold py-2 px-4 rounded-2xl">
                 <a href="/" onClick={() => Auth.logout()}>
-                Logout
+                  Logout
                 </a>
               </button>
             </li>
@@ -39,24 +39,24 @@ function Nav() {
     } else {
       return (
         <div className="flex flex-row justify-between p-4 bg-slate-950">
-          <h1 className="text-2xl text-white">Sports Connect</h1>
+          <button><Link to={`/`}><img className="h-12 mx-2" src={sportsConnect}></img></Link></button>
           <ul className="flex flex-row">
-            <li className="mx-1">
-              <button className="bg-stone-900 hover:bg-stone-800 text-white font-bold py-2 px-4 rounded-2xl">
+            <li className="m-2">
+              <button className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl">
                 <Link to="/searchEventsClubs">
                   Search
                 </Link>
               </button>
             </li>
-            <li className="mx-1">
-              <button className="bg-stone-900 hover:bg-stone-800 text-white font-bold py-2 px-4 rounded-2xl">
+            <li className="m-2">
+              <button className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl">
                 <Link to="/login">
                   Login
                 </Link>
               </button>
             </li>
-            <li className="mx-1">
-              <button className="bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-2xl">
+            <li className="m-2">
+              <button className="bg-red-900 hover:bg-rose-900 text-white font-bold py-2 px-4 rounded-2xl">
                 <Link to="/signup">
                   Signup
                 </Link>
