@@ -38,9 +38,9 @@ const EventList = ({ events }) => {
               <div className='font-bold text-xl mb-2'>
                 {singleEvent.title}
               </div>
-              <p className='text-gray-700 text-base'>
+              {/* <p className='text-gray-700 text-base'>
                 {singleEvent.description}
-              </p>
+              </p> */}
               <ul>
                 <li>{singleEvent.dateTime}</li>
                 <li>{singleEvent.address}</li>

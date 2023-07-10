@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_EVENT, QUERY_ME } from "../../utils/queries";
@@ -165,61 +165,197 @@ const EventDetail = () => {
       <div className="overflow-auto bg-black opacity-80 hover:opacity-90 rounded-2xl w-8/12 min-h-[40rem] max-h-screen flex items-center">
         <div className="w-1/2 flex flex-col items-center text-center">
 
-          <h3 className="text-3xl m-3">{eventData.title}</h3>
-          {!eventData.image ? (
-            <img className="m-3" src='/images/event_default.jpg' width="300px" />
-          ) : (
-            <img className="m-3" src={eventData.image} width="300px" />
-          )}
-          <p className="text-xl m-3"><span className="font-bold">Event Description:</span> {eventData.description}</p>
-          <ul className='text-base'>
-            <li className="text-xl m-3">Date and Time: {eventData.dateTime}</li>
-            <li className="text-xl m-3">{eventData.address}</li>
-            {eventData.isAvailable
-              ? <li className="text-xl"><span className="font-bold">Status:</span> <span className="text-green-500">Available</span></li>
-              : <li className="text-xl"><span className="font-bold">Status:</span> <span className="text-red-500">Not Available</span></li>}
-          </ul>
-          <Link className="m-3" to="/profile" >← Back to Profile</Link>
-        </div>
-        <div className="w-1/2 flex flex-col items-center">
-          {token ? (
-            userInClub ? (
-              signedUp ? (
-                <p className="text-xl m-2">You are signed up for this event!</p>
-              ) : (
-                <button
-                  disabled={savedEventIds?.some((savedEventId) => savedEventId === eventId)}
-                  className="bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  type="button"
-                  onClick={() => { handleJoinEvent() }}>
-                  {savedEventIds?.some((savedEventId) => savedEventId === eventId)
-                    ? 'You have joined this event!'
-                    : 'Join event!'}
-                </button>
-              )
-            ) : (
-              <p>Join the club to add this event</p>
-            )
-          ) : (
-            <p>Log in to Join!</p>
-          )
-          }
-          <div className="m-3">
-            <JaanMap latLngArray={latLngArray} />
-          </div>
-          {token ? (
-            isAdmin ? (
-              <button
-                className="m-3 bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:bg-rose-900 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                onClick={() => { setShowModal(true) }}
-              >
-                Edit Event
-              </button>
-            ) : null
-          ) : null
-          }
-        </div>
-      </div>
+    return (
+        <>
+        { token ? 
+            <Link to="/profile" >← Back to Profile</Link>
+          : null }
+            <h3>{eventData.title}</h3>
+                { !eventData.image ? (
+                    <img className="" src= '/images/event_default.jpg' width="300px" />
+                    ) : (
+                    <img  src= {eventData.image} width="300px" />
+                    )}
+                    <p>{eventData.description}</p>
+                        <ul className='text-gray-700 text-base'>
+                            <li>Date and Time: {eventData.dateTime}</li>
+                            <li>{eventData.address}</li>
+                            {eventData.isAvailable 
+                                ? <li>Available</li>
+                                : <li>Not Available</li>}
+                        </ul>
+                        {token ? (
+                            userInClub ? (
+                                signedUp ? (
+                                    <p>You're already signed up for his event!</p>
+                                  ) : (
+                                    <button
+                                        disabled={savedEventIds?.some((savedEventId) => savedEventId === eventId)}
+                                        className="bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        type="button"
+                                        onClick={() => { handleJoinEvent() }}>
+                                        {savedEventIds?.some((savedEventId) => savedEventId === eventId)
+                                        ? 'You have joined this event!'
+                                        : 'Join event!'}     
+                                    </button>
+                                ) 
+                                ) : (
+                                    <p>Join the club to add this event</p>
+                                )
+                        ) : (
+                          <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950"><Link to={`/login`}>Login to Join!</Link></button>
+                          )
+                        }
+                        {token ? (
+                            isAdmin ? (
+                                <button
+                                className="bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                onClick={() => { setShowModal(true) }}
+                                >
+                                    Edit Event
+                                </button>
+                            ) :  null 
+                        ) : null
+                    }
+                        <JaanMap latLngArray={latLngArray} />
+        
+        {/* Modal to Edit Event */}
+            {showModal ? (
+          <>
+           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative w-auto my-2 mx-auto max-w-sm">
+                {/*content*/}
+                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                  {/*header*/}
+                  <div className="flex items-start justify-between p-3 border-b border-solid border-slate-200 rounded-t">
+                    <h3 className="text-3xl font-semibold text-black">
+                        Update Event
+                    </h3>
+                    <button
+                      className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                      onClick={() => setShowModal(false)}
+                    >
+                      <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  {/*body*/}
+                  <div className="relative p-6 flex-auto">
+                    <form onSubmit={handleEditEvent}>
+                      <div className="flex-row space-between my-2">
+                        <label htmlFor="title">Title:</label>
+                        <input
+                          className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+                          placeholder="title"
+                          name="title"
+                          type="text"
+                          id="title"
+                          defaultValue={eventData?.title}
+                          onChange={handleEditEventChange}
+                          value={eventEditform.title}
+                        />
+                      </div>
+                      <div className="flex-row space-between my-2">
+                            <label htmlFor="address">Location:</label>
+                            <input
+                               className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+                                placeholder="Where is this event taking place?"
+                                name="address"
+                                type="text"
+                                id="address"
+                                onChange={handleEditEventChange}
+                                value={eventEditform.address}
+                            />
+                        </div>
+                        <div className="flex-row space-between my-2">
+                            <label htmlFor="dateTime">Date:</label>
+                            <input
+                                className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+                                placeholder="Choose a date for your event"
+                                name="dateTime"
+                                type="text"
+                                id="dateTime"
+                                onChange={handleEditEventChange}
+                                value={eventEditform.dateTime}
+                            />
+                        </div>
+                        <div className="flex-row space-between my-2">
+                            <label htmlFor="image">Description:</label>
+                            <textarea
+                                className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+                                placeholder="Enter a short description of your event"
+                                name="description"
+                                onChange={handleEditEventChange}
+                                value={eventEditform.description}
+                            ></textarea>
+                        </div>
+                            <label htmlFor="image">Image:</label>
+                            <input
+                                className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+                                placeholder="Image link"
+                                name="image"
+                                type="text"
+                                id="image"
+                                onChange={handleEditEventChange}
+                                value={eventEditform.image}
+                            />
+                        <div>
+//           <h3 className="text-3xl m-3">{eventData.title}</h3>
+//           {!eventData.image ? (
+//             <img className="m-3" src='/images/event_default.jpg' width="300px" />
+//           ) : (
+//             <img className="m-3" src={eventData.image} width="300px" />
+//           )}
+//           <p className="text-xl m-3"><span className="font-bold">Event Description:</span> {eventData.description}</p>
+//           <ul className='text-base'>
+//             <li className="text-xl m-3">Date and Time: {eventData.dateTime}</li>
+//             <li className="text-xl m-3">{eventData.address}</li>
+//             {eventData.isAvailable
+//               ? <li className="text-xl"><span className="font-bold">Status:</span> <span className="text-green-500">Available</span></li>
+//               : <li className="text-xl"><span className="font-bold">Status:</span> <span className="text-red-500">Not Available</span></li>}
+//           </ul>
+//           <Link className="m-3" to="/profile" >← Back to Profile</Link>
+//         </div>
+//         <div className="w-1/2 flex flex-col items-center">
+//           {token ? (
+//             userInClub ? (
+//               signedUp ? (
+//                 <p className="text-xl m-2">You are signed up for this event!</p>
+//               ) : (
+//                 <button
+//                   disabled={savedEventIds?.some((savedEventId) => savedEventId === eventId)}
+//                   className="bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+//                   type="button"
+//                   onClick={() => { handleJoinEvent() }}>
+//                   {savedEventIds?.some((savedEventId) => savedEventId === eventId)
+//                     ? 'You have joined this event!'
+//                     : 'Join event!'}
+//                 </button>
+//               )
+//             ) : (
+//               <p>Join the club to add this event</p>
+//             )
+//           ) : (
+//             <p>Log in to Join!</p>
+//           )
+//           }
+//           <div className="m-3">
+//             <JaanMap latLngArray={latLngArray} />
+//           </div>
+//           {token ? (
+//             isAdmin ? (
+//               <button
+//                 className="m-3 bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:bg-rose-900 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+//                 onClick={() => { setShowModal(true) }}
+//               >
+//                 Edit Event
+//               </button>
+//             ) : null
+//           ) : null
+//           }
+//         </div>
+//       </div>
 
       {/* Modal to Edit Event */}
       {showModal ? (

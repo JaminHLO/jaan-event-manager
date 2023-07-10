@@ -101,9 +101,9 @@ const ClubDetail = () => {
     };
 
     const token = auth.loggedIn() ? auth.getToken() : null;
-    if (!token) {
-        return false;
-    }
+    // if (!token) {
+    //     return false;
+    // }
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -152,9 +152,17 @@ const ClubDetail = () => {
             const { data } = await updateClub({
                 variables: {
                     clubId: clubIdParam,
-                    club: { ...clubEditform }
-                }
-            })
+                    club: { 
+                        title: clubEditform.title.toString(),
+                        maxMembers: parseInt(clubEditform.maxMembers),
+                        image: clubEditform.image.toString(),
+                        price: parseFloat(clubEditform.price),
+                        description: clubEditform.description.toString()
+                    }
+              }})
+//                     club: { ...clubEditform }
+//                 }
+//             })
             console.log('updated club', data)
             setClubEditForm({ title: `${clubData?.title}`, maxMembers: `${clubData?.maxMembers}`, price: `${clubData?.price}`, image: `${clubData?.image}`, description: `${clubData?.description}` });
         } catch (error) {
@@ -198,22 +206,30 @@ const ClubDetail = () => {
                         <p className="text-xl m-2">About: {clubData.description}</p>
                         <p className="text-xl m-2">Membership Price: ${clubData.price}</p>
                         <p className="text-xl m-2">Spots Available: {clubData.spotsAvailable}</p>
+                        { token ? (
                         <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950" onClick={submitCheckout}>Purchase Membership</button>
+                        ) : (
+                        <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950"><Link to={`/login`}>Login to Join!</Link></button>
+                        )}
                     </div>
                 </div>
                 <div className="overflow-auto resize-y transition ease-in-out delay-150 bg-black opacity-70 hover:opacity-80 rounded-2xl w-[60rem] h-[22rem] mt-4">
                     <h2 className="text-3xl text-center m-4">List of Events</h2>
-                    <ul>
+                    <ul className="list-disc">
                         {clubData.events?.length !== 0 ? (
 
                             clubEvents.map((singleEvent) => (
+//                                 <li className="text-red-500">
+//                                     <Link to={`/events/event/${singleEvent._id}`}
+//                                     className="text-xl m-4 text-white">
+//                                         <strong>{singleEvent.title} </strong>on <small>{singleEvent.dateTime}</small>
                                 <li className="border-solid border-2 border-white hover:bg-white hover:text-black rounded-xl m-3 p-3">
                                     <Link to={`/events/event/${singleEvent._id}`}>
                                         <span className="font-bold">Event:</span> {singleEvent.title} <span className="font-bold">Date:</span> {singleEvent.dateTime}
                                     </Link>
                                 </li>
                             ))) : (
-                            <p>No events have been listed for this club</p>
+                            <p className="m-3">No events have been listed for this club</p>
                         )
                         }
                     </ul>
@@ -266,6 +282,18 @@ const ClubDetail = () => {
                                         />
                                     </div>
                                     <div className="flex-row space-between my-2">
+                                        <label htmlFor="image"></label>
+                                        <input
+                                            className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+                                            placeholder="Image Link"
+                                            name="image"
+                                            type="text"
+                                            id="image"
+                                            onChange={handleChange}
+                                            value={eventFormState.image}
+                                        />
+                                    </div>
+                                    <div className="flex-row space-between my-2">
                                         <label htmlFor="dateTime"></label>
                                         <input
                                             className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
@@ -305,114 +333,224 @@ const ClubDetail = () => {
             }
 
             {/* Edit Club Modal */}
-            {showEditModal ? (
-                <>
-                    <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                        <div className="relative w-auto my-2 mx-auto max-w-sm">
-                            {/*content*/}
-                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                                {/*header*/}
-                                <div className="flex items-start justify-between p-3 border-b border-solid border-slate-200 rounded-t">
-                                    <h3 className="text-3xl font-semibold text-black">
-                                        Update Club
-                                    </h3>
-                                    <button
-                                        className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                                        onClick={() => setShowEditModal(false)}
-                                    >
-                                        <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                                            ×
-                                        </span>
-                                    </button>
-                                </div>
-                                {/*body*/}
-                                <div className="relative p-6 flex-auto">
-                                    <form
-                                        onSubmit={handleEditClub}
-                                    >
-                                        <div className="flex-row space-between my-2">
-                                            <label htmlFor="title">Title:</label>
-                                            <input
-                                                className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
-                                                placeholder="Title"
-                                                name="title"
-                                                type="text"
-                                                id="title"
-                                                onChange={handleEditClubChange}
-                                                value={clubEditform.title}
-                                            />
-                                        </div>
-                                        <div className="flex-row space-between my-2">
-                                            <label htmlFor="maxMembers">Max. number of members:</label>
-                                            <input
-                                                className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
-                                                placeholder="Max number of members"
-                                                name="maxMembers"
-                                                type="text"
-                                                id="maxMembers"
-                                                onChange={handleEditClubChange}
-                                                value={clubEditform.maxMembers}
-                                            />
-                                        </div>
-                                        <div className="flex-row space-between my-2">
-                                            <label htmlFor="price">Price:</label>
-                                            <input
-                                                className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
-                                                placeholder="Price"
-                                                name="price"
-                                                type="text"
-                                                id="price"
-                                                onChange={handleEditClubChange}
-                                                value={clubEditform.price}
-                                            />
-                                        </div>
-                                        <div className="flex-row space-between my-2">
-                                            <label htmlFor="price">Description:</label>
-                                            <textarea
-                                                className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
-                                                placeholder="Short description of your club"
-                                                name="description"
-                                                onChange={handleEditClubChange}
-                                                value={clubEditform.description}
-                                            ></textarea>
-                                        </div>
-                                        <label htmlFor="image">Image:</label>
-                                        <input
-                                            className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
-                                            placeholder="Image link"
-                                            name="image"
-                                            type="text"
-                                            id="image"
-                                            onChange={handleEditClubChange}
-                                            value={clubEditform.image}
-                                        />
-                                    </form>
-                                </div>
-                                {/*footer*/}
-                                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                                    <button
-                                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="button"
-                                        onClick={() => setShowEditModal(false)}
-                                    >
-                                        Close
-                                    </button>
-                                    <button
-                                        className="bg-red-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="submit"
-                                        onClick={() => {
-                                            handleEditClub()
-                                            setShowEditModal(false)
-                                        }}
-                                    >
-                                        Save Changes
-                                    </button>
-                                </div>
-                            </div>
+        {showEditModal ? (
+          <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div className="relative w-auto my-2 mx-auto max-w-sm">
+                {/*content*/}
+                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                  {/*header*/}
+                  <div className="flex items-start justify-between p-3 border-b border-solid border-slate-200 rounded-t">
+                    <h3 className="text-3xl font-semibold text-black">
+                        Update Club
+                    </h3>
+                    <button
+                      className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                      onClick={() => setShowEditModal(false)}
+                    >
+                      <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                        ×
+                      </span>
+                    </button>
+                  </div>
+                  {/*body*/}
+                  <div className="relative p-6 flex-auto">
+                    <form
+                        onSubmit={handleEditClub}
+                        >
+                      <div className="flex-row space-between my-2">
+                        <label htmlFor="title"></label>
+                        <input
+                          className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+                          placeholder="Title"
+                          name="title"
+                          type="text"
+                          id="title"
+                          onChange={handleEditClubChange}
+                          value={clubEditform.title}
+                        />
+                      </div>
+                      <div className="flex-row space-between my-2">
+                            <label htmlFor="maxMembers" className="text-black">Max. number of members:</label>
+                            <input
+                                className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+                                placeholder="Max number of members"
+                                name="maxMembers"
+                                type="integer"
+                                id="maxMembers"
+                                onChange={handleEditClubChange}
+                                value={clubEditform.maxMembers}
+                            />
                         </div>
-                    </div>
-                </>
-            ) : null}
+                        <div className="flex-row space-between my-2">
+                            <label htmlFor="price"className="text-black">Price:</label>
+                            <input
+                                className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+                                placeholder="Price"
+                                name="price"
+                                type="float"
+                                id="price"
+                                onChange={handleEditClubChange}
+                                value={clubEditform.price}
+                            />
+                        </div>
+                        <div className="flex-row space-between my-2">
+                        <label htmlFor="price" className="text-black">Description:</label>
+                            <textarea
+                                className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"                                                                            
+                                placeholder="Short description of your club"
+                                name="description"
+                                type="float"
+                                onChange={handleEditClubChange}
+                                value={clubEditform.description}
+                            ></textarea>
+                        </div>
+                            <label htmlFor="image" className="text-black">Image:</label>
+                            <input
+                                className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"                                                                            
+                                placeholder="Image link"
+                                name="image"
+                                type="text"
+                                id="image"
+                                onChange={handleEditClubChange}
+                                value={clubEditform.image}
+                            />
+                    </form>
+                  </div>
+                  {/*footer*/}
+                  <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                    <button
+                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => setShowEditModal(false)}
+                    >
+                      Close
+                    </button>
+                    <button
+                      className="bg-red-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="submit"
+                      onClick={() => {
+                        handleEditClub()
+                        setShowEditModal(false)
+                      }}
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                </div>
+                </div>
+            </div>
+            </>
+        ) : null}  
+ 
+//             {showEditModal ? (
+//                 <>
+//                     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+//                         <div className="relative w-auto my-2 mx-auto max-w-sm">
+//                             {/*content*/}
+//                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+//                                 {/*header*/}
+//                                 <div className="flex items-start justify-between p-3 border-b border-solid border-slate-200 rounded-t">
+//                                     <h3 className="text-3xl font-semibold text-black">
+//                                         Update Club
+//                                     </h3>
+//                                     <button
+//                                         className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+//                                         onClick={() => setShowEditModal(false)}
+//                                     >
+//                                         <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+//                                             ×
+//                                         </span>
+//                                     </button>
+//                                 </div>
+//                                 {/*body*/}
+//                                 <div className="relative p-6 flex-auto">
+//                                     <form
+//                                         onSubmit={handleEditClub}
+//                                     >
+//                                         <div className="flex-row space-between my-2">
+//                                             <label htmlFor="title">Title:</label>
+//                                             <input
+//                                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+//                                                 placeholder="Title"
+//                                                 name="title"
+//                                                 type="text"
+//                                                 id="title"
+//                                                 onChange={handleEditClubChange}
+//                                                 value={clubEditform.title}
+//                                             />
+//                                         </div>
+//                                         <div className="flex-row space-between my-2">
+//                                             <label htmlFor="maxMembers">Max. number of members:</label>
+//                                             <input
+//                                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+//                                                 placeholder="Max number of members"
+//                                                 name="maxMembers"
+//                                                 type="text"
+//                                                 id="maxMembers"
+//                                                 onChange={handleEditClubChange}
+//                                                 value={clubEditform.maxMembers}
+//                                             />
+//                                         </div>
+//                                         <div className="flex-row space-between my-2">
+//                                             <label htmlFor="price">Price:</label>
+//                                             <input
+//                                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+//                                                 placeholder="Price"
+//                                                 name="price"
+//                                                 type="text"
+//                                                 id="price"
+//                                                 onChange={handleEditClubChange}
+//                                                 value={clubEditform.price}
+//                                             />
+//                                         </div>
+//                                         <div className="flex-row space-between my-2">
+//                                             <label htmlFor="price">Description:</label>
+//                                             <textarea
+//                                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+//                                                 placeholder="Short description of your club"
+//                                                 name="description"
+//                                                 onChange={handleEditClubChange}
+//                                                 value={clubEditform.description}
+//                                             ></textarea>
+//                                         </div>
+//                                         <label htmlFor="image">Image:</label>
+//                                         <input
+//                                             className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
+//                                             placeholder="Image link"
+//                                             name="image"
+//                                             type="text"
+//                                             id="image"
+//                                             onChange={handleEditClubChange}
+//                                             value={clubEditform.image}
+//                                         />
+//                                     </form>
+//                                 </div>
+//                                 {/*footer*/}
+//                                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+//                                     <button
+//                                         className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+//                                         type="button"
+//                                         onClick={() => setShowEditModal(false)}
+//                                     >
+//                                         Close
+//                                     </button>
+//                                     <button
+//                                         className="bg-red-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+//                                         type="submit"
+//                                         onClick={() => {
+//                                             handleEditClub()
+//                                             setShowEditModal(false)
+//                                         }}
+//                                     >
+//                                         Save Changes
+//                                     </button>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </>
+//             ) : null}
 
 
 

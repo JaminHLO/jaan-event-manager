@@ -13,11 +13,11 @@ const typeDefs = gql`
     description: String
     category: String
     members: [String]
-    maxMembers: String
+    maxMembers: Int
     image: String
-    zipCode: String
-    price: String
-    spotsAvailable: String
+    zipCode: Int
+    price: Float
+    spotsAvailable: Int
     notifications: String
     messages: [String]
     geocode: String
