@@ -49,7 +49,7 @@ const Clubs = () => {
         <div className="clubs-category">
 
             <div className="flex justify-center">
-                <div className="overflow-auto w-[20rem] bg-black opacity-80 hover:opacity-90 min-h-[22rem] rounded-2xl m-4 flex flex-col flex-wrap justify-center">
+                <div className="overflow-auto w-[20rem] bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 min-h-[22rem] rounded-2xl m-4 flex flex-col flex-wrap justify-center">
                     <h3 className="text-white text-3xl text-center p-4">Choose a Category</h3>
                     {categoryData.map((category) => (
                         <button
@@ -66,7 +66,7 @@ const Clubs = () => {
                 </div>
                 {/* Use Club By Category if can filter from backend */}
                 < ClubByCategory categoryId={categoryId} />
-                <div className="overflow-auto bg-black opacity-80 hover:opacity-90 min-h-[25rem] max-h-screen min-w-[70%] rounded-2xl m-4 flex justify-center items-center">
+                <div className="overflow-auto bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 min-h-[25rem] max-h-screen min-w-[70%] rounded-2xl m-4 flex justify-center items-center">
                     <p className="text-white text-2xl">
                         <ClubList clubs={updateClubs} />
                     </p>
