@@ -27,7 +27,6 @@ import ClubDetail from './components/ClubDetail';
 import Clubs from './pages/Clubs';
 import SearchEvents from './components/SearchEvents';
 import SearchClubs from './components/SearchClubs';
-import SearchEventsClubs from './components/SearchEventsClubs';
 import EventDetail from './components/EventDetail'; 
 
 const httpLink = createHttpLink({
