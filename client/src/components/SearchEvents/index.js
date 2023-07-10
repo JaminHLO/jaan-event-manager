@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
+import auth from "../../utils/auth";
 import { useLazyQuery, useQuery } from "@apollo/client";
 import { QUERY_SEARCH_EVENTS, QUERY_ME } from "../../utils/queries";
 import JaanMap from "../JaanMap";
@@ -14,9 +15,12 @@ const SearchEvents = () => {
     const [itemOffset, setItemOffset] = useState(0);
 
     const events = data?.searchEvents || [];
+    // if (auth.loggedIn()) {
+        // const userData = meData?.me || {}
+    // }
+    // console.log('meData is', meData);
 
     const userData = meData?.me || {}
-    // console.log('meData is', meData);
 
     const itemsPerPage = 10;
     const endOffset = itemOffset + itemsPerPage;
@@ -41,9 +45,15 @@ const SearchEvents = () => {
 
     const latLngArray = [];
     // console.log('userData in SearchEvents is:', userData);
-    if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
+    // const userGeocode = userData?.geocode || `{ "lat": 0, "lng": 0 }`
+    // const userGeocode = userData?.geocode
+    // console.log(userGeocode)
+    if (userData?.geocode) latLngArray.push(JSON.parse(userData?.geocode));
     if (events?.length) {
-        events.map(event => latLngArray.push(JSON.parse(event.geocode)));
+        events.map(event => {
+            const eventGeocode = event?.geocode || `{ "lat": 0, "lng": 0 }`
+            latLngArray.push(JSON.parse(eventGeocode))
+        });
     }
 
     return (
@@ -89,13 +99,13 @@ const SearchEvents = () => {
                     </div>
                     {events.length ? (
                         < ReactPaginate
-                        breakLabel="..."
-                        onPageChange={paginate}
-                        pageCount={pageCount}
-                        previousLabel={'Prev'}
-                        nextLabel={'Next'}
-                        pageRangeDisplayed={5}
-                        renderOnZeroPageCount={null}
+                            breakLabel="..."
+                            onPageChange={paginate}
+                            pageCount={pageCount}
+                            previousLabel={'Prev'}
+                            nextLabel={'Next'}
+                            pageRangeDisplayed={5}
+                            renderOnZeroPageCount={null}
                         />
                     ) : null}
                 </div>

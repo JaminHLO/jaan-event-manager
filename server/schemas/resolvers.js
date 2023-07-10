@@ -29,7 +29,7 @@ const resolvers = {
     },
     club: async (parent, { _id }) => {
       return await Club.findById(_id).populate('category').populate('events')
-        .populate({ path: "notifications", populate: { path: "message"} });
+        .populate({ path: "notifications", populate: { path: "message" } });
     },
     user: async (parent, args, context) => {
       if (context.user) {
@@ -108,9 +108,9 @@ const resolvers = {
     },
     searchEvents: async (parent, { eventQuery }, context) => {
 
-      // if (eventQuery === "") {
-      //   return;
-      // }
+      if (eventQuery === "") {
+        return;
+      }
 
       const filteredEvents = await Event.find({ title: { $regex: eventQuery, $options: "i" } })
         .populate({
@@ -119,12 +119,31 @@ const resolvers = {
             path: "category"
           }
         })
+        .limit(20)
+      const geoCheckEvents = filteredEvents.map(event => {
+        if (!event.geocode) {
+          return { ...event._doc, geocode: `{"lat":33.753746,"lng":-84.386330}` }
+        }
+        return event;
+      })
       if (context.user) {
         const user = await User.findById(context.user._id);
-        const sorted = jaanSort(user, filteredEvents);
+        const geoCheckUser = (user) => {
+          if (!user.geocode) {
+            return { ...user._doc, geocode: `{"lat":33.753746,"lng":-84.386330}` };
+          };
+        }
+        const checkedUser = geoCheckUser(user);
+        // console.log("line 136", checkedUser)
+        if (checkedUser) {
+          const sorted = jaanSort(checkedUser, geoCheckEvents);
+          return sorted
+        }
+        // console.log(geoCheckEvents)
+        const sorted = jaanSort(user, geoCheckEvents);
         return sorted;
       }
-      return filteredEvents;
+      return geoCheckEvents;
     },
     searchClubs: async (parent, { clubQuery }, context) => {
 

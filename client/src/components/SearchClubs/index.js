@@ -40,10 +40,15 @@ const SearchClubs = () => {
     }
 
     const latLngArray = [];
-    console.log('userData in SearchClubs is:', userData);
-    if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
+    // console.log('userData in SearchClubs is:', userData);
+    // const userGeocode = userData?.geocode || `{ "lat": 0, "lng": 0 }`
+    const userGeocode = userData?.geocode
+    if (userGeocode) latLngArray.push(JSON.parse(userGeocode));
     if (clubs?.length) {
-        clubs.map(event => latLngArray.push(JSON.parse(event.geocode)));
+        clubs.map(club => {
+            const clubGeocode = club?.geocode || `{ "lat": 0, "lng": 0 }`
+            latLngArray.push(JSON.parse(clubGeocode));
+        });
     }
 
     return (
@@ -51,7 +56,7 @@ const SearchClubs = () => {
             <h2>Search for a club:</h2>
             <div>
                 <form onSubmit={handleSubmit}>
-                    {/* <label>Search for a club:</label> */}
+                    <label>Search for a club:</label>
                     <input
                         type="text"
                         placeholder="Find an club here"
