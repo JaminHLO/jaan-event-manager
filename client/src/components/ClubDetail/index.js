@@ -10,15 +10,18 @@ import JaanMap from "../JaanMap";
 import { idbPromise, getGeocode } from "../../utils/helpers";
 import Notification from "../Notification";
 
+
 const stripePromise = loadStripe(
     'pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
 
+
 const ClubDetail = () => {
     const { id: clubIdParam } = useParams();
-    const [clubEditform, setClubEditForm] = useState({ title: ``, maxMembers: ``, description: ``, price: '', image: '' });
+    const [clubEditform, setClubEditForm] = useState({ title: ``, maxMembers: ``, description:``, price:'', image: ''});
+
 
     const [showModal, setShowModal] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);    
     const [isAdmin, setIsAdmin] = useState();
     const [isMember, setIsMember] = useState();
     const [addEvent, { error }] = useMutation(ADD_EVENT, {
@@ -40,24 +43,30 @@ const ClubDetail = () => {
             geocode: ""
         })
 
+
     const { loading, data } = useQuery(QUERY_CLUB, {
         variables: { id: clubIdParam }
     });
+
 
     const clubData = data?.club || {};
     console.log(clubData)
     const clubEvents = clubData.events
 
+
     useEffect(() => {
-        setClubEditForm({ title: `${clubData?.title}`, maxMembers: `${clubData?.maxMembers}`, price: `${clubData?.price}`, image: `${clubData?.image}`, description: `${clubData?.description}` });
+        setClubEditForm({ title: `${clubData?.title}`, maxMembers: `${clubData?.maxMembers}`, price: `${clubData?.price}`, image:`${clubData?.image}`, description:`${clubData?.description}`});
     }, [clubData])
+
 
     const { loading: meLoading, data: meData } = useQuery(QUERY_ME);
     const userData = meData?.me || {};
 
+
     const latLngArray = [];
     if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
     if (clubData?.geocode) latLngArray.push(JSON.parse(clubData.geocode));
+
 
     useEffect(() => {
         if (checkoutData) {
@@ -67,6 +76,7 @@ const ClubDetail = () => {
         }
     }, [checkoutData]);
 
+
     useEffect(() => {
         if (userData._id === clubData.adminId) {
             setIsAdmin(true)
@@ -75,14 +85,14 @@ const ClubDetail = () => {
         }
     }, [clubData.adminId])
 
+
     const [updateClub, { err }] = useMutation(UPDATE_CLUB, {
         refetchQueries: [
-            {
-                query: QUERY_CLUB,
-                variables: { id: clubIdParam }
-            }
+            { query: QUERY_CLUB,
+            variables: { id: clubIdParam }}
         ]
     })
+
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -92,18 +102,21 @@ const ClubDetail = () => {
         })
     }
 
+
     const handleEditClubChange = (event) => {
         const { name, value } = event.target;
         setClubEditForm({
-            ...clubEditform,
-            [name]: value,
+          ...clubEditform,
+          [name]: value,
         });
-    };
+      };
+
 
     const token = auth.loggedIn() ? auth.getToken() : null;
     // if (!token) {
     //     return false;
     // }
+
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
@@ -132,6 +145,7 @@ const ClubDetail = () => {
         }
     };
 
+
     function submitCheckout() {
         console.log("clicked")
         const clubIds = [clubData._id];
@@ -140,10 +154,11 @@ const ClubDetail = () => {
         });
         idbPromise("clubs", "put", clubData);
     }
-
+   
     if (loading || meLoading) {
         return <div>Loading...</div>
     }
+
 
     const handleEditClub = async (event) => {
         // event.preventDefault();
@@ -152,7 +167,7 @@ const ClubDetail = () => {
             const { data } = await updateClub({
                 variables: {
                     clubId: clubIdParam,
-                    club: { 
+                    club: {
                         title: clubEditform.title.toString(),
                         maxMembers: parseInt(clubEditform.maxMembers),
                         image: clubEditform.image.toString(),
@@ -160,48 +175,50 @@ const ClubDetail = () => {
                         description: clubEditform.description.toString()
                     }
               }})
-//                     club: { ...clubEditform }
-//                 }
-//             })
             console.log('updated club', data)
-            setClubEditForm({ title: `${clubData?.title}`, maxMembers: `${clubData?.maxMembers}`, price: `${clubData?.price}`, image: `${clubData?.image}`, description: `${clubData?.description}` });
+            setClubEditForm({ title: `${clubData?.title}`, maxMembers: `${clubData?.maxMembers}`, price: `${clubData?.price}`, image:`${clubData?.image}`, description:`${clubData?.description}`});
         } catch (error) {
-            console.error(error)
+                console.error(error)
+            }
         }
-    }
+
+
 
 
     return (
 
-        <div className="club-details text-white flex justify-center items-center">
-            <Notification clubData={clubData} userData={userData} />
 
-            <div className="transition ease-in-out delay-150 bg-black opacity-70 hover:opacity-80 max-w-[25rem] rounded-2xl h-[30rem] mr-[5rem]">
+        <div className="club-details text-white flex justify-center items-center">
+            <Notification clubData={clubData} userData={userData}/>
+
+
+            <div className="transition ease-in-out delay-150 bg-black opacity-60 hover:opacity-70 max-w-[25rem] rounded-2xl h-[30rem] mr-[5rem]">
                 <div className="p-4">
                     <JaanMap latLngArray={latLngArray} />
                 </div>
                 <div className="text-center">
                     {auth.loggedIn() && isAdmin ? (
-                        <>
-                            <button
-                                className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                onClick={() => { setShowModal(true) }}
-                            >Create an event</button>
-                            <button
-                                className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                onClick={() => { setShowEditModal(true) }}
-                            >Edit club</button>
-                        </>
+                    <>
+                        <button
+                            className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            onClick={() => { setShowModal(true) }}
+                        >Create an event</button>
+                        <button
+                            className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            onClick={() => { setShowEditModal(true) }}
+                        >Edit club</button>
+                    </>
                     ) : null}
                 </div>
             </div>
             <div className="flex flex-col">
-                <div className="overflow-auto resize-y flex transition ease-in-out delay-150 bg-black opacity-70 hover:opacity-80 rounded-2xl w-[60rem] h-[18rem] mb-4">
+                <div className="overflow-auto resize-y flex transition ease-in-out delay-150 bg-black opacity-60 hover:opacity-70 rounded-2xl w-[60rem] h-[18rem] mb-4">
                     <div>
                         <img className="h-[100%] w-[100%] rounded-2xl" src={clubData.image}></img>
                     </div>
                     <div className="ml-10 m-5">
                         <h3 className="text-3xl m-2">{clubData.title}</h3>
+
 
                         <p className="text-xl m-2">About: {clubData.description}</p>
                         <p className="text-xl m-2">Membership Price: ${clubData.price}</p>
@@ -213,19 +230,16 @@ const ClubDetail = () => {
                         )}
                     </div>
                 </div>
-                <div className="overflow-auto resize-y transition ease-in-out delay-150 bg-black opacity-70 hover:opacity-80 rounded-2xl w-[60rem] h-[22rem] mt-4">
+                <div className="overflow-auto resize-y flex transition ease-in-out delay-150 bg-black opacity-60 hover:opacity-70 rounded-2xl w-[60rem] h-[18rem] mb-4">
                     <h2 className="text-3xl text-center m-4">List of Events</h2>
                     <ul className="list-disc">
                         {clubData.events?.length !== 0 ? (
 
+
                             clubEvents.map((singleEvent) => (
-//                                 <li className="text-red-500">
-//                                     <Link to={`/events/event/${singleEvent._id}`}
-//                                     className="text-xl m-4 text-white">
-//                                         <strong>{singleEvent.title} </strong>on <small>{singleEvent.dateTime}</small>
                                 <li className="border-solid border-2 border-white hover:bg-white hover:text-black rounded-xl m-3 p-3">
                                     <Link to={`/events/event/${singleEvent._id}`}>
-                                        <span className="font-bold">Event:</span> {singleEvent.title} <span className="font-bold">Date:</span> {singleEvent.dateTime}
+                                    <span className="font-bold">Event:</span> {singleEvent.title} <span className="font-bold">Date:</span> {singleEvent.dateTime}
                                     </Link>
                                 </li>
                             ))) : (
@@ -235,7 +249,7 @@ const ClubDetail = () => {
                     </ul>
                 </div>
             </div>
-
+           
             {showModal &&
                 <div
                     className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50"
@@ -328,9 +342,11 @@ const ClubDetail = () => {
                             </div>
                         </div>
 
+
                     </div>
                 </div>
             }
+
 
             {/* Edit Club Modal */}
         {showEditModal ? (
@@ -443,119 +459,13 @@ const ClubDetail = () => {
             </>
         ) : null}  
  
-//             {showEditModal ? (
-//                 <>
-//                     <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-//                         <div className="relative w-auto my-2 mx-auto max-w-sm">
-//                             {/*content*/}
-//                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-//                                 {/*header*/}
-//                                 <div className="flex items-start justify-between p-3 border-b border-solid border-slate-200 rounded-t">
-//                                     <h3 className="text-3xl font-semibold text-black">
-//                                         Update Club
-//                                     </h3>
-//                                     <button
-//                                         className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-//                                         onClick={() => setShowEditModal(false)}
-//                                     >
-//                                         <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-//                                             ×
-//                                         </span>
-//                                     </button>
-//                                 </div>
-//                                 {/*body*/}
-//                                 <div className="relative p-6 flex-auto">
-//                                     <form
-//                                         onSubmit={handleEditClub}
-//                                     >
-//                                         <div className="flex-row space-between my-2">
-//                                             <label htmlFor="title">Title:</label>
-//                                             <input
-//                                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
-//                                                 placeholder="Title"
-//                                                 name="title"
-//                                                 type="text"
-//                                                 id="title"
-//                                                 onChange={handleEditClubChange}
-//                                                 value={clubEditform.title}
-//                                             />
-//                                         </div>
-//                                         <div className="flex-row space-between my-2">
-//                                             <label htmlFor="maxMembers">Max. number of members:</label>
-//                                             <input
-//                                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
-//                                                 placeholder="Max number of members"
-//                                                 name="maxMembers"
-//                                                 type="text"
-//                                                 id="maxMembers"
-//                                                 onChange={handleEditClubChange}
-//                                                 value={clubEditform.maxMembers}
-//                                             />
-//                                         </div>
-//                                         <div className="flex-row space-between my-2">
-//                                             <label htmlFor="price">Price:</label>
-//                                             <input
-//                                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
-//                                                 placeholder="Price"
-//                                                 name="price"
-//                                                 type="text"
-//                                                 id="price"
-//                                                 onChange={handleEditClubChange}
-//                                                 value={clubEditform.price}
-//                                             />
-//                                         </div>
-//                                         <div className="flex-row space-between my-2">
-//                                             <label htmlFor="price">Description:</label>
-//                                             <textarea
-//                                                 className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
-//                                                 placeholder="Short description of your club"
-//                                                 name="description"
-//                                                 onChange={handleEditClubChange}
-//                                                 value={clubEditform.description}
-//                                             ></textarea>
-//                                         </div>
-//                                         <label htmlFor="image">Image:</label>
-//                                         <input
-//                                             className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
-//                                             placeholder="Image link"
-//                                             name="image"
-//                                             type="text"
-//                                             id="image"
-//                                             onChange={handleEditClubChange}
-//                                             value={clubEditform.image}
-//                                         />
-//                                     </form>
-//                                 </div>
-//                                 {/*footer*/}
-//                                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-//                                     <button
-//                                         className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-//                                         type="button"
-//                                         onClick={() => setShowEditModal(false)}
-//                                     >
-//                                         Close
-//                                     </button>
-//                                     <button
-//                                         className="bg-red-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-//                                         type="submit"
-//                                         onClick={() => {
-//                                             handleEditClub()
-//                                             setShowEditModal(false)
-//                                         }}
-//                                     >
-//                                         Save Changes
-//                                     </button>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </>
-//             ) : null}
+
 
 
 
         </div>
     )
 }
+
 
 export default ClubDetail;
