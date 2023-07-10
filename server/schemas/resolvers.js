@@ -190,7 +190,7 @@ const resolvers = {
     buyMembership: async (parent, { _id, spotsAvailable }) => {
       const decrement = Math.abs(spotsAvailable) * -1;
 
-      return await Club.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
+      return await Club.findByIdAndUpdate(_id, { $inc: { spotsAvailable: decrement } }, { new: true });
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });

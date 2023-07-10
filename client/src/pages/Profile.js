@@ -133,9 +133,9 @@ const Profile = () => {
                                     <button className='w-48 bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-xl'>
                                         <Link
                                             className="btn btn-primary btn-block btn-squared"
-                                            to={`/clubs`}
+                                            to={`/searchClubs`}
                                         >
-                                            Join a Club
+                                            Search for Clubs
                                         </Link>
                                     </button>
                                 </li>
@@ -159,6 +159,17 @@ const Profile = () => {
                                         </Link>
                                     </button>
                                 </li>
+                                <li className='m-4'>
+                                    <button className='w-48 bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-xl'>
+                                        <Link
+                                            className="btn btn-primary btn-block btn-squared"
+                                            to={`/orderHistory`}
+                                        >
+                                            Order History
+                                        </Link>
+                                    </button>
+                                </li>
+
                             </ul>
                         </div>
                     </div>

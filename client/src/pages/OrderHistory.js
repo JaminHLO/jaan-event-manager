@@ -14,36 +14,38 @@ function OrderHistory() {
 
   return (
     <>
-      <div className="container my-1">
-        <Link to="/">← Back to Products</Link>
-
+      <div className="w-[50rem]">
         {user ? (
           <>
-            <h2>
-              Order History for {user.firstName} {user.lastName}
+            <Link to="/profile">← Back to Profile</Link>
+            <h2 className='font-bold text-xl mb-2'>
+              Order History for {user.name}
             </h2>
-            {user.orders.map((order) => (
-              <div key={order._id} className="my-2">
-                <h3>
-                  {new Date(parseInt(order.purchaseDate)).toLocaleDateString()}
-                </h3>
-                <div className="flex-row">
-                  {order.products.map(({ _id, image, name, price }, index) => (
-                    <div key={index} className="card px-1 py-1">
-                      <Link to={`/products/${_id}`}>
-                        <img alt={name} src={`/images/${image}`} />
-                        <p>{name}</p>
-                      </Link>
-                      <div>
-                        <span>${price}</span>
+            {user.orders?.length === 0 ? <h2>No Orders yet</h2> : (
+              user.orders.map((order) => (
+                <div key={order._id} className="border-solid border-2 rounded-xl flex items-center flex-wrap m-3 p-3">
+                  <h2>  
+                    <strong>{new Date(parseInt(order.purchaseDate)).toLocaleDateString()}</strong>
+                  </h2>
+                  {/* <div className=""> */}
+                    {order.clubs.map(({ _id, image, title, price }) => (
+                      <div className="card px-1 py-1">
+                        <Link to={`/clubs/club/${_id}`}>       
+                          <img alt={title} className= "h-32 w-32 rounded-2xl" width="300px" src={image ? image : '/images/club_default.jpg'} />
+                          <p>{title}</p>
+                        </Link>
+                        <div>
+                          <span>${price}</span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  {/* </div> */}
                 </div>
-              </div>
-            ))}
-          </>
-        ) : null}
+              ))
+              ) }
+        </>
+        ) : 
+        <Link to="/login">← Login</Link> }
       </div>
     </>
   );

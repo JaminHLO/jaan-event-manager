@@ -1,22 +1,29 @@
 import React, { useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import Jumbotron from '../components/Jumbotron';
-import { ADD_ORDER, JOIN_CLUB } from '../utils/mutations';
+import { ADD_ORDER, JOIN_CLUB, BUY_MEMBERSHIP } from '../utils/mutations';
 import { idbPromise } from '../utils/helpers';
 
 function Success() {
   const [addOrder] = useMutation(ADD_ORDER);
   const [joinClub] = useMutation(JOIN_CLUB);
+  const [buyMembership] = useMutation(BUY_MEMBERSHIP);
 
   useEffect(() => {
     async function saveOrder() {
       const clubsData = await idbPromise('clubs', 'get');
       const clubs = clubsData.map((club) => club._id);
-
+      const newClubId = clubs[clubs.length - 1]
+      console.log(newClubId)
+      console.log(clubs)
       try {
         const { data: orderData } = await addOrder({
           variables: { clubs }
         });
+        const { newClubData } = await buyMembership({
+          variables: { id: newClubId,   spotsAvailable: 1 }
+        });
+        console.log(newClubData)
         const { data: joinData } = await clubs.map((clubId) => {
           joinClub({
             variables: { clubId }
