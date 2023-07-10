@@ -111,9 +111,9 @@ const Profile = () => {
                             )}
                         </div>
                         <div>
-                            <h2 className="profile-header text-white col-span-9 h-[3.75rem] bg-dark text-light p-6 text-4xl flex flex-row justify-center">
+                            <h2 className="profile-header text-white col-span-9 h-[3.75rem] bg-dark text-light p-6 text-2xl flex flex-row justify-center">
                                 {/* Viewing {user ? `${user.name}'s` : 'your'} profile. */}
-                                Hello {`${user.name}`}
+                                {`${user.name}`}
                             </h2>
                         </div>
                         <div className='flex justify-center items-center m-4 '>
