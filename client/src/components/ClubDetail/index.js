@@ -9,6 +9,8 @@ import auth from "../../utils/auth";
 import JaanMap from "../JaanMap";
 import { idbPromise, getGeocode } from "../../utils/helpers";
 import Notification from "../Notification";
+import Calendar from 'react-calendar';
+import { getFormattedDate } from '../../utils/helpers';
 
 
 const stripePromise = loadStripe(
@@ -19,6 +21,7 @@ const ClubDetail = () => {
     const { id: clubIdParam } = useParams();
     const [clubEditform, setClubEditForm] = useState({ title: ``, maxMembers: ``, description: ``, price: '', image: '' });
 
+    const [date, setDate] = useState(new Date());
 
     const [showModal, setShowModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
@@ -72,6 +75,8 @@ const ClubDetail = () => {
         userClubsId.push(userData.myClubs[i]._id)
     }
     console.log(userClubsId)
+
+    // useEffect for calendar?
 
     useEffect(() => {
         if (userClubsId.includes(clubData._id)) {
@@ -149,7 +154,8 @@ const ClubDetail = () => {
                 variables: {
                     event: {
                         ...eventFormState,
-                        geocode: geoEventAddress
+                        geocode: geoEventAddress,
+                        dateTime: getFormattedDate(date)
                     },
                     clubId: clubIdParam
                 }
@@ -199,14 +205,9 @@ const ClubDetail = () => {
     }
 
 
-
-
     return (
-
-
         <div className="club-details text-white flex justify-center items-center">
             <Notification clubData={clubData} userData={userData} />
-
 
             <div className="transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 max-w-[25rem] rounded-2xl h-[30rem] mr-[5rem]">
                 <div className="p-4">
@@ -266,6 +267,7 @@ const ClubDetail = () => {
                         }
                     </ul>
                 </div>
+
             </div>
 
             {showModal &&
@@ -327,7 +329,11 @@ const ClubDetail = () => {
                                     </div>
                                     <div className="flex-row space-between my-2">
                                         <label htmlFor="dateTime"></label>
-                                        <input
+                                        <div className="bg-red-800 opacity-80 rounded-xl p-3 w-80">
+                                            <Calendar onClickDay={setDate} minDate={new Date()} value={date} />
+                                            <div className='text-center fw-bold'>Selected Date:{' '}{date.toDateString()}</div>
+                                        </div>
+                                        {/* <input
                                             className="modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                                             placeholder="Choose a date for your event"
                                             name="dateTime"
@@ -335,7 +341,7 @@ const ClubDetail = () => {
                                             id="dateTime"
                                             onChange={handleChange}
                                             value={eventFormState.date}
-                                        />
+                                        /> */}
                                     </div>
                                     <div className="flex-row space-between my-2">
                                         <textarea
@@ -362,6 +368,8 @@ const ClubDetail = () => {
 
 
                     </div>
+                    
+
                 </div>
             }
 
