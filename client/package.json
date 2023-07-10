@@ -19,7 +19,8 @@
     "react-file-base64": "^1.0.3",
     "react-paginate": "^8.2.0",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "react-calendar": "^4.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
