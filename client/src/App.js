@@ -117,10 +117,6 @@ function App() {
                 path='/searchClubs'
                 element={<SearchClubs />}
               />
-              <Route 
-                path='/searchEventsClubs'
-                element={<SearchEventsClubs />}
-              />
             </Routes>
           </StoreProvider>
         </div>
