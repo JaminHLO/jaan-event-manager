@@ -66,7 +66,20 @@ const ClubDetail = () => {
     const latLngArray = [];
     if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
     if (clubData?.geocode) latLngArray.push(JSON.parse(clubData.geocode));
+    
+    const userClubsId = []
+    for (let i=0; i<userData?.myClubs?.length; i++) {
+        userClubsId.push(userData.myClubs[i]._id)
+    }
+    console.log(userClubsId)
 
+    useEffect(() => {
+        if (userClubsId.includes(clubData._id)) {
+            setIsMember(true)
+        } else {
+            setIsMember(false);
+        }
+    }, [clubData.adminId])
 
     useEffect(() => {
         if (checkoutData) {
@@ -217,7 +230,7 @@ const ClubDetail = () => {
             <div className="flex flex-col">
                 <div className="overflow-auto resize-y flex transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 rounded-2xl w-[60rem] h-[18rem] mb-4">
                     <div>
-                        <img className="h-[100%] w-[100%] rounded-2xl" src={clubData.image}></img>
+                        <img className="h-[100%] w-[100%] rounded-2xl" src={clubData.image ? clubData.image : '/images/club_default.jpg'}></img>
                     </div>
                     <div className="ml-10 m-5">
                         <h3 className="text-3xl m-2">{clubData.title}</h3>
@@ -227,8 +240,10 @@ const ClubDetail = () => {
                         <p className="text-xl m-2">Membership Price: ${clubData.price}</p>
                         <p className="text-xl m-2">Spots Available: {clubData.spotsAvailable}</p>
                         {token ? (
+                            !isMember ? (
                             <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950" onClick={submitCheckout}>Purchase Membership</button>
-                        ) : (
+                            ) : null
+                            ) : (
                             <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950"><Link to={`/login`}>Login to Join!</Link></button>
                         )}
                     </div>

@@ -192,7 +192,7 @@ const EventDetail = () => {
                 ? <li className="text-xl"><span className="font-bold">Status:</span> <span className="text-green-500">Available</span></li>
                 : <li className="text-xl"><span className="font-bold">Status:</span> <span className="text-red-500">Not Available</span></li>}
             </ul>
-            <Link className="m-3" to="/profile" >← Back to Profile</Link>
+            { token ? <Link className="m-3" to="/profile" >← Back to Profile</Link> : null }
           </div>
           <div className="w-1/2 flex flex-col items-center">
             {token ? (
@@ -214,7 +214,7 @@ const EventDetail = () => {
                 <p>Join the club to add this event</p>
               )
             ) : (
-              <p>Log in to Join!</p>
+              <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950"><Link to={`/login`}>Login to Join!</Link></button>
             )
             }
             <div className="m-3">
@@ -297,7 +297,7 @@ const EventDetail = () => {
                             />
                         </div>
                         <div className="flex-row space-between my-2">
-                            <label htmlFor="image">Description:</label>
+                            <label htmlFor="description">Description:</label>
                             <textarea
                                 className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                                 placeholder="Enter a short description of your event"
@@ -305,7 +305,7 @@ const EventDetail = () => {
                                 onChange={handleEditEventChange}
                                 value={eventEditform.description}
                             ></textarea>
-                        </div>
+                        {/* </div>
                             <label htmlFor="image">Image:</label>
                             <input
                                 className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
@@ -316,7 +316,7 @@ const EventDetail = () => {
                                 onChange={handleEditEventChange}
                                 value={eventEditform.image}
                             />
-                        <div>
+                        <div> */}
 
 
                         </div>

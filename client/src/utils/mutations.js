@@ -168,3 +168,12 @@ export const REMOVE_NOTIFICATIONS = gql`
   }
 }
 `;
+
+export const BUY_MEMBERSHIP = gql`
+  mutation BuyMembership($id: ID!, $spotsAvailable: Int!) {
+    buyMembership(_id: $id, spotsAvailable: $spotsAvailable) {
+      title
+      maxMembers
+      spotsAvailable
+    }
+  }`

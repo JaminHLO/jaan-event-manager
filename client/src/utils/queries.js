@@ -183,8 +183,6 @@ query EventById($id: ID!) {
   }
 }`
 
-// Next from starter code
-
 export const QUERY_CATEGORIES = gql`
   {
     categories {
@@ -202,41 +200,23 @@ export const QUERY_CHECKOUT = gql`
   }
 `;
 
-export const QUERY_ALL_PRODUCTS = gql`
-  {
-    products {
-      _id
-      name
-      description
-      price
-      quantity
-      category {
-        name
-      }
-    }
-  }
-`;
-
-
 export const QUERY_USER = gql`
-  {
-    user {
-      firstName
-      lastName
-      orders {
+  query User {
+  user {
+    name
+    orders {
+      purchaseDate
+      _id
+      clubs {
         _id
-        purchaseDate
-        products {
-          _id
-          name
-          description
-          price
-          quantity
-          image
-        }
+        title
+        image
+        price
+        description
       }
     }
   }
+}
 `;
 
 export const QUERY_SEARCH_EVENTS = gql`

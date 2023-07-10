@@ -67,6 +67,13 @@ const clubSchema = new Schema({
   }
 });
 
+clubSchema.pre('save', async function(next) {
+  if (this.isNew) {
+    this.spotsAvailable = this.maxMembers 
+  }
+  next()
+})
+
 const Club = mongoose.model('Club', clubSchema);
 
 module.exports = Club;
