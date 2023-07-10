@@ -2,6 +2,7 @@ import React from "react";
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import sportsConnect from "../../images/sports-connect-logo.png";
+import SearchEventsClubs from "../SearchEventsClubs";
 
 function Nav() {
 
@@ -12,11 +13,12 @@ function Nav() {
           <img className="m-2 h-12" src={sportsConnect}></img>
           <ul className=" flex flex-row">
             <li className="text-white p-3">
-              <button className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl">
+              {/* <button className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl">
                 <Link
                   to={`/searchEventsClubs`}
                 >Search</Link>
-              </button>
+              </button> */}
+              <SearchEventsClubs />
             </li>
             <li className="text-white p-3">
               <button className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl">
