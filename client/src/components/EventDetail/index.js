@@ -14,13 +14,14 @@ import { getFormattedDate } from '../../utils/helpers';
 const EventDetail = () => {
   const { id: eventId } = useParams();
   const [eventEditform, setEventEditForm] = useState(
-    { 
-      title: ``, 
-      address: ``, 
-      description: ``, 
-      dateTime: '', 
-      image: '', 
-      isAvailable: ""});
+    {
+      title: ``,
+      address: ``,
+      description: ``,
+      dateTime: '',
+      image: '',
+      isAvailable: ""
+    });
   const { loading, data } = useQuery(QUERY_EVENT, {
     variables: { id: eventId }
   });
@@ -29,20 +30,21 @@ const EventDetail = () => {
   const eventData = data?.event || {};
 
   const [date, setDate] = useState(
-      (eventData?.dateTime) ? 
-      (new Date (eventData.dateTime)) 
+    (eventData?.dateTime) ?
+      (new Date(eventData.dateTime))
       : (new Date())
-    );
+  );
 
 
   useEffect(() => {
     setEventEditForm(
-      { 
-        title: `${eventData?.title}`, 
-        address: `${eventData?.address}`, 
+      {
+        title: `${eventData?.title}`,
+        address: `${eventData?.address}`,
         // dateTime: `${eventData?.dateTime}`, 
-        image: `${eventData?.image}`, 
-        description: `${eventData?.description}` });
+        image: `${eventData?.image}`,
+        description: `${eventData?.description}`
+      });
   }, [eventData])
   // console.log('club id', eventData.clubId)
 
@@ -71,11 +73,11 @@ const EventDetail = () => {
 
   const stringToBoolean = (value) => {
     if (value && typeof value === "string") {
-         if (value.toLowerCase() === "true") return true;
-         if (value.toLowerCase() === "false") return false;
+      if (value.toLowerCase() === "true") return true;
+      if (value.toLowerCase() === "false") return false;
     }
     return value;
- }
+  }
 
   const handleEditEventChange = (event) => {
     const { name, value } = event.target;
@@ -197,12 +199,12 @@ const EventDetail = () => {
       })
       console.log('updated event', data)
       setEventEditForm(
-        { 
-          title: `${eventData?.title}`, 
-          address: `${eventData?.address}`, 
+        {
+          title: `${eventData?.title}`,
+          address: `${eventData?.address}`,
           // dateTime: `${eventData?.dateTime}`, 
-          image: `${eventData?.image}`, 
-          description: `${eventData?.description}` 
+          image: `${eventData?.image}`,
+          description: `${eventData?.description}`
         });
     } catch (error) {
       console.error(error)
@@ -217,8 +219,8 @@ const EventDetail = () => {
 
   return (
     <div className="event-page text-white flex justify-center items-center">
-      <div className="overflow-auto bg-black opacity-80 hover:opacity-90 rounded-2xl w-8/12 min-h-[40rem] max-h-screen flex items-center">
-        <div className="w-1/2 flex flex-col items-center text-center">
+      <div className="lg:overflow-auto bg-black opacity-80 hover:opacity-90 rounded-2xl lg:w-8/12 xs:w-[90%] min-h-[40rem] lg:max-h-screen flex lg:flex-row xs:flex-col xs:m-5 items-center">
+        <div className="lg:w-1/2 flex flex-col items-center text-center">
 
           <h3 className="text-3xl m-3">{eventData.title}</h3>
           {!eventData.image ? (
@@ -241,7 +243,7 @@ const EventDetail = () => {
           {token ? (
             userInClub ? (
               signedUp ? (
-                <p className="text-xl m-2">You are signed up for this event!</p>
+                <p className="text-xl m-2 xs:text-center">You are signed up for this event!</p>
               ) : (
                 <button
                   disabled={savedEventIds?.some((savedEventId) => savedEventId === eventId)}
@@ -263,13 +265,13 @@ const EventDetail = () => {
           <div className="m-3">
             <JaanMap latLngArray={latLngArray} />
           </div>
-          { isAdmin ? (
-              <button
-                className="m-3 bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:bg-rose-900 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                onClick={() => { setShowModal(true) }}
-              >
-                Edit Event
-              </button>
+          {isAdmin ? (
+            <button
+              className="lg:m-3 xs:m-4 bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:bg-rose-900 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              onClick={() => { setShowModal(true) }}
+            >
+              Edit Event
+            </button>
           ) : null
           }
         </div>
@@ -328,8 +330,8 @@ const EventDetail = () => {
                     <div className="flex-row space-between my-2">
                       <label htmlFor="dateTime">Date:</label>
                       <div className="bg-red-800 opacity-80 rounded-xl p-3 w-80">
-                          <Calendar onClickDay={setDate} minDate={new Date()} value={date} />
-                          <div className='text-center fw-bold'>Selected Date:{' '}{date.toDateString()}</div>
+                        <Calendar onClickDay={setDate} minDate={new Date()} value={date} />
+                        <div className='text-center fw-bold'>Selected Date:{' '}{date.toDateString()}</div>
                       </div>
                       {/* <input
                         className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"

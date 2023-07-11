@@ -216,9 +216,9 @@ const ClubDetail = () => {
 
 
     return (
-        <div className="club-details text-white flex justify-center items-center">
+        <div className="club-details text-white flex justify-center items-center lg:flex-row xs:flex-col xs:flex-col-reverse">
 
-            <div className="transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 max-w-[25rem] rounded-2xl h-[25rem] mr-[5rem]">
+            <div className="transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 max-w-[25rem] rounded-2xl h-[25rem] lg:mr-[5rem] xs:m-4">
                 <div className="p-4 flex justify-center" >
                     <JaanMap latLngArray={latLngArray} />
                 </div>
@@ -239,19 +239,19 @@ const ClubDetail = () => {
                 </div>
             </div>
             <div className="flex flex-col">
-                <div className="overflow-auto resize-y flex transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 rounded-2xl w-[60rem] h-[18rem] mb-4">
-                    <div>
-                        <img className="h-[100%] w-[100%] rounded-2xl" src={clubData.image ? clubData.image : '/images/club_default.jpg'}></img>
+                <div className="overflow-auto resize-y flex transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 rounded-2xl lg:w-[60rem] xs:w-fit xs:m-5 lg:h-[18rem] mb-4">
+                    <div className="xs:flex xs:items-center xs:m-2">
+                        <img className="lg:h-[100%] lg:w-[100%] rounded-2xl" src={clubData.image ? clubData.image : '/images/club_default.jpg'}></img>
                     </div>
                     <div className="ml-10 m-5">
                         <Notification clubData={clubData} userData={userData} />
 
-                        <h3 className="text-3xl m-2">{clubData.title}</h3>
+                        <h3 className="lg:text-3xl xs:text-2xl m-2">{clubData.title}</h3>
 
 
-                        <p className="text-xl m-2">About: {clubData.description}</p>
-                        <p className="text-xl m-2">Membership Price: ${clubData.price}</p>
-                        <p className="text-xl m-2">Spots Available: {clubData.spotsAvailable}</p>
+                        <p className="lg:text-xl m-2">About: {clubData.description}</p>
+                        <p className="lg:text-xl m-2">Membership Price: ${clubData.price}</p>
+                        <p className="lg:text-xl m-2">Spots Available: {clubData.spotsAvailable}</p>
                         {token ? (
                             !isMember ? (
                                 isAvailable ? (
@@ -263,7 +263,7 @@ const ClubDetail = () => {
                         )}
                     </div>
                 </div>
-                <div className="overflow-auto resize-y flex flex-col transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 rounded-2xl w-[60rem] h-[18rem] mb-4">
+                <div className="overflow-auto resize-y flex flex-col transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 rounded-2xl lg:w-[60rem] xs:w-fit xs:m-5 h-[18rem] mb-4">
                     <h2 className="text-3xl text-center m-4">List of Events</h2>
                     <ul className="list-disc list-none text-center">
                         {clubData.events?.length !== 0 ? (
