@@ -189,8 +189,11 @@ const resolvers = {
     },
     buyMembership: async (parent, { _id, spotsAvailable }) => {
       const decrement = Math.abs(spotsAvailable) * -1;
-
-      return await Club.findByIdAndUpdate(_id, { $inc: { spotsAvailable: decrement } }, { new: true });
+      const updatedClub = Club.findByIdAndUpdate(_id, { $inc: { spotsAvailable: decrement } }, { new: true });
+      if (updatedClub.spotsAvailable === 0) {
+        const updatedClub = Club.findByIdAndUpdate(_id, { isAvailable: false } , { new: true });
+      }
+      return await updatedClub
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });

@@ -14,7 +14,8 @@ function OrderHistory() {
 
   return (
     <>
-      <div className="w-[50rem]">
+      <div className="create-club my-1  flex justify-center items-center min-h-[90vh]">
+        <div className='p-5 bg-black opacity-80 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 hover:opacity-90'>
         {user ? (
           <>
             <Link to="/profile">← Back to Profile</Link>
@@ -46,6 +47,7 @@ function OrderHistory() {
         </>
         ) : 
         <Link to="/login">← Login</Link> }
+        </div>
       </div>
     </>
   );
