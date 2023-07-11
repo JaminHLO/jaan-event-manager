@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
 
+
 function Login(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN);
@@ -32,7 +33,7 @@ function Login(props) {
 
   return (
     <div className="login-logout flex justify-center items-center text-white text-xl">
-      <div className="login-container transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70 rounded-2xl h-auto w-2/5 text-center">
+      <div className="login-container transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70 rounded-2xl h-auto lg:w-2/5 xs:w-screen text-center">
         <h2 className='text-4xl m-4'>Login</h2>
         <form onSubmit={handleFormSubmit} className='m-5'>
           <div className="flex-row space-between my-2">

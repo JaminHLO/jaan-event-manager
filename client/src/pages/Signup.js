@@ -29,13 +29,13 @@ function Signup(props) {
 
   if (signupError) {
     return (
-          <div className="login-logout flex justify-center items-center text-white text-xl">
-            <div className="login-container transition ease-in-out delay-150 bg-black opacity-80 rounded-2xl h-auto w-2/5 text-center">
-              <p className='text-4xl m-4'>This email has already been used.</p>
-              <p className='text-4xl m-4'>Please try a different one.</p>
-              <a className="m-3" href='' >← Back to Signup</a>
-            </div>
-          </div>
+      <div className="login-logout flex justify-center items-center text-white text-xl">
+        <div className="login-container transition ease-in-out delay-150 bg-black opacity-80 rounded-2xl h-auto w-2/5 text-center">
+          <p className='text-4xl m-4'>This email has already been used.</p>
+          <p className='text-4xl m-4'>Please try a different one.</p>
+          <a className="m-3" href='' >← Back to Signup</a>
+        </div>
+      </div>
     )
   }
 
@@ -49,7 +49,7 @@ function Signup(props) {
 
   return (
     <div className="login-logout flex justify-center items-center text-white text-xl">
-      <div className="login-container transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70 rounded-2xl h-auto w-2/5 text-center">
+      <div className="login-container transition ease-in-out delay-150 bg-black opacity-50 hover:opacity-70 rounded-2xl h-auto lg:w-2/5 xs:w-screen text-center">
         <h2 className='text-4xl m-4'>Signup</h2>
         <form onSubmit={handleFormSubmit} className='m-5'>
           <div className="flex-row space-between my-2">
