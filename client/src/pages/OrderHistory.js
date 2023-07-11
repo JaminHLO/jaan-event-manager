@@ -15,28 +15,28 @@ function OrderHistory() {
   return (
     <>
       <div className="create-club my-1  flex justify-center items-center min-h-[90vh]">
-        <div className='p-5 bg-black opacity-80 w-1/2 h-auto rounded-2xl text-center transition ease-in-out delay-150 hover:opacity-90'>
+        <div className='overflow-auto resize-y text-white p-5 bg-black opacity-80 lg:w-1/2 md:3/4 h-auto rounded-2xl text-center transition ease-in-out delay-150 hover:opacity-90'>
         {user ? (
           <>
-            <Link to="/profile">← Back to Profile</Link>
-            <h2 className='font-bold text-xl mb-2'>
+            <h2 className='text-3xl m-3'>
               Order History for {user.name}
             </h2>
+            <Link to="/profile">← Back to Profile</Link>
             {user.orders?.length === 0 ? <h2>No Orders yet</h2> : (
               user.orders.map((order) => (
-                <div key={order._id} className="border-solid border-2 rounded-xl flex items-center flex-wrap m-3 p-3">
+                <div key={order._id} className="flex justify-center flex-row items-center border-solid border-2 rounded-xl items-center flex-wrap m-3 p-3">
                   <h2>  
                     <strong>{new Date(parseInt(order.purchaseDate)).toLocaleDateString()}</strong>
                   </h2>
                   {/* <div className=""> */}
-                    {order.clubs.map(({ _id, image, title, price }) => (
-                      <div className="card px-1 py-1">
-                        <Link to={`/clubs/club/${_id}`}>       
-                          <img alt={title} className= "h-32 w-32 rounded-2xl" width="300px" src={image ? image : '/images/club_default.jpg'} />
-                          <p>{title}</p>
-                        </Link>
-                        <div>
-                          <span>${price}</span>
+                    {order.clubs?.map(({ _id, image, title, price }) => (
+                      <div className="flex flex-row items-stretch">
+                          <img alt={title} className= "p-1 h-32 w-32 rounded-2xl" width="300px" src={image ? image : '/images/club_default.jpg'} />
+                        <div className='flex flex-col justify-center'>  
+                          <Link to={`/clubs/club/${_id}`}>       
+                            <p>{title}</p>
+                          </Link>
+                          <p>${price}</p>
                         </div>
                       </div>
                     ))}
