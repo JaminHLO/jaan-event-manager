@@ -22,17 +22,6 @@
     min-height: 70vh;
 }
 
-
-.top-image {
-    z-index: 1;
-    height: auto;
-    min-width: 43.75rem;
-    max-width: 50rem;
-    position: absolute;
-    margin-top: 5em;
-    margin-left: 5em;
-}
-
 /* login & logout page styles */
 
 .login-logout {
