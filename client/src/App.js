@@ -28,6 +28,7 @@ import Clubs from './pages/Clubs';
 import SearchEvents from './components/SearchEvents';
 import SearchClubs from './components/SearchClubs';
 import EventDetail from './components/EventDetail'; 
+import Contact from './components/About';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3001/graphql',
@@ -115,6 +116,10 @@ function App() {
               <Route 
                 path='/searchClubs'
                 element={<SearchClubs />}
+              />
+              <Route
+                path='/contact'
+                element={<Contact />}
               />
             </Routes>
           </StoreProvider>
