@@ -6,10 +6,11 @@
 ## Description
 
 This application is a full-stack sports club management solution. It is built with Javascript, React, and GraphQL with a MongoDB backend. 
-It uses the following libraries: apollo-server-express, express, axios, bcrypt, graphql, mongoose, stripe, dotenv, dayjs, node-fetch, and react. 
+It uses the following libraries: apollo-server-express, express, axios, bcrypt, graphql, mongoose, stripe, dotenv, dayjs, node-fetch, react-calendar, @react-google-maps/api, and react. API access to Stripe and GoogleMaps has also proven invaluable.
+
 Sports Connect offers users access to registered Clubs and Events in their area of interest. <br>
-- Clubs: users may search, create, edit, or purchase access to clubs. <br>
-- Events: users  will be able to check their rental unit details, submit maintenance tickets to their landlord, and communicate with them through a messaging system.
+- Clubs: users may search, create, edit, or purchase access to clubs. Club owners may post and edit notifications to club members. <br>
+- Events: users may search events and join if they are members of the event's club. Club owners may create and edit events.
 
 
 ## Table of Contents
@@ -27,31 +28,37 @@ This application runs on the browser.
 To run the code locally:<br>
 >Clone the repository.<br>
 >Download required packages: npm i.<br>
->Run mysql from the /db directory.<br>
->SOURCE the schema.sql file to create the database.<br>
->Seed the tables from the main directory using: npm run seed.<br>
->Run the server: npm start.<br>
->The local application may be accessed on your browser using: http://localhost:3001/
+>Seed the database: npm run seed.<br>
+>Start the program: npm run develop.<br>
+>The local application may be accessed on your browser using: http://localhost:3000/
 
 
 ## Usage
 
-The link to access the deployed application is: https://home-hub-management.herokuapp.com/
+The link to access the deployed application is: XXhttps://home-hub-management.herokuapp.com/XX
  
-- Landlord Usage:
-    * Create a new landlord account or sign in as landlord. The dashboard has the following options:
-    * Your properties(if any): Displays current units, allows landlord to add new property and invite tenants.
-    * Maintenance tickets(if any): Displays a list of maintenance tickets for your properties. Allows the landlord to update them.
-    * Your messages: Shows the conversations with your tenants. Allows the landlord to start a new conversation.
-    * Update profile: Allows the landlord to update their profile info, including their password. Displays a list of their current tenants.
+- Finding Clubs and Events:
+    * Click the 'Search' menu dropdown in the navigation bar to select either Clubs or Events for your search.
+    * Enter a search term or a single white space ' ' if you would like to see all clubs or events.
+    * Under the 'List' click 'View Details' of any club or event of interest.
+    * After viewing the details, a prospective user is required to create an account or login to join.
 
-- Tenant Usage:
-    * Sign in as a tenant while the tenant check box is checked. The dashboard has the following options:
-    * Your unit: Lists information about your rental unit.
-    * Your maintenance tickets: Displays a list of the maintenance tickets the tenant has sent.
-    * Add maintenance ticket: Opens a window to create a new maintenance ticket.
-    * Your messages: Shows tenant-landlord conversations. Allows tenant to start a new conversation.
-    * Update your profile: The tenant can update email/password for their account.
+- Creating an Account:
+    * Users who are not logged in may create an account by clicking the 'Signup' button on the nav bar.
+    * Emails must be unique to the user.
+    * A user's name, profile image, and address may be updated from the 'Update your Profile' option.
+    * Users may also add participants to their account in case they are signing up for a Club on behalf of minor children.
+      
+- Creating a Club & Event:
+    * After creating an account or signing in, a user may create a Club from the button beneath their profile.
+    * Enter the required Club information, a user is now a Club owner and may update the details of their Club.
+    * Club owners may post or delete a club-wide Announcement viewable by all Club members.
+    * Club owners may create and edit the Club's Events as well as join them.
+    * Editing an Event also gives the Club owner the ability to change the event status to unavailable.
+ 
+- Joining a Club & Event:
+    * Users may either create a Club or join the Club of another for a fee.
+    * Once a member of a Club, a user will have access to join all the Club's Events.
 
 Screenshots of the app in use:
 
@@ -73,4 +80,4 @@ Instruction Team:
 
 ## License
 
-This Project is covered by the MIT License.
+This Project is covered by the GPL License.
