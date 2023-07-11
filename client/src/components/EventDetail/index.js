@@ -7,6 +7,8 @@ import Auth from "../../utils/auth";
 import JaanMap from "../JaanMap";
 import { saveEventIds, getSavedEventsIds } from "../../utils/localStorage";
 import { getGeocode } from '../../utils/helpers';
+import Calendar from 'react-calendar';
+import { getFormattedDate } from '../../utils/helpers';
 
 
 const EventDetail = () => {
@@ -26,13 +28,19 @@ const EventDetail = () => {
 
   const eventData = data?.event || {};
 
+  const [date, setDate] = useState(
+      (eventData?.dateTime) ? 
+      (new Date (eventData.dateTime)) 
+      : (new Date())
+    );
+
 
   useEffect(() => {
     setEventEditForm(
       { 
         title: `${eventData?.title}`, 
         address: `${eventData?.address}`, 
-        dateTime: `${eventData?.dateTime}`, 
+        // dateTime: `${eventData?.dateTime}`, 
         image: `${eventData?.image}`, 
         description: `${eventData?.description}` });
   }, [eventData])
@@ -181,7 +189,9 @@ const EventDetail = () => {
           eventId: eventId,
           event: {
             ...eventEditform
-            , geocode: value
+            , geocode: value,
+            dateTime: getFormattedDate(date)
+
           }
         }
       })
@@ -190,7 +200,7 @@ const EventDetail = () => {
         { 
           title: `${eventData?.title}`, 
           address: `${eventData?.address}`, 
-          dateTime: `${eventData?.dateTime}`, 
+          // dateTime: `${eventData?.dateTime}`, 
           image: `${eventData?.image}`, 
           description: `${eventData?.description}` 
         });
@@ -318,7 +328,11 @@ const EventDetail = () => {
                     </div>
                     <div className="flex-row space-between my-2">
                       <label htmlFor="dateTime">Date:</label>
-                      <input
+                      <div className="bg-red-800 opacity-80 rounded-xl p-3 w-80">
+                          <Calendar onClickDay={setDate} minDate={new Date()} value={date} />
+                          <div className='text-center fw-bold'>Selected Date:{' '}{date.toDateString()}</div>
+                      </div>
+                      {/* <input
                         className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                         placeholder="Choose a date for your event"
                         name="dateTime"
@@ -326,7 +340,7 @@ const EventDetail = () => {
                         id="dateTime"
                         onChange={handleEditEventChange}
                         value={eventEditform.dateTime}
-                      />
+                      /> */}
                     </div>
                     <div className="flex-row space-between my-2">
                       <label htmlFor="description">Description:</label>
