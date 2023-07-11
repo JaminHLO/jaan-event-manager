@@ -9,7 +9,7 @@ function Nav() {
   function showNavigation() {
     if (Auth.loggedIn()) {
       return (
-        <div className="flex flex-row justify-between p-4 bg-slate-950">
+        <div className="flex flex-row justify-between p-4 bg-black">
           <button><Link to={'/profile'}><img className="m-2 h-12" src={sportsConnect}></img></Link></button>
           <ul className=" flex flex-row">
             <li className="text-white p-3">
@@ -35,7 +35,7 @@ function Nav() {
       );
     } else {
       return (
-        <div className="flex flex-row justify-between p-4 bg-slate-950">
+        <div className="flex flex-row justify-between p-4 bg-black">
           <button><Link to={`/`}><img className="h-12 mx-2" src={sportsConnect}></img></Link></button>
           <ul className="flex flex-row">
             <li className="m-2">
