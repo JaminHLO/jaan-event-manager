@@ -60,9 +60,9 @@ const Notification = ({ clubData, userData }) => {
             ) : (
                 <div>
                     {/* {isAdmin && <button onClick={() => setShowModal(true)}>Create Notification</button>} */}
-                    <button className="mb-1 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    {isAdmin && <button className="mb-1 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             onClick={() => setShowModal(true)}
-                            >Post announcement</button>
+                            >Post announcement</button>}
                 </div>
             )}
             {showModal ? (
