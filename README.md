@@ -6,7 +6,7 @@
 ## Description
 
 This application is a full-stack sports club management solution. It is built with Javascript, React, and GraphQL with a MongoDB backend. 
-It uses the following libraries: apollo-server-express, express, axios, bcrypt, graphql, mongoose, stripe, dotenv, dayjs, node-fetch, react-calendar, @react-google-maps/api, and react. API access to Stripe and GoogleMaps has also proven invaluable.
+It uses the following libraries: apollo-server-express, express, axios, bcrypt, graphql, mongoose, stripe, dotenv, dayjs, node-fetch, react-calendar, @react-google-maps/api, and react. API access to Stripe and Google Maps has also proven invaluable.
 
 Sports Connect offers users access to registered Clubs and Events in their area of interest. <br>
 - Clubs: users may search, create, edit, or purchase access to clubs. Club owners may post and edit notifications to club members. <br>
@@ -62,7 +62,7 @@ The link to access the deployed application is: XXhttps://home-hub-management.he
 
 Screenshots of the app in use:
 
-<img src=https://raw.githubusercontent.com/Anabel-Espinoza/HomeHub/main/public/images/screenshots/hh-home-02.png width=30% margin=10px alt="HomeHub Homepage"> <img src=https://raw.githubusercontent.com/Anabel-Espinoza/HomeHub/main/public/images/screenshots/landlord-properties.png width=30% margin=10px alt="Landlord Dashboard"> <img src=https://raw.githubusercontent.com/Anabel-Espinoza/HomeHub/main/public/images/screenshots/landlord-convo.png width=30% margin=10px alt="Landlord Convo"> <img src=https://raw.githubusercontent.com/Anabel-Espinoza/HomeHub/main/public/images/screenshots/tenant-dashboard.png width=30% margin=10px alt="Tenant Dashboard"> <img src=https://raw.githubusercontent.com/Anabel-Espinoza/HomeHub/main/public/images/screenshots/tenant-add-ticket.png width=30% margin=10px alt="Tenant Add Ticket"> 
+<img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/public/images/screenshots/sc-ss-landing.png width=30% margin=10px alt="Sports Connect Homepage"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/public/images/screenshots/sc-ss-signup.png width=30% margin=10px alt="Signup"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/public/images/screenshots/sc-ss-profile.png width=30% margin=10px alt="User Profile"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/public/images/screenshots/sc-ss-club.png width=30% margin=10px alt="Club View"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/public/images/screenshots/sc-ss-createevent.png width=30% margin=10px alt="Create Event"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/public/images/screenshots/sc-ss-event.png width=30% margin=10px alt="View Event"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/public/images/screenshots/sc-ss-eventsearch.png width=30% margin=10px alt="Event Search">
 
 
 ## Credits

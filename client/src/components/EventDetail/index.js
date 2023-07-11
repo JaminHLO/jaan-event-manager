@@ -235,8 +235,8 @@ const EventDetail = () => {
 
   return (
     <div className="event-page text-white flex justify-center items-center">
-      <div className="overflow-auto bg-black opacity-80 hover:opacity-90 rounded-2xl w-8/12 min-h-[40rem] max-h-screen flex items-center">
-        <div className="w-1/2 flex flex-col items-center text-center">
+      <div className="lg:overflow-auto bg-black opacity-80 hover:opacity-90 rounded-2xl lg:w-8/12 xs:w-[90%] min-h-[40rem] lg:max-h-screen flex lg:flex-row xs:flex-col xs:m-5 items-center">
+        <div className="lg:w-1/2 flex flex-col items-center text-center">
 
           <h3 className="text-3xl m-3">{eventData.title}</h3>
           {!eventData.image ? (
@@ -259,7 +259,7 @@ const EventDetail = () => {
           {token ? (
             userInClub ? (
               signedUp ? (
-                <p className="text-xl m-2">You are signed up for this event!</p>
+                <p className="text-xl m-2 xs:text-center">You are signed up for this event!</p>
               ) : (
                 <button
                   disabled={savedEventIds?.some((savedEventId) => savedEventId === eventId)}
@@ -297,7 +297,7 @@ const EventDetail = () => {
           </div>
           {isAdmin ? (
             <button
-              className="m-3 bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:bg-rose-900 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="lg:m-3 xs:m-4 bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:bg-rose-900 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               onClick={() => { setShowModal(true) }}
             >
               Edit Event

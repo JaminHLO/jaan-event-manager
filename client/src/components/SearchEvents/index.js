@@ -59,7 +59,7 @@ const SearchEvents = () => {
     return (
 
         <div className="search-events text-white flex flex-col items-center justify-center">
-            <div className="bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl min-w-[25rem] max-w-[25rem] text-center m-4">
+            <div className="bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl lg:w-1/2 text-center m-4">
                 <h2 className="text-3xl m-2">Search for an event</h2>
                 <div className="m-4">
                     <form onSubmit={handleSubmit}>
@@ -78,7 +78,7 @@ const SearchEvents = () => {
 
             </div>
 
-            <div className="overflow-auto overflow-x-hidden bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl m-4 min-w-[25rem] max-w-[25rem] flex flex-col items-center max-h-[35rem]">
+            <div className="overflow-auto overflow-x-hidden bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl m-4 lg:w-1/2 flex flex-col items-center lg:max-h-[35rem]">
                 <div className="m-4 w-full ">
                     <h3 className="text-3xl text-center m-3">Results:</h3>
                     <div className="flex justify-center">
@@ -88,7 +88,7 @@ const SearchEvents = () => {
                         <p className="text-2xl text-center">List Of Events:</p>
                         {events.length ? (
                             currentItems.map((event) => (
-                                <div className="text-xl border-solid border-2 border-white flex items-center flex-wrap rounded-xl m-3 p-3" key={event._id}>
+                                <div className="text-xl border-solid border-2 border-white flex items-center xs:justify-center lg:justify-start flex-wrap rounded-xl m-3 p-3" key={event._id}>
                                     {!event.image ? (
                                         <img className="h-36 w-36 rounded-2xl"
                                             src="/images/event_default.jpg"
@@ -98,7 +98,7 @@ const SearchEvents = () => {
                                             src={event.image}
                                             alt='single event' />
                                     )}
-                                    <div className="m-5">
+                                    <div className="m-5 xs:text-center lg:text-left">
                                         <p className="my-1"><span className="font-bold">Event:</span> {event.title}</p>
                                         <p className="my-1"><span className="font-bold">Description:</span> {event.description}</p>
                                         {event.isAvailable
