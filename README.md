@@ -6,7 +6,7 @@
 ## Description
 
 This application is a full-stack sports club management solution. It is built with Javascript, React, and GraphQL with a MongoDB backend. 
-It uses the following libraries: apollo-server-express, express, axios, bcrypt, graphql, mongoose, stripe, dotenv, dayjs, node-fetch, react-calendar, @react-google-maps/api, and react. API access to Stripe and GoogleMaps has also proven invaluable.
+It uses the following libraries: apollo-server-express, express, axios, bcrypt, graphql, mongoose, stripe, dotenv, dayjs, node-fetch, react-calendar, @react-google-maps/api, and react. API access to Stripe and Google Maps has also proven invaluable.
 
 Sports Connect offers users access to registered Clubs and Events in their area of interest. <br>
 - Clubs: users may search, create, edit, or purchase access to clubs. Club owners may post and edit notifications to club members. <br>
