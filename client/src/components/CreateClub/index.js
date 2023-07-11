@@ -161,6 +161,7 @@ const CreateClub = (props) => {
                             name="title"
                             type="title"
                             id="title"
+                            maxlength="24"
                             onChange={handleChange}
                             value={club.title}
                         />

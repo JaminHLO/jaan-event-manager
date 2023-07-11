@@ -13,8 +13,8 @@ import Calendar from 'react-calendar';
 import { getFormattedDate } from '../../utils/helpers';
 
 
-const stripePromise = loadStripe(
-    'pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
+    // 'pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
 
 
 const ClubDetail = () => {
@@ -206,11 +206,10 @@ const ClubDetail = () => {
 
 
     return (
-        <div className="club-details text-white flex justify-center items-center">
-            <Notification clubData={clubData} userData={userData} />
+        <div className="club-details text-white flex  items-center">
 
             <div className="transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 max-w-[25rem] rounded-2xl h-[30rem] mr-[5rem]">
-                <div className="p-4">
+                <div className="p-4 flex justify-center" >
                     <JaanMap latLngArray={latLngArray} />
                 </div>
                 <div className="text-center">
@@ -224,6 +223,10 @@ const ClubDetail = () => {
                                 className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 onClick={() => { setShowEditModal(true) }}
                             >Edit club</button>
+                            {/* <button
+                                className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                onClick={() => { console.log('hi') }}
+                            >Post announcement</button> */}
                         </>
                     ) : null}
                 </div>
@@ -234,6 +237,8 @@ const ClubDetail = () => {
                         <img className="h-[100%] w-[100%] rounded-2xl" src={clubData.image ? clubData.image : '/images/club_default.jpg'}></img>
                     </div>
                     <div className="ml-10 m-5">
+                        <Notification clubData={clubData} userData={userData} />
+
                         <h3 className="text-3xl m-2">{clubData.title}</h3>
 
 
@@ -408,6 +413,7 @@ const ClubDetail = () => {
                                                 name="title"
                                                 type="text"
                                                 id="title"
+                                                maxlength="24"
                                                 onChange={handleEditClubChange}
                                                 value={clubEditform.title}
                                             />
