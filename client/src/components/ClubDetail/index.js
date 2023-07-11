@@ -27,6 +27,7 @@ const ClubDetail = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [isAdmin, setIsAdmin] = useState();
     const [isMember, setIsMember] = useState();
+    const [isAvailable, setIsAvailable] = useState()
     const [addEvent, { error }] = useMutation(ADD_EVENT, {
         refetchQueries: [
             {
@@ -55,6 +56,17 @@ const ClubDetail = () => {
     const clubData = data?.club || {};
     console.log(clubData)
     const clubEvents = clubData.events
+    const spotsAvailable = clubData?.spotsAvailable
+
+    useEffect(() => {
+        if (spotsAvailable === 0) {
+            setIsAvailable(false)
+        } else {
+            setIsAvailable(true);
+        }
+    }, [clubData])
+    console.log('spots', spotsAvailable, 'available', isAvailable )
+
 
 
     useEffect(() => {
@@ -113,7 +125,6 @@ const ClubDetail = () => {
         ]
     })
 
-
     const handleChange = (event) => {
         const { name, value } = event.target;
         setEventFormState({
@@ -121,7 +132,6 @@ const ClubDetail = () => {
             [name]: value,
         })
     }
-
 
     const handleEditClubChange = (event) => {
         const { name, value } = event.target;
@@ -247,7 +257,9 @@ const ClubDetail = () => {
                         <p className="text-xl m-2">Spots Available: {clubData.spotsAvailable}</p>
                         {token ? (
                             !isMember ? (
+                                isAvailable ? (
                             <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950" onClick={submitCheckout}>Purchase Membership</button>
+                                ) : <p className="text-xl m-2">This club is not available</p>
                             ) : null
                             ) : (
                             <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950"><Link to={`/login`}>Login to Join!</Link></button>
@@ -260,7 +272,7 @@ const ClubDetail = () => {
                         {clubData.events?.length !== 0 ? (
 
 
-                            clubEvents.map((singleEvent) => (
+                            clubEvents?.map((singleEvent) => (
                                 <li className="border-solid border-2 border-white hover:bg-white hover:text-black rounded-xl m-3 p-3">
                                     <Link to={`/events/event/${singleEvent._id}`}>
                                         <span className="font-bold">Event:</span> {singleEvent.title} <span className="font-bold">Date:</span> {singleEvent.dateTime}

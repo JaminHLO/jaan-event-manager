@@ -25,6 +25,7 @@ query getClubs($category: ID) {
     messages
     price
     spotsAvailable
+    isAvailable
     geocode
     category {
       _id
@@ -38,6 +39,7 @@ export const QUERY_CLUB = gql`
   club(_id: $id) {
     _id
     adminId
+    isAvailable
     events {
       _id
       title

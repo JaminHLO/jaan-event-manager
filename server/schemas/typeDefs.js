@@ -21,6 +21,7 @@ const typeDefs = gql`
     notifications: String
     messages: [String]
     geocode: String
+    isAvailable: Boolean
   }
 
   type Club {
@@ -39,6 +40,7 @@ const typeDefs = gql`
     messages: [String]
     events: [Event]
     geocode: String
+    isAvailable: Boolean
   }
 
   type Order {
