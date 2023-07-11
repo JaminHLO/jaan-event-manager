@@ -233,10 +233,7 @@ const ClubDetail = () => {
                                 className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 onClick={() => { setShowEditModal(true) }}
                             >Edit club</button>
-                            {/* <button
-                                className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                onClick={() => { console.log('hi') }}
-                            >Post announcement</button> */}
+
                         </>
                     ) : null}
                 </div>
