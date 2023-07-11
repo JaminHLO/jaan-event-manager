@@ -3,6 +3,7 @@ import React from "react";
 // import CategoryMenu from "../components/CategoryMenu";
 // import Cart from "../components/Cart";
 import teamwork from "../images/teamwork.png";
+import sportsTeam from "../images/sports-team.png";
 // import EventMap from "../components/EventMap";
 import { Link } from "react-router-dom";
 import logo from "../images/sports-connect-logo.png";
@@ -19,8 +20,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="mid-page bg-black flex flex-row">
-        <div className="w-1/2 max-w-5xl flex flex-col items-center justify-center">
+      <div className="mid-page lg:min-h-[60vh] xs:h-auto bg-black flex md:flex-row xs:flex-col">
+        <div className="lg:w-1/2 xs:w-auto max-w-5xl flex flex-col items-center justify-center">
           <div className="flex justify-center m-8">
             <p className="w-1/2 text-3xl text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sollicitudin erat id eros fermentum, vel tincidunt felis vestibulum.</p>
           </div>
@@ -34,7 +35,7 @@ const Home = () => {
             <div className="bg-red-900 h-96 w-60"></div>
           </div>
           <div className="top-image">
-            <img src={teamwork} alt="" className="teamwork"></img>
+            <img src={teamwork} alt="teamwork" className="teamwork h-96"></img>
           </div>
         </div>
       </div>

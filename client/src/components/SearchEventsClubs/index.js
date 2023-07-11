@@ -7,18 +7,23 @@ import { Link } from "react-router-dom";
 const SearchEventsClubs = () => {
 
     const [display, setDisplay] = useState("none");
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const handleDisplay = () => {
-        if (display === "none") {
-            setDisplay("block")
+        if (!menuOpen) {
+            setDisplay("block");
+            setMenuOpen(true);
         } else {
-            setDisplay("none")
+            setDisplay("none");
+            setMenuOpen(false);
         }
     }
 
     return (
         <div>
-            <button className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl"
+            <button
+                className={`bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl ${menuOpen ? "text-sm" : ""
+                    }`}
                 onClick={handleDisplay}
             >
                 Search ▾
@@ -26,15 +31,21 @@ const SearchEventsClubs = () => {
             <div style={{ display: display }}>
                 <div>
                     <button
-                        className="bg-transparent hover:text-red-900 text-white font-bold py-2 px-4 rounded-2xl"
+                        className={`bg-transparent hover:text-red-900 text-white font-bold py-2 px-4 rounded-2xl ${menuOpen ? "text-sm" : ""
+                            }`}
                         onClick={handleDisplay}
-                    ><Link to="/searchClubs">▸ For Clubs</Link></button>
+                    >
+                        <Link to="/searchClubs">▸ For Clubs</Link>
+                    </button>
                 </div>
                 <div>
                     <button
-                        className="bg-transparent hover:text-red-900 text-white font-bold py-2 px-4 rounded-2xl"
+                        className={`bg-transparent hover:text-red-900 text-white font-bold py-2 px-4 rounded-2xl ${menuOpen ? "text-sm" : ""
+                            }`}
                         onClick={handleDisplay}
-                    ><Link to="searchEvents">▸ For Events</Link></button>
+                    >
+                        <Link to="searchEvents">▸ For Events</Link>
+                    </button>
                 </div>
             </div>
         </div>
