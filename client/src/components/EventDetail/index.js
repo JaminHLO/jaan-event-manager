@@ -118,8 +118,8 @@ const EventDetail = () => {
   // console.log('my clubs:', myClubsIds)
 
 
-  let eventClubId = eventData.clubId?._id
-  // console.log('clubId for this event', eventClubId)
+  const eventClubId = eventData.clubId?._id
+  console.log('clubId for this event', eventClubId)
 
 
   useEffect(() => {
@@ -234,7 +234,8 @@ const EventDetail = () => {
               ? <li className="text-xl"><span className="font-bold">Status:</span> <span className="text-green-500">Available</span></li>
               : <li className="text-xl"><span className="font-bold">Status:</span> <span className="text-red-500">Not Available</span></li>}
           </ul>
-          {token ? <Link className="m-3" to="/profile" >← Back to Profile</Link> : null}
+          {token ? <Link className="m-1" to="/profile" >← Back to Profile</Link> : null}
+          <Link to={`/clubs/club/${eventClubId}`}>← Club Details</Link>
         </div>
         <div className="w-1/2 flex flex-col items-center">
           {token ? (
@@ -256,21 +257,19 @@ const EventDetail = () => {
               <p>Join the club to add this event</p>
             )
           ) : (
-            <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950"><Link to={`/login`}>Login to Join!</Link></button>
+            <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-2 hover:bg-rose-950"><Link to={`/login`}>Login to Join!</Link></button>
           )
           }
           <div className="m-3">
             <JaanMap latLngArray={latLngArray} />
           </div>
-          {token ? (
-            isAdmin ? (
+          { isAdmin ? (
               <button
                 className="m-3 bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:bg-rose-900 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 onClick={() => { setShowModal(true) }}
               >
                 Edit Event
               </button>
-            ) : null
           ) : null
           }
         </div>
