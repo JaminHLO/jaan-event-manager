@@ -21,7 +21,7 @@ const EventList = ({ events }) => {
   }
 
   return (
-    <div className='w-[40rem]'>
+    <div className='w-full'>
       {events &&
         events.map((singleEvent) => (
           <div key={singleEvent._id} className="border-solid border-2 rounded-xl flex items-center flex-wrap m-3 p-3">

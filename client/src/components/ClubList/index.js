@@ -13,7 +13,7 @@ const ClubList = ({ clubs }) => {
   }
 
   return (
-    <div className='w-[40rem]'>
+    <div className='w-full'>
       {clubs &&
         clubs.map((club) => (
           <div key={club._id} className="border-solid border-2 rounded-xl flex items-center flex-wrap m-3 p-3">

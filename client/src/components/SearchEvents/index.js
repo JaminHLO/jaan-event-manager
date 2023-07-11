@@ -111,7 +111,7 @@ const SearchEvents = () => {
                                 </div>
                             ))
                         ) : (
-                            <p>No matching event found</p>
+                            <p className="text-center">No matching event found</p>
                         )}
                     </div>
                     {events.length ? (

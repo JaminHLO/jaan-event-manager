@@ -100,7 +100,7 @@ const Profile = () => {
                 </>
             ) : null}
 
-            <div className='flex justify-center items-center min-h-[90vh]'>
+            <div className='flex overflow-x-hidden justify-center items-center min-h-[90vh]'>
                 <div className="bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 min-w-[25rem] max-w-[25rem] rounded-2xl h-[45rem]">
                     <div className='flex justify-center flex-col items-center p-3 h-full'>
                         <div className="w-10/12 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 h-[50%]">
@@ -112,7 +112,6 @@ const Profile = () => {
                         </div>
                         <div>
                             <h2 className="profile-header text-white col-span-9 h-[3.75rem] bg-dark text-light p-6 text-2xl flex flex-row justify-center">
-                                {/* Viewing {user ? `${user.name}'s` : 'your'} profile. */}
                                 {`${user.name}`}
                             </h2>
                         </div>
@@ -126,26 +125,6 @@ const Profile = () => {
                                         >
                                             Update your Profile
 
-                                        </Link>
-                                    </button>
-                                </li>
-                                <li className='m-4'>
-                                    <button className='w-48 bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-xl'>
-                                        <Link
-                                            className="btn btn-primary btn-block btn-squared"
-                                            to={`/searchClubs`}
-                                        >
-                                            Search for Clubs
-                                        </Link>
-                                    </button>
-                                </li>
-                                <li className='m-4'>
-                                    <button className='w-48 bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-xl'>
-                                        <Link
-                                            className="btn btn-primary btn-block btn-squared"
-                                            to={`/searchEvents`}
-                                        >
-                                            Search for Events
                                         </Link>
                                     </button>
                                 </li>
@@ -174,23 +153,19 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-                <div className='pl-10'>
-                    <div className="overflow-auto mb-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl min-h-[20rem] max-h-[23rem]">
+                <div className='ml-28 w-2/5'>
+                    <div className="overflow-auto mb-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl min-h-[20rem] max-h-[22rem]">
                         <p className='text-3xl text-center m-3'>Your Clubs</p>
-                        <div className='flex justify-center flex-col items-center'>
-                            <ClubList
-                                clubs={user.myClubs}
-                            />
-                        </div>
+                        <ClubList
+                            clubs={user.myClubs}
+                        />
                     </div>
 
-                    <div className="overflow-auto mt-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl min-h-[20rem] max-h-[23rem]">
+                    <div className="overflow-auto mt-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl min-h-[20rem] max-h-[22rem]">
                         <p className='text-3xl text-center m-3'>Your Events</p>
-                        <div className='flex justify-center flex-col items-center'>
-                            <EventList
-                                events={user.myEvents}
-                            />
-                        </div>
+                        <EventList
+                            events={user.myEvents}
+                        />
                     </div>
                 </div>
             </div>

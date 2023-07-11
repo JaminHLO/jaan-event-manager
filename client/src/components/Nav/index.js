@@ -10,7 +10,7 @@ function Nav() {
     if (Auth.loggedIn()) {
       return (
         <div className="flex flex-row justify-between p-4 bg-slate-950">
-          <img className="m-2 h-12" src={sportsConnect}></img>
+          <button><Link to={'/profile'}><img className="m-2 h-12" src={sportsConnect}></img></Link></button>
           <ul className=" flex flex-row">
             <li className="text-white p-3">
               <SearchEventsClubs />

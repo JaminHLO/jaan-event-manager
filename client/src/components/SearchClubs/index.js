@@ -54,7 +54,7 @@ const SearchClubs = () => {
     return (
         <div className="search-events text-white flex flex-col items-center justify-center">
             <div className="bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl w-1/2 text-center m-4">
-                <h2 className="text-3xl m-2">Search for a club:</h2>
+                <h2 className="text-3xl m-2">Search for a club</h2>
                 <div className="m-4">
                     <form onSubmit={handleSubmit}>
                         <label></label>
@@ -101,7 +101,7 @@ const SearchClubs = () => {
                                 </div>
                             ))
                         ) : (
-                            <p>No matching club found</p>
+                            <p className="text-center">No matching club found</p>
                         )}
                     </div>
                     {clubs.length ? (

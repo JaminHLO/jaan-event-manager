@@ -14,7 +14,7 @@ import { getFormattedDate } from '../../utils/helpers';
 
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
-    // 'pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
+// 'pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
 
 
 const ClubDetail = () => {
@@ -65,7 +65,7 @@ const ClubDetail = () => {
             setIsAvailable(true);
         }
     }, [clubData])
-    console.log('spots', spotsAvailable, 'available', isAvailable )
+    console.log('spots', spotsAvailable, 'available', isAvailable)
 
 
 
@@ -81,9 +81,9 @@ const ClubDetail = () => {
     const latLngArray = [];
     if (userData?.geocode) latLngArray.push(JSON.parse(userData.geocode));
     if (clubData?.geocode) latLngArray.push(JSON.parse(clubData.geocode));
-    
+
     const userClubsId = []
-    for (let i=0; i<userData?.myClubs?.length; i++) {
+    for (let i = 0; i < userData?.myClubs?.length; i++) {
         userClubsId.push(userData.myClubs[i]._id)
     }
     console.log(userClubsId)
@@ -216,9 +216,9 @@ const ClubDetail = () => {
 
 
     return (
-        <div className="club-details text-white flex  items-center">
+        <div className="club-details text-white flex justify-center items-center">
 
-            <div className="transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 max-w-[25rem] rounded-2xl h-[30rem] mr-[5rem]">
+            <div className="transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 max-w-[25rem] rounded-2xl h-[25rem] mr-[5rem]">
                 <div className="p-4 flex justify-center" >
                     <JaanMap latLngArray={latLngArray} />
                 </div>
@@ -255,26 +255,26 @@ const ClubDetail = () => {
                         {token ? (
                             !isMember ? (
                                 isAvailable ? (
-                            <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950" onClick={submitCheckout}>Purchase Membership</button>
+                                    <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950" onClick={submitCheckout}>Purchase Membership</button>
                                 ) : <p className="text-xl m-2">This club is not available</p>
                             ) : null
-                            ) : (
+                        ) : (
                             <button className="transition ease-in-out delay-150 bg-red-900 cursor-pointer rounded-xl p-2 m-3 hover:bg-rose-950"><Link to={`/login`}>Login to Join!</Link></button>
                         )}
                     </div>
                 </div>
                 <div className="overflow-auto resize-y flex flex-col transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 rounded-2xl w-[60rem] h-[18rem] mb-4">
                     <h2 className="text-3xl text-center m-4">List of Events</h2>
-                    <ul className="list-disc list-none">
+                    <ul className="list-disc list-none text-center">
                         {clubData.events?.length !== 0 ? (
 
 
                             clubEvents?.map((singleEvent) => (
-                                <li className="border-solid border-2 border-white hover:bg-white hover:text-black rounded-xl m-3 p-3">
+                                <button><li className="border-solid border-2 border-white hover:bg-red-900 rounded-xl m-3 p-3">
                                     <Link to={`/events/event/${singleEvent._id}`}>
-                                        <span className="font-bold">Event:</span> {singleEvent.title} <span className="font-bold">Date:</span> {singleEvent.dateTime}
+                                        <span className="font-bold">Event:</span> {singleEvent.title} <br></br> <span className="font-bold">Date:</span> {singleEvent.dateTime}
                                     </Link>
-                                </li>
+                                </li></button>
                             ))) : (
                             <p className="m-3">No events have been listed for this club</p>
                         )
@@ -382,7 +382,7 @@ const ClubDetail = () => {
 
 
                     </div>
-                    
+
 
                 </div>
             }
