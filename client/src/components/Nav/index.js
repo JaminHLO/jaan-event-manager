@@ -124,20 +124,39 @@ function Nav() {
     }
   }
 
-  return (
-    <header className="flex-row">
-      <nav className="bg-black">
-        <div className="flex flex-row justify-between p-4">
-          <button>
-            <Link to={'/'}>
-              <img className="h-12 mx-2" src={sportsConnect} alt="Logo" />
-            </Link>
-          </button>
-          {showNavigation()}
-        </div>
-      </nav>
-    </header>
-  );
+
+  if (Auth.loggedIn()) {
+    return (
+      <header className="flex-row">
+        <nav className="bg-black">
+          <div className="flex flex-row justify-between p-4">
+            <button>
+              <Link to={'/profile'}>
+                <img className="h-12 mx-2" src={sportsConnect} alt="Logo" />
+              </Link>
+            </button>
+            {showNavigation()}
+          </div>
+        </nav>
+      </header>
+    )
+  } else {
+    return (
+      <header className="flex-row">
+        <nav className="bg-black">
+          <div className="flex flex-row justify-between p-4">
+            <button>
+              <Link to={'/'}>
+                <img className="h-12 mx-2" src={sportsConnect} alt="Logo" />
+              </Link>
+            </button>
+            {showNavigation()}
+          </div>
+        </nav>
+      </header>
+    )
+  }
+
 }
 
 export default Nav;
