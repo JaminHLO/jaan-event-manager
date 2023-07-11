@@ -46,35 +46,46 @@ const Notification = ({ clubData, userData }) => {
 
     return (
         <div>
-            <h2>Notice:</h2>
             {clubData.notifications?._id ? (
                 <div>
-                    <p>{clubData.notifications.message}</p>
-                    {isAdmin && <button onClick={handleRemove}>Remove Notification</button>}
+                    {/* <h2 className="text-2xl m-2 text-red-500">Notice:</h2> */}
+                    {/* <p className="text-xl ml-2 text-red-500">Announcement:</p> */}
+                    <div className="text-xl ml-2 text-red-500">Notice: "{clubData.notifications.message}"
+                        {isAdmin && <button className="m-2 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
+                        onClick={handleRemove}>Delete</button>}
+                    </div>
+                    
                 </div>
 
             ) : (
                 <div>
-                    {isAdmin && <button onClick={() => setShowModal(true)}>Create Notification</button>}
+                    {/* {isAdmin && <button onClick={() => setShowModal(true)}>Create Notification</button>} */}
+                    <button className="mb-1 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            onClick={() => setShowModal(true)}
+                            >Post announcement</button>
                 </div>
             )}
             {showModal ? (
                 <div>
                     <form onSubmit={handleSubmit}>
-                        <label htmlFor="notificationMsg">Create a new club notification</label>
+                        {/* <label htmlFor="notificationMsg">Create a new club notification</label> */}
                         <input
                             className="text-black"
                             type="text"
-                            placeholder="Enter a short message"
+                            size="40"
+                            placeholder="Enter Announcement"
                             onChange={(event) => setNotificationMsg(event.target.value)}
                             name="notificationMsg"
                             value={notificationMsg}
                         ></input>
-                        <button type="submit" onClick={(event) => {
+                        <button className="m-2 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            type="submit" onClick={(event) => {
                             handleSubmit(event)
                             setShowModal(false)
                         }}>Submit</button>{" "}
-                        <button onClick={() => setShowModal(false)}>Close</button>
+      
+                        <button className="m-2 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        onClick={() => setShowModal(false)}>Close</button>
                     </form>
                 </div>
             ) : null}
