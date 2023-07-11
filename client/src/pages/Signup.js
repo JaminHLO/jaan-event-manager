@@ -7,19 +7,37 @@ import { ADD_USER } from '../utils/mutations';
 function Signup(props) {
   const [formState, setFormState] = useState({ name: '', email: '', password: '' });
   const [addUser] = useMutation(ADD_USER);
+  const [signupError, setSignupError] = useState(false);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const mutationResponse = await addUser({
-      variables: {
-        email: formState.email,
-        password: formState.password,
-        name: formState.name,
-      },
-    });
-    const token = mutationResponse.data.addUser.token;
-    Auth.login(token);
+    try {
+      const mutationResponse = await addUser({
+        variables: {
+          email: formState.email,
+          password: formState.password,
+          name: formState.name,
+        },
+      });
+      const token = mutationResponse.data.addUser.token;
+      Auth.login(token);
+
+    } catch (error) {
+      setSignupError(true)
+    }
   };
+
+  if (signupError) {
+    return (
+          <div className="login-logout flex justify-center items-center text-white text-xl">
+            <div className="login-container transition ease-in-out delay-150 bg-black opacity-80 rounded-2xl h-auto w-2/5 text-center">
+              <p className='text-4xl m-4'>This email has already been used.</p>
+              <p className='text-4xl m-4'>Please try a different one.</p>
+              <a className="m-3" href='' >← Back to Signup</a>
+            </div>
+          </div>
+    )
+  }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
