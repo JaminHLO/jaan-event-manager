@@ -21,7 +21,7 @@ function Success() {
           variables: { clubs }
         });
         const { newClubData } = await buyMembership({
-          variables: { id: newClubId,   spotsAvailable: 1 }
+          variables: { id: newClubId, spotsAvailable: 1 }
         });
         console.log(newClubData)
         const { data: joinData } = await clubs.map((clubId) => {
@@ -36,7 +36,7 @@ function Success() {
       } catch (error) {
         console.error(error)
       }
-    
+
       setTimeout(() => {
         window.location.assign('/');
       }, 3000);
@@ -46,13 +46,13 @@ function Success() {
   }, [addOrder, joinClub]);
 
   return (
-    <div>
-      <Jumbotron>
-        <h1>Success!</h1>
-        <h2>Thank you for your purchase!</h2>
-        <h2>Welcome to the club!</h2>
-        <h2>You will now be redirected to the home page</h2>
-      </Jumbotron>
+    <div className="login-logout flex justify-center items-center text-white text-xl">
+      <div className="login-container transition ease-in-out delay-150 bg-black opacity-80 rounded-2xl h-auto w-2/5 text-center">
+        <h1 className='text-4xl m-4'>Success!</h1>
+        <h3 className='text-4xl m-4'>Thank you for your purchase!</h3>
+        <h3 className='text-4xl m-4'>Welcome to the club!</h3>
+        <h2 className='text-4xl m-4'>You will shortly be redirected to the home page.</h2>
+      </div>
     </div>
   );
 }
