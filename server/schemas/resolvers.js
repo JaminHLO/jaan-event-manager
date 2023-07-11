@@ -105,6 +105,7 @@ const resolvers = {
     },
     event: async (parent, { _id }) => {
       return await Event.findById(_id).populate('clubId')
+        .populate({ path: "participants", populate: { path: "name" } })
     },
     searchEvents: async (parent, { eventQuery }, context) => {
 
