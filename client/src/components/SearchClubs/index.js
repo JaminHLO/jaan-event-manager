@@ -53,7 +53,7 @@ const SearchClubs = () => {
 
     return (
         <div className="search-events text-white flex flex-col items-center justify-center">
-            <div className="bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl w-1/2 text-center m-4">
+            <div className="bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl min-w-[25rem] max-w-[25rem] text-center m-4">
                 <h2 className="text-3xl m-2">Search for a club</h2>
                 <div className="m-4">
                     <form onSubmit={handleSubmit}>
@@ -70,7 +70,7 @@ const SearchClubs = () => {
                     </form>
                 </div>
             </div>
-            <div className="overflow-auto overflow-x-hidden bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl m-4 w-1/2 flex flex-col items-center max-h-[35rem]">
+            <div className="overflow-auto overflow-x-hidden bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl m-4 min-w-[25rem] max-w-[25rem] flex flex-col items-center max-h-[35rem]">
                 <div className="m-4 w-full">
                     <h3 className="text-3xl text-center m-3">Results</h3>
                     <div className="flex justify-center">
