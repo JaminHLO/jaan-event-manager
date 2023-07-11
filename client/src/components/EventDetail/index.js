@@ -9,10 +9,25 @@ import { saveEventIds, getSavedEventsIds } from "../../utils/localStorage";
 import { getGeocode } from '../../utils/helpers';
 import Calendar from 'react-calendar';
 import { getFormattedDate } from '../../utils/helpers';
+import events from "inquirer/lib/utils/events";
 
 
 const EventDetail = () => {
   const { id: eventId } = useParams();
+
+  const [displayMemberList, setDisplayMemberList] = useState("none");
+  const [memberListOpen, setMemberListOpen] = useState(false);
+
+  const handleMemberListDisplay = () => {
+    if (!memberListOpen) {
+      setDisplayMemberList("block");
+      setMemberListOpen(true);
+    } else {
+      setDisplayMemberList("none");
+      setMemberListOpen(false);
+    }
+  }
+
   const [eventEditform, setEventEditForm] = useState(
     {
       title: ``,
@@ -28,6 +43,7 @@ const EventDetail = () => {
 
 
   const eventData = data?.event || {};
+  // console.log(eventData)
 
   const [date, setDate] = useState(
     (eventData?.dateTime) ?
@@ -121,7 +137,7 @@ const EventDetail = () => {
 
 
   const eventClubId = eventData.clubId?._id
-  console.log('clubId for this event', eventClubId)
+  // console.log('clubId for this event', eventClubId)
 
 
   useEffect(() => {
@@ -159,7 +175,7 @@ const EventDetail = () => {
 
   const handleJoinEvent = async (event) => {
     // event.preventDefault();
-    console.log('clicked')
+    // console.log('clicked')
     try {
       const { data } = await joinEvent({
         variables: { eventId }
@@ -264,6 +280,20 @@ const EventDetail = () => {
           }
           <div className="m-3">
             <JaanMap latLngArray={latLngArray} />
+            {userInClub && <div>
+              <button
+                className={`bg-transparent hover:text-red-900 text-white font-bold py-2 px-4 rounded-2xl ${memberListOpen ? "text-sm" : ""
+                  }`}
+                onClick={handleMemberListDisplay}
+              >View Participants ▾</button>
+              <div style={{ display: displayMemberList }}>
+                {eventData.participants.map(participant => {
+                  return (
+                    <p key={participant._id}>▸ {participant.name}</p>
+                  )
+                })}
+              </div>
+            </div>}
           </div>
           {isAdmin ? (
             <button

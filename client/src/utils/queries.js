@@ -174,6 +174,7 @@ query EventById($id: ID!) {
     title
     description
     participants {
+      _id
       name
     }
     location
