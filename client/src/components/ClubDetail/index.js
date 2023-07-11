@@ -14,7 +14,6 @@ import { getFormattedDate } from '../../utils/helpers';
 
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
-// 'pk_test_51NNi4mBTDevFCiGQvy6JTMqQQ8UpkUSfhPkbq9VlNb5f0zKttPUMO2EKirlmPST1ttc8JlggwW8AAaO2S1yz8uiG00nN0DWcxK');
 
 
 const ClubDetail = () => {
@@ -22,7 +21,7 @@ const ClubDetail = () => {
     const [clubEditform, setClubEditForm] = useState({ title: ``, maxMembers: ``, description: ``, price: '', image: '' });
 
     const [date, setDate] = useState(new Date());
-
+    const [membersModal, setMembersModal] = useState(false)
     const [showModal, setShowModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [isAdmin, setIsAdmin] = useState();
@@ -88,7 +87,11 @@ const ClubDetail = () => {
     }
     console.log(userClubsId)
 
-    // useEffect for calendar?
+    const participantsList = []
+    for (let i = 0; i < clubData?.members?.length; i++) {
+        participantsList.push(clubData.members[i].name)
+    }
+    console.log (participantsList)
 
     useEffect(() => {
         if (userClubsId.includes(clubData._id)) {
@@ -218,7 +221,8 @@ const ClubDetail = () => {
     return (
         <div className="club-details text-white flex justify-center items-center lg:flex-row xs:flex-col xs:flex-col-reverse">
 
-            <div className="transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 max-w-[25rem] rounded-2xl h-[25rem] lg:mr-[5rem] xs:m-4">
+
+            <div className="transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 max-w-[25rem] rounded-2xl h-[28rem] lg:mr-[5rem] xs:m-4">
                 <div className="p-4 flex justify-center" >
                     <JaanMap latLngArray={latLngArray} />
                 </div>
@@ -233,7 +237,10 @@ const ClubDetail = () => {
                                 className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 onClick={() => { setShowEditModal(true) }}
                             >Edit club</button>
-
+                            <button
+                                className="mb-3 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                onClick={() => { setMembersModal(true) }}
+                            >List of Members</button>
                         </>
                     ) : null}
                 </div>
@@ -500,7 +507,54 @@ const ClubDetail = () => {
                 </>
             ) : null}
 
+{/* List of participants Modal */}
+{membersModal &&
+                <div
+                    className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50"
+                >
+                    <div className="relative w-auto my-6 mx-auto max-w-sm">
+                        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                            <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                                <h3 className="text-3xl font-semibold text-black">
+                                    List of Participants
+                                </h3>
+                                <button
+                                    className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                    onClick={() => setMembersModal(false)}
+                                >
+                                    <span className="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
+                                        ×
+                                    </span>
+                                </button>
+                            </div>
+                            <ul className="relative p-6 flex-auto">
+                            { clubData.members?.length === 0 ? <p className="text-black m-2">No participants yet</p> 
+                            : (
+                                clubData.members?.map(({name}) => (
+                                <li className="text-black flex-row space-between m-2">
+                                {name} 
+                                </li> )
+                                )
+                            )}
+                            </ul>
+                            <div className="relative p-6 flex-auto">
+                                    <div className="text-center">
+                                        <button onClick={(event) => { 
+                                                setMembersModal(false);
+                                            }}
+                                            type="button"
+                                            className="bg-red-800 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:bg-red-500 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        >Close</button>{" "}
+                                    </div>
+                            </div>
+                        </div>
 
+
+                    </div>
+
+
+                </div>
+            }
 
 
 

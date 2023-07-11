@@ -40,6 +40,10 @@ export const QUERY_CLUB = gql`
     _id
     adminId
     isAvailable
+    members {
+      _id
+      name
+    }
     events {
       _id
       title

@@ -28,7 +28,7 @@ const resolvers = {
 
     },
     club: async (parent, { _id }) => {
-      return await Club.findById(_id).populate('category').populate('events')
+      return await Club.findById(_id).populate('category').populate('events').populate('members')
         .populate({ path: "notifications", populate: { path: "message" } });
     },
     user: async (parent, args, context) => {
