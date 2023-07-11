@@ -60,7 +60,7 @@ The link to access the deployed application is: XXhttps://home-hub-management.he
     * Users may either create a Club or join the Club of another for a fee.
     * Once a member of a Club, a user will have access to join all the Club's Events.
 
-Screenshots of the app in use:
+Screenshots of the app in use:<br>
 <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/client/public/images/screenshots/sc-ss-landing.png width=30% margin=10px alt="Sports Connect Homepage"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/client/public/images/screenshots/sc-ss-signup.png width=30% margin=10px alt="Signup"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/client/public/images/screenshots/sc-ss-profile.png width=30% margin=10px alt="User Profile"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/client/public/images/screenshots/sc-ss-club.png width=30% margin=10px alt="Club View"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/client/public/images/screenshots/sc-ss-createevent.png width=30% margin=10px alt="Create Event"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/client/public/images/screenshots/sc-ss-event.png width=30% margin=10px alt="View Event"> <img src=https://raw.githubusercontent.com/JaminHLO/jaan-event-manager/main/client/public/images/screenshots/sc-ss-eventsearch.png width=30% margin=10px alt="Event Search">
 
 
