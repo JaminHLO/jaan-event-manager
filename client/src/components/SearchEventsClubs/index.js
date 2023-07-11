@@ -26,13 +26,13 @@ const SearchEventsClubs = () => {
             <div style={{ display: display }}>
                 <div>
                     <button
-                        className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl"
+                        className="bg-transparent hover:text-red-900 text-white font-bold py-2 px-4 rounded-2xl"
                         onClick={handleDisplay}
                     ><Link to="/searchClubs">▸ For Clubs</Link></button>
                 </div>
                 <div>
                     <button
-                        className="bg-stone-200 hover:bg-red-900 hover:text-white text-black font-bold py-2 px-4 rounded-2xl"
+                        className="bg-transparent hover:text-red-900 text-white font-bold py-2 px-4 rounded-2xl"
                         onClick={handleDisplay}
                     ><Link to="searchEvents">▸ For Events</Link></button>
                 </div>
