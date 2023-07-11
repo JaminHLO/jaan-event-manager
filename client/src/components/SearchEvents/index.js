@@ -78,21 +78,37 @@ const SearchEvents = () => {
 
             </div>
 
-            <div className="overflow-auto bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl m-4 w-1/2 flex flex-col items-center max-h-[35rem]">
-                <div className="m-4 text-center">
-                    <h3 className="text-3xl m-3">Results:</h3>
+            <div className="overflow-auto overflow-x-hidden bg-black opacity-80 hover:opacity-90 transition ease-in-out delay-150 rounded-2xl m-4 w-1/2 flex flex-col items-center max-h-[35rem]">
+                <div className="m-4 w-full ">
+                    <h3 className="text-3xl text-center m-3">Results:</h3>
                     <div className="flex justify-center">
                         <JaanMap latLngArray={latLngArray} />
                     </div>
-                    <div className="text-white max-w-full rounded-2xl m-3">
-                        <p className="text-2xl">List Of Events:</p>
+                    <div className="text-white max-w-full rounded-2xl m-3 flex flex-col justify-center">
+                        <p className="text-2xl text-center">List Of Events:</p>
                         {events.length ? (
                             currentItems.map((event) => (
-                                <ul key={event._id}>
-                                    <li className="text-xl border-solid border-2 border-white rounded-xl m-3 p-3"><span className="font-bold">Event:</span> {event.title} <button className="bg-red-900 hover:bg-rose-900 rounded-xl ml-3 p-1"><Link
-                                        to={`/events/event/${event._id}`}
-                                    >View Details</Link></button></li>
-                                </ul>
+                                <div className="text-xl border-solid border-2 border-white flex items-center flex-wrap rounded-xl m-3 p-3" key={event._id}>
+                                    {!event.image ? (
+                                        <img className="h-36 w-36 rounded-2xl"
+                                            src="/images/event_default.jpg"
+                                            alt='default event' />
+                                    ) : (
+                                        <img className="h-36 w-36 rounded-2xl"
+                                            src={event.image}
+                                            alt='single event' />
+                                    )}
+                                    <div className="m-5">
+                                        <p className="my-1"><span className="font-bold">Event:</span> {event.title}</p>
+                                        <p className="my-1"><span className="font-bold">Description:</span> {event.description}</p>
+                                        {event.isAvailable
+                                            ? <p className="text-xl"><span className="font-bold">Status:</span> <span className="text-green-500">Available</span></p>
+                                            : <p className="text-xl"><span className="font-bold">Status:</span> <span className="text-red-500">Not Available</span></p>}
+                                        <button className="bg-red-900 hover:bg-rose-900 rounded-xl my-1 p-1"><Link
+                                            to={`/events/event/${event._id}`}
+                                        >View Details</Link></button>
+                                    </div>
+                                </div>
                             ))
                         ) : (
                             <p>No matching event found</p>
@@ -100,6 +116,7 @@ const SearchEvents = () => {
                     </div>
                     {events.length ? (
                         < ReactPaginate
+                            className="flex justify-around m-5"
                             breakLabel="..."
                             onPageChange={paginate}
                             pageCount={pageCount}

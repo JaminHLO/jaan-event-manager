@@ -225,6 +225,8 @@ export const QUERY_SEARCH_EVENTS = gql`
       _id
       title
       dateTime
+      description
+      isAvailable
       geocode
       clubId {
         geocode
@@ -243,6 +245,9 @@ export const QUERY_SEARCH_CLUBS = gql`
    searchClubs(clubQuery: $clubQuery) {
       _id
       title
+      description
+      image
+      spotsAvailable
       geocode
       category {
         _id
