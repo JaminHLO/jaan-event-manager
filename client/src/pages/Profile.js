@@ -100,8 +100,8 @@ const Profile = () => {
                 </>
             ) : null}
 
-            <div className='flex overflow-x-hidden justify-center items-center min-h-[90vh]'>
-                <div className="bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 min-w-[25rem] max-w-[25rem] rounded-2xl h-[45rem]">
+            <div className='flex lg:flex-row xs:flex-col overflow-x-hidden justify-center items-center min-h-[90vh]'>
+                <div className="bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 min-w-[25rem] max-w-[25rem] rounded-2xl lg:h-[45rem] xs:h-[40rem] xs:m-4">
                     <div className='flex justify-center flex-col items-center p-3 h-full'>
                         <div className="w-10/12 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 h-[50%]">
                             {!user.image ? (
@@ -153,15 +153,15 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-                <div className='ml-28 w-2/5'>
-                    <div className="overflow-auto mb-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl min-h-[20rem] max-h-[22rem]">
+                <div className='lg:ml-28 lg:w-2/5 xs:w-full xs:m-4'>
+                    <div className="overflow-auto mb-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl lg:min-h-[20rem] lg:max-h-[22rem] xs:max-h-[30rem]">
                         <p className='text-3xl text-center m-3'>Your Clubs</p>
                         <ClubList
                             clubs={user.myClubs}
                         />
                     </div>
 
-                    <div className="overflow-auto mt-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl min-h-[20rem] max-h-[22rem]">
+                    <div className="overflow-auto mt-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl lg:min-h-[20rem] lg:max-h-[22rem] xs:max-h-[30rem]">
                         <p className='text-3xl text-center m-3'>Your Events</p>
                         <EventList
                             events={user.myEvents}
