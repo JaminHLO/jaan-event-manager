@@ -33,7 +33,7 @@ import Contact from './components/About';
 console.log('process.env.MONGODB_URI is:', process.env.MONGODB_URI)
 
 const httpLink = createHttpLink({
-  uri: process.env.MONGODB_URI || 'http://localhost:3001/graphql',
+  uri: 'mongodb+srv://jaimon:zSV0YrenBzj9I1rK@google-book-search.pg2e1ad.mongodb.net/sports-connect?retryWrites=true&w=majority' || process.env.MONGODB_URI || 'http://localhost:3001/graphql', 
 });
 
 const authLink = setContext((_, { headers }) => {
