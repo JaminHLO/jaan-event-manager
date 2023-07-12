@@ -381,7 +381,7 @@ const EventDetail = () => {
                         onChange={handleEditEventChange}
                         value={eventEditform.description}
                       ></textarea>
-                      {/* </div>
+                      </div>
                             <label htmlFor="image">Image:</label>
                             <input
                                 className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
@@ -392,7 +392,7 @@ const EventDetail = () => {
                                 onChange={handleEditEventChange}
                                 value={eventEditform.image}
                             />
-                        <div> */}
+                        <div>
                     </div>
                     <div className="flex-row space-between my-2">
                       <label htmlFor="isAvailable">Status:</label>
