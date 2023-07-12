@@ -126,7 +126,7 @@ const resolvers = {
         .lean();
         // console.log(filteredEvents);
       const geoCheckEvents = filteredEvents.map(event => {
-        if (!event.geocode) {
+        if (!event.geocode) { // if no geocode, use washington monument
           return { ...event, geocode: `{"lat":38.889484,"lng":-77.035278}` }
         }
         return event;
@@ -136,18 +136,18 @@ const resolvers = {
         const user = await User.findById(context.user._id).lean();
         // console.log(user)
         const geoCheckUser = (user) => {
-          if (!user.geocode) {
+          if (!user.geocode) { // if no geocode, use washington monument
             return { ...user, geocode: `{"lat":38.889484,"lng":-77.035278}` };
           };
         }
         const checkedUser = geoCheckUser(user);
         // console.log("line 136", checkedUser)
         if (checkedUser) {
-          const sorted = jaanSort(checkedUser, geoCheckEvents);
+          const sorted = jaanSort(checkedUser, geoCheckEvents, searchRadius);
           return sorted
         }
         // console.log(geoCheckEvents)
-        const sorted = jaanSort(user, geoCheckEvents);
+        const sorted = jaanSort(user, geoCheckEvents, searchRadius);
         return sorted;
       }
       return geoCheckEvents;

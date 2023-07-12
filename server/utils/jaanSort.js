@@ -4,7 +4,7 @@ const axios = require('axios');
 // jaanArray - input array of objects with User first, followed by 
 // either Club or Event objects
 module.exports = {
-     jaanSort: async (user, jaanArray) => {
+     jaanSort: async (user, jaanArray, searchRadius) => {
         const APIKey = process.env.GOOGLE_MAPS_API_KEY;
         // console.log('APIKey is:', APIKey);
 
@@ -44,14 +44,32 @@ module.exports = {
             });
             // console.log('distanceArray is now', distanceArray);
             // distanceArray.map((element, index)=> console.log(`title:${jaanArray[index].title}, distance:${element.distance}`))
+            const rejectedArray = [];
+            distanceArray.map((element, index)=> {
+                // if the distance of this element is greater than our searchRadius, mark it as rejected
+                if (element.distance > searchRadius) {
+                    rejectedArray.push(index);
+                    // console.log(`title:${jaanArray[index].title}, distance:${element.distance} REJECTED`)
+                }
+                // else console.log(`title:${jaanArray[index].title}, distance:${element.distance}`)
+            });
+
             // sort by distance
             distanceArray.sort((a,b) => a.distance - b.distance);
             // console.log('distanceArray is sorted', distanceArray);
             // jaanArray to sortedArray by distanceArray's sorted indexes
+            //
+            // console.log('rejectedArray is', rejectedArray)
             for (let i=0; i < jaanArray.length; i++) {
-                sortedArray.push(jaanArray[distanceArray[i].index]);
+                // if this location index is in our rejectedArray, we dont add to sortedArray to return.
+                // if (rejectedArray.length > 0) {
+                    // console.log('index is ', i)
+                    if (!(rejectedArray.find(element => element === i))) {
+                        sortedArray.push(jaanArray[distanceArray[i].index]);
+                    }
+                // }
             }
-            distanceArray.map((element, index)=> console.log(`title:${sortedArray[index].title}, distance:${element.distance}`))
+            // distanceArray.map((element, index)=> console.log(`title:${sortedArray[index].title}, distance:${element.distance}`))
         // console.log("jaanArray is", jaanArray);
         // console.log("sortedArray is", sortedArray);
         // return jaanArray;
