@@ -30,12 +30,6 @@ import SearchClubs from './components/SearchClubs';
 import EventDetail from './components/EventDetail'; 
 import Contact from './components/About';
 
-// console.log('process.env.MONGODB_URI is:', process.env.REACT_APP_MONGODB_URI)
-
-// const httpLink = createHttpLink({ //mongodb+srv://jaimon:SowSr2UUeEsJL7yl@google-book-search.pg2e1ad.mongodb.net/clubManagerDB?retryWrites=true&w=majority
-//   uri: process.env.REACT_APP_MONGODB_URI || 'http://localhost:3001/graphql', 
-// });
-
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
