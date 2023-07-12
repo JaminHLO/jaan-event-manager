@@ -30,8 +30,10 @@ import SearchClubs from './components/SearchClubs';
 import EventDetail from './components/EventDetail'; 
 import Contact from './components/About';
 
+console.log('process.env.MONGODB_URI is:', process.env.MONGODB_URI)
+
 const httpLink = createHttpLink({
-  uri: 'http://localhost:3001/graphql',
+  uri: process.env.MONGODB_URI || 'http://localhost:3001/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
