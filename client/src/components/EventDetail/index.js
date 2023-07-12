@@ -9,7 +9,6 @@ import { saveEventIds, getSavedEventsIds } from "../../utils/localStorage";
 import { getGeocode } from '../../utils/helpers';
 import Calendar from 'react-calendar';
 import { getFormattedDate } from '../../utils/helpers';
-import events from "inquirer/lib/utils/events";
 
 
 const EventDetail = () => {

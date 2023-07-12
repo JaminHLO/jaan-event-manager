@@ -23,7 +23,7 @@ const Home = () => {
       <div className="mid-page lg:min-h-[60vh] xs:h-auto bg-black flex md:flex-row xs:flex-col">
         <div className="lg:w-1/2 xs:w-auto max-w-5xl flex flex-col items-center justify-center">
           <div className="flex justify-center m-8">
-            <p className="lg:w-1/2 text-3xl text-white xs:text-center lg:text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sollicitudin erat id eros fermentum, vel tincidunt felis vestibulum.</p>
+            <p className="lg:w-1/2 text-3xl text-white xs:text-center lg:text-left">Sport Connect is a dynamic online platform designed to unite sports lovers by offering them a convenient and user-friendly space to create and organize clubs and events centered around their favorite sports activities.</p>
           </div>
           <div>
             <button className="bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-2xl m-4"><Link to={'/login'}>Login</Link></button>
