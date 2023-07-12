@@ -154,14 +154,14 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className='lg:ml-28 lg:w-2/5 xs:w-full xs:m-4'>
-                    <div className="overflow-auto mb-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl lg:min-h-[20rem] lg:max-h-[22rem] xs:max-h-[30rem]">
+                    <div className="xs:m-2 overflow-auto mb-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl lg:min-h-[20rem] lg:max-h-[22rem] xs:max-h-[30rem]">
                         <p className='text-3xl text-center m-3'>Your Clubs</p>
                         <ClubList
                             clubs={user.myClubs}
                         />
                     </div>
 
-                    <div className="overflow-auto mt-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl lg:min-h-[20rem] lg:max-h-[22rem] xs:max-h-[30rem]">
+                    <div className="xs:m-2 overflow-auto mt-4 club-event-profile text-white bg-black transition ease-in-out delay-150 opacity-80 hover:opacity-90 rounded-xl lg:min-h-[20rem] lg:max-h-[22rem] xs:max-h-[30rem]">
                         <p className='text-3xl text-center m-3'>Your Events</p>
                         <EventList
                             events={user.myEvents}

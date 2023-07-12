@@ -91,7 +91,7 @@ const ClubDetail = () => {
     for (let i = 0; i < clubData?.members?.length; i++) {
         participantsList.push(clubData.members[i].name)
     }
-    console.log (participantsList)
+    console.log(participantsList)
 
     useEffect(() => {
         if (userClubsId.includes(clubData._id)) {
@@ -246,9 +246,9 @@ const ClubDetail = () => {
                 </div>
             </div>
             <div className="flex flex-col">
-                <div className="overflow-auto resize-y flex transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 rounded-2xl lg:w-[60rem] xs:w-fit xs:m-5 lg:h-[18rem] mb-4">
-                    <div className="xs:flex xs:items-center xs:m-2">
-                        <img className="lg:h-[100%] lg:w-[100%] rounded-2xl" src={clubData.image ? clubData.image : '/images/club_default.jpg'}></img>
+                <div className="overflow-auto resize-y flex lg:flex-row xs:flex-col xs:items-center xs:text-center lg:text-left transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 rounded-2xl lg:w-[60rem] xs:w-[90%] xs:m-5 lg:h-[18rem] xs:h-[27rem] mb-4">
+                    <div className="xs:flex xs:items-center xs:mt-4 lg:m-4">
+                        <img className="lg:h-60 lg:w-60 xs:h-40 xs:w-40 rounded-2xl" src={clubData.image ? clubData.image : '/images/club_default.jpg'}></img>
                     </div>
                     <div className="ml-10 m-5">
                         <Notification clubData={clubData} userData={userData} />
@@ -270,7 +270,7 @@ const ClubDetail = () => {
                         )}
                     </div>
                 </div>
-                <div className="overflow-auto resize-y flex flex-col transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 rounded-2xl lg:w-[60rem] xs:w-fit xs:m-5 h-[18rem] mb-4">
+                <div className="overflow-auto resize-y flex flex-col transition ease-in-out delay-150 bg-black opacity-80 hover:opacity-90 rounded-2xl lg:w-[60rem] xs:w-[90%] xs:m-5 lg:h-[18rem] xs:h-[27rem] mb-4">
                     <h2 className="text-3xl text-center m-4">List of Events</h2>
                     <ul className="list-disc list-none text-center">
                         {clubData.events?.length !== 0 ? (
@@ -507,8 +507,8 @@ const ClubDetail = () => {
                 </>
             ) : null}
 
-{/* List of participants Modal */}
-{membersModal &&
+            {/* List of participants Modal */}
+            {membersModal &&
                 <div
                     className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50"
                 >
@@ -528,24 +528,24 @@ const ClubDetail = () => {
                                 </button>
                             </div>
                             <ul className="relative p-6 flex-auto">
-                            { clubData.members?.length === 0 ? <p className="text-black m-2">No participants yet</p> 
-                            : (
-                                clubData.members?.map(({name}) => (
-                                <li className="text-black flex-row space-between m-2">
-                                {name} 
-                                </li> )
-                                )
-                            )}
+                                {clubData.members?.length === 0 ? <p className="text-black m-2">No participants yet</p>
+                                    : (
+                                        clubData.members?.map(({ name }) => (
+                                            <li className="text-black flex-row space-between m-2">
+                                                {name}
+                                            </li>)
+                                        )
+                                    )}
                             </ul>
                             <div className="relative p-6 flex-auto">
-                                    <div className="text-center">
-                                        <button onClick={(event) => { 
-                                                setMembersModal(false);
-                                            }}
-                                            type="button"
-                                            className="bg-red-800 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:bg-red-500 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        >Close</button>{" "}
-                                    </div>
+                                <div className="text-center">
+                                    <button onClick={(event) => {
+                                        setMembersModal(false);
+                                    }}
+                                        type="button"
+                                        className="bg-red-800 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:bg-red-500 outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    >Close</button>{" "}
+                                </div>
                             </div>
                         </div>
 
