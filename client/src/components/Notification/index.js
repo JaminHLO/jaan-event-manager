@@ -51,18 +51,18 @@ const Notification = ({ clubData, userData }) => {
                     {/* <h2 className="text-2xl m-2 text-red-500">Notice:</h2> */}
                     {/* <p className="text-xl ml-2 text-red-500">Announcement:</p> */}
                     <div className="text-xl ml-2 text-red-500">Notice: "{clubData.notifications.message}"
-                        {isAdmin && <button className="m-2 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
-                        onClick={handleRemove}>Delete</button>}
+                        {isAdmin && <button className="m-2 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                            onClick={handleRemove}>Delete</button>}
                     </div>
-                    
+
                 </div>
 
             ) : (
                 <div>
                     {/* {isAdmin && <button onClick={() => setShowModal(true)}>Create Notification</button>} */}
-                    {isAdmin && <button className="mb-1 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                            onClick={() => setShowModal(true)}
-                            >Post announcement</button>}
+                    {isAdmin && <button className="mb-1 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 xs:mr-3 mb-1 ease-linear transition-all duration-150"
+                        onClick={() => setShowModal(true)}
+                    >Post announcement</button>}
                 </div>
             )}
             {showModal ? (
@@ -80,12 +80,12 @@ const Notification = ({ clubData, userData }) => {
                         ></input>
                         <button className="m-2 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                             type="submit" onClick={(event) => {
-                            handleSubmit(event)
-                            setShowModal(false)
-                        }}>Submit</button>{" "}
-      
+                                handleSubmit(event)
+                                setShowModal(false)
+                            }}>Submit</button>{" "}
+
                         <button className="m-2 transition ease-in-out delay-150 bg-red-900 cursor-pointer hover:bg-rose-950 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        onClick={() => setShowModal(false)}>Close</button>
+                            onClick={() => setShowModal(false)}>Close</button>
                     </form>
                 </div>
             ) : null}
