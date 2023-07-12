@@ -27,7 +27,7 @@ const SearchClubs = () => {
         const newOffset = (event.selected * itemsPerPage) % clubs.length;
         setItemOffset(newOffset);
     }
-
+   
     const handleChange = (event) => {
         setClubQuery(event.target.value)
     }

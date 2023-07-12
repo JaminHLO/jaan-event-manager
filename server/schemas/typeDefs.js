@@ -125,7 +125,7 @@ const typeDefs = gql`
     checkout(clubs: [ID]!): Checkout
     myEvents(user: ID): User
     event(_id:ID!): Event
-    searchEvents(eventQuery: String!): [Event]
+    searchEvents(eventQuery: String!, searchRadius: String!): [Event]
     searchClubs(clubQuery: String!): [Club]
     me: User
   }
