@@ -15,7 +15,7 @@
 }
 
 .hero {
-    background-image: url('./images/hero-red.png');
+    background-image: url('./images/hero-red.jpg'); 
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -25,7 +25,7 @@
 /* login & logout page styles */
 
 .login-logout {
-    background-image: url('./images/rock-climbing.png');
+    background-image: url('./images/rock-climbing.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -44,7 +44,7 @@
 
 /* profile styles */
 .profile {
-    background-image: url('./images/basketball-sunset.png');
+    background-image: url('./images/basketball-sunset.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -86,7 +86,7 @@
 
 /* create club styles */
 .create-club {
-    background-image: url('./images/sunset-sport.png');
+    background-image: url('./images/sunset-sport.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -96,7 +96,7 @@
 }
 
 .clubs-category {
-    background-image: url('./images/sunset-bike.png');
+    background-image: url('./images/sunset-bike.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -106,7 +106,7 @@
 }
 
 .club-details {
-    background-image: url('./images/martial-arts-sunset.png');
+    background-image: url('./images/martial-arts-sunset.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -117,7 +117,7 @@
 
 /* search events styles */
 .search-events {
-    background-image: url('./images/kayake-sunset.png');
+    background-image: url('./images/kayake-sunset.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -136,7 +136,7 @@
 
 /* event page styles */
 .event-page {
-    background-image: url('./images/surfer-sunset.png');
+    background-image: url('./images/surfer-sunset.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
