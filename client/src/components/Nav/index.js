@@ -55,22 +55,22 @@ function Nav() {
               </Link>
             </li>
             <li className="text-white p-3">
-              <a
-                href="/"
+              <Link
+                to="/"
                 onClick={() => Auth.logout()}
                 className="bg-red-900 hover:bg-rose-900 text-white font-bold py-2 px-4 rounded-2xl"
               >
                 Logout
-              </a>
+              </Link>
             </li>
             <li className={`text-white p-3`}>
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className={`bg-red-900 hover:bg-rose-900 text-white font-bold py-2 px-4 rounded-2xl ${menuOpen ? 'text-sm' : ''
                   }`}
               >
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </>
@@ -119,22 +119,22 @@ function Nav() {
               </Link>
             </li>
             <li className={`text-white p-3 ${menuOpen ? 'text-sm' : ''}`}>
-              <a
-                href="/signup"
+              <Link
+                to="/signup"
                 className={`bg-red-900 hover:bg-rose-900 text-white font-bold py-2 px-4 rounded-2xl ${menuOpen ? 'text-sm' : ''
                   }`}
               >
                 Signup
-              </a>
+              </Link>
             </li>
             <li className={`text-white p-3 ${menuOpen ? 'text-sm' : ''}`}>
-              <a
-                href="/contact"
+              <Link
+                to="/contact"
                 className={`bg-red-900 hover:bg-rose-900 text-white font-bold py-2 px-4 rounded-2xl ${menuOpen ? 'text-sm' : ''
                   }`}
               >
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </>
