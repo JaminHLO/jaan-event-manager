@@ -35,7 +35,7 @@ To run the code locally:<br>
 
 ## Usage
 
-The link to access the deployed application is: XXhttps://home-hub-management.herokuapp.com/XX
+The link to access the deployed application is: https://sports-connect-e11a3bbe276b.herokuapp.com/
  
 - Finding Clubs and Events:
     * Click the 'Search' menu dropdown in the navigation bar to select either Clubs or Events for your search.
