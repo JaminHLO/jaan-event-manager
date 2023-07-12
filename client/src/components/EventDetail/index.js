@@ -71,11 +71,12 @@ const EventDetail = () => {
   const [userInClub, setUserInClub] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
   const [showModal, setShowModal] = useState(false);
+  const [isEventAvailable, setIsEventAvailable] = useState()
   const [savedEventIds, setSavedEventIds] = useState(getSavedEventsIds());
   const [joinEvent, { error }] = useMutation(JOIN_EVENT, {
     refetchQueries: [
-      { query: QUERY_ME }
-    ]
+      { query: QUERY_EVENT, variables: { id: eventId } }, 
+      { query: QUERY_ME }]
   })
   const [updateEvent, { err }] = useMutation(UPDATE_EVENT, {
     refetchQueries: [
@@ -153,6 +154,13 @@ const EventDetail = () => {
     return () => saveEventIds(savedEventIds);
   });
 
+  useEffect(() => {
+    if (eventData.isAvailable === true) {
+      setIsEventAvailable(true)
+    } else {
+      setIsEventAvailable(false)
+    }
+  })
 
   // Check if the user is an admin of the club so he can edit the event
   let clubAdminId = eventData.clubId?.adminId
@@ -260,6 +268,7 @@ const EventDetail = () => {
               signedUp ? (
                 <p className="text-xl m-2 xs:text-center">You are signed up for this event!</p>
               ) : (
+                isEventAvailable ? (
                 <button
                   disabled={savedEventIds?.some((savedEventId) => savedEventId === eventId)}
                   className="bg-red-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -269,6 +278,7 @@ const EventDetail = () => {
                     ? 'You have joined this event!'
                     : 'Join event!'}
                 </button>
+                ) : null 
               )
             ) : (
               <p>Join the club to add this event</p>
@@ -332,7 +342,7 @@ const EventDetail = () => {
                 <div className="relative p-6 flex-auto">
                   <form onSubmit={handleEditEvent}>
                     <div className="flex-row space-between my-2">
-                      <label htmlFor="title">Title:</label>
+                      <label htmlFor="title"></label>
                       <input
                         className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                         placeholder="title"
@@ -345,7 +355,7 @@ const EventDetail = () => {
                       />
                     </div>
                     <div className="flex-row space-between my-2">
-                      <label htmlFor="address">Location:</label>
+                      <label htmlFor="address"></label>
                       <input
                         className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                         placeholder="Where is this event taking place?"
@@ -357,7 +367,7 @@ const EventDetail = () => {
                       />
                     </div>
                     <div className="flex-row space-between my-2">
-                      <label htmlFor="dateTime">Date:</label>
+                      <label htmlFor="dateTime"></label>
                       <div className="bg-red-800 opacity-80 rounded-xl p-3 w-80">
                         <Calendar onClickDay={setDate} minDate={new Date()} value={date} />
                         <div className='text-center fw-bold'>Selected Date:{' '}{date.toDateString()}</div>
@@ -373,7 +383,7 @@ const EventDetail = () => {
                       /> */}
                     </div>
                     <div className="flex-row space-between my-2">
-                      <label htmlFor="description">Description:</label>
+                      <label htmlFor="description"></label>
                       <textarea
                         className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                         placeholder="Enter a short description of your event"
@@ -382,7 +392,7 @@ const EventDetail = () => {
                         value={eventEditform.description}
                       ></textarea>
                       </div>
-                            <label htmlFor="image">Image:</label>
+                            <label htmlFor="image"></label>
                             <input
                                 className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                                 placeholder="Image link"
@@ -395,7 +405,7 @@ const EventDetail = () => {
                         <div>
                     </div>
                     <div className="flex-row space-between my-2">
-                      <label htmlFor="isAvailable">Status:</label>
+                      <label htmlFor="isAvailable"></label>
                       <select
                         className="text-white modal-input bg-red-800 opacity-80 rounded-xl p-3 w-80"
                         id="isAvailable"
