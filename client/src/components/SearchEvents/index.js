@@ -10,6 +10,7 @@ import JaanMap from "../JaanMap";
 const SearchEvents = () => {
     const { loading: meLoading, data: meData } = useQuery(QUERY_ME);
     const [eventQuery, setEventQuery] = useState("");
+    const [searchRadius, setSearchRadius] = useState("");
     const [getEventQuery, { loading, data }] = useLazyQuery(QUERY_SEARCH_EVENTS);
 
     const [itemOffset, setItemOffset] = useState(0);
@@ -32,6 +33,10 @@ const SearchEvents = () => {
         setItemOffset(newOffset);
     }
 
+    const handleRadiusChange = (event) => {
+        setSearchRadius(event.target.value)
+    }
+
     const handleChange = (event) => {
         setEventQuery(event.target.value)
     }
@@ -39,7 +44,7 @@ const SearchEvents = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         getEventQuery({
-            variables: { eventQuery }
+            variables: { eventQuery, searchRadius }
         })
     }
 
@@ -51,7 +56,7 @@ const SearchEvents = () => {
     if (userData?.geocode) latLngArray.push(JSON.parse(userData?.geocode));
     if (events?.length) {
         events.map(event => {
-            const eventGeocode = event?.geocode || `{ "lat": 0, "lng": 0 }`
+            const eventGeocode = event?.geocode || `{ "lat":38.889484, "lng":-77.035278}`
             latLngArray.push(JSON.parse(eventGeocode))
         });
     }
@@ -72,6 +77,22 @@ const SearchEvents = () => {
                             name="eventQuery"
                             value={eventQuery}
                         ></input>
+                        {" "}
+                        <select
+                            id="searchRadius"
+                            value={searchRadius}
+                            onChange={handleRadiusChange}
+                            name="searchRadius"
+                            className="text-black search-event-input rounded-xl p-2"
+                        >
+                            <option value="">--Distance--</option>
+                            <option value="8800">5 miles</option>
+                            <option value="17600">10 miles</option>
+                            <option value="35200">20 miles</option>
+                            <option value="88000">50 miles</option>
+                            <option value="176000">100 miles</option>
+                            <option value="880000">500 miles</option>
+                        </select>
                         <button className="bg-red-900 hover:bg-rose-900 rounded-xl p-2 m-2" type="submit">Search</button>
                     </form>
                 </div>

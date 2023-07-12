@@ -227,8 +227,8 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_SEARCH_EVENTS = gql`
-  query SearchEvents($eventQuery: String!) {
-    searchEvents(eventQuery: $eventQuery) {
+  query SearchEvents($eventQuery: String!, $searchRadius: String!) {
+    searchEvents(eventQuery: $eventQuery, searchRadius: $searchRadius) {
       _id
       title
       dateTime

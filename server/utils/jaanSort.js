@@ -31,6 +31,7 @@ module.exports = {
         // destinationGeocodes = '33.7700012%2C-84.3811458'; // %7C is |
 
         const sortedArray = [];
+        // console.log(destinationGeocodes)
         // console.log(`URL to fetch is: https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originGeocode}&destinations=${destinationGeocodes}&units=imperial&key=${APIKey}`)
         try {
             const response = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originGeocode}&destinations=${destinationGeocodes}&units=imperial&key=${APIKey}`)

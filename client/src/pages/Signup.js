@@ -26,17 +26,6 @@ function Signup(props) {
       setSignupError(true)
     }
   };
-  // const currentUrl = window.location.pathname + window.location.search;
-
-  function RefreshButton() {
-    const currentUrl = window.location.pathname + window.location.search;
-
-    return (
-      <Link to={currentUrl}>
-        <button>Refresh</button>
-      </Link>
-    );
-  }
 
   if (signupError) {
     return (

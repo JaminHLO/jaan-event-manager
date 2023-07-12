@@ -108,8 +108,9 @@ const resolvers = {
       return await Event.findById(_id).populate('clubId')
         .populate({ path: "participants", populate: { path: "name" } })
     },
-    searchEvents: async (parent, { eventQuery }, context) => {
+    searchEvents: async (parent, { eventQuery, searchRadius }, context) => {
 
+      console.log(searchRadius)
       if (eventQuery === "") {
         return;
       }
@@ -122,17 +123,21 @@ const resolvers = {
           }
         })
         .limit(20)
+        .lean();
+        // console.log(filteredEvents);
       const geoCheckEvents = filteredEvents.map(event => {
         if (!event.geocode) {
-          return { ...event._doc, geocode: `{"lat":33.753746,"lng":-84.386330}` }
+          return { ...event, geocode: `{"lat":38.889484,"lng":-77.035278}` }
         }
         return event;
       })
+      // console.log(geoCheckEvents)
       if (context.user) {
-        const user = await User.findById(context.user._id);
+        const user = await User.findById(context.user._id).lean();
+        // console.log(user)
         const geoCheckUser = (user) => {
           if (!user.geocode) {
-            return { ...user._doc, geocode: `{"lat":33.753746,"lng":-84.386330}` };
+            return { ...user, geocode: `{"lat":38.889484,"lng":-77.035278}` };
           };
         }
         const checkedUser = geoCheckUser(user);
