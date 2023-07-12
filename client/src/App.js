@@ -18,7 +18,7 @@ import Profile from './pages/Profile'
 import Detail from './pages/Detail';
 import NoMatch from './pages/NoMatch';
 import Nav from './components/Nav';
-import { StoreProvider } from './utils/GlobalState';
+// import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
 import UpdateProfile from './components/UpdateProfile';
@@ -32,6 +32,7 @@ import Contact from './components/About';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
+  // uri: 'http://localhost:3001/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -54,7 +55,7 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div>
-          <StoreProvider>
+          {/* <StoreProvider> */}
             <Nav />
             <Routes>
               <Route
@@ -122,7 +123,7 @@ function App() {
                 element={<Contact />}
               />
             </Routes>
-          </StoreProvider>
+          {/* </StoreProvider> */}
         </div>
       </Router>
     </ApolloProvider>
