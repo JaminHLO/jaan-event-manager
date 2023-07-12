@@ -31,7 +31,7 @@ module.exports = {
         // destinationGeocodes = '33.7700012%2C-84.3811458'; // %7C is |
 
         const sortedArray = [];
-        console.log(`URL to fetch is: https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originGeocode}&destinations=${destinationGeocodes}&units=imperial&key=${APIKey}`)
+        // console.log(`URL to fetch is: https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originGeocode}&destinations=${destinationGeocodes}&units=imperial&key=${APIKey}`)
         try {
             const response = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${originGeocode}&destinations=${destinationGeocodes}&units=imperial&key=${APIKey}`)
 
@@ -42,7 +42,7 @@ module.exports = {
                 distanceArray.push({index: index, distance: element.distance.value});
             });
             // console.log('distanceArray is now', distanceArray);
-            distanceArray.map((element, index)=> console.log(`title:${jaanArray[index].title}, distance:${element.distance}`))
+            // distanceArray.map((element, index)=> console.log(`title:${jaanArray[index].title}, distance:${element.distance}`))
             // sort by distance
             distanceArray.sort((a,b) => a.distance - b.distance);
             // console.log('distanceArray is sorted', distanceArray);
