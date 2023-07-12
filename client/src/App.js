@@ -27,7 +27,7 @@ import ClubDetail from './components/ClubDetail';
 import Clubs from './pages/Clubs';
 import SearchEvents from './components/SearchEvents';
 import SearchClubs from './components/SearchClubs';
-import EventDetail from './components/EventDetail'; 
+import EventDetail from './components/EventDetail';
 import Contact from './components/About';
 
 const httpLink = createHttpLink({
@@ -110,11 +110,11 @@ function App() {
                 path="*"
                 element={<NoMatch />}
               />
-              <Route 
+              <Route
                 path='/searchEvents'
                 element={<SearchEvents />}
               />
-              <Route 
+              <Route
                 path='/searchClubs'
                 element={<SearchClubs />}
               />

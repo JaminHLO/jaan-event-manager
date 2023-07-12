@@ -20,10 +20,10 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="mid-page lg:min-h-[60vh] xs:h-auto bg-black flex md:flex-row xs:flex-col">
-        <div className="lg:w-1/2 xs:w-auto max-w-5xl flex flex-col items-center justify-center">
+      <div className="mid-page lg:min-h-[60vh] xs:h-auto bg-black flex lg:flex-row xs:flex-col">
+        <div className="lg:w-1/2 xs:w-auto max-w-5xl flex flex-col items-center justify-center xs:m-3">
           <div className="flex justify-center m-8">
-            <p className="lg:w-1/2 text-3xl text-white xs:text-center lg:text-left">Sport Connect is a dynamic online platform designed to unite sports lovers by offering them a convenient and user-friendly space to create and organize clubs and events centered around their favorite sports activities.</p>
+            <p className="lg:w-1/2 text-3xl text-white xs:text-center xs:text-xl lg:text-left">Sport Connect is a dynamic online platform designed to unite sports lovers by offering them a convenient and user-friendly space to create and organize clubs and events centered around their favorite sports activities.</p>
           </div>
           <div>
             <button className="bg-red-900 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-2xl m-4"><Link to={'/login'}>Login</Link></button>
@@ -34,8 +34,8 @@ const Home = () => {
           <div className="bottom-image xs:hidden lg:absolute lg:block">
             <div className="bg-red-900 h-96 w-60"></div>
           </div>
-          <div className="top-image lg:absolute h-auto lg:z-[1] lg:min-w-[43.75rem] lg:max-w-[50rem] lg:mt-[5em] lg:ml-[5em] xs:min-w-[45rem] xs:m-10">
-            <img src={teamwork} alt="teamwork" className="teamwork h-96"></img>
+          <div className="top-image lg:absolute h-auto lg:z-[1] lg:min-w-[43.75rem] lg:max-w-[50rem] lg:mt-[5em] lg:ml-[5em] xs:min-w-[45rem] xs:m-10 xs:flex xs:justify-center">
+            <img src={teamwork} alt="teamwork" className="teamwork lg:h-96 xs:h-80"></img>
           </div>
         </div>
       </div>
