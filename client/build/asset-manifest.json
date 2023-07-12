@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.99a3c1a5.css",
+    "main.js": "/static/js/main.342b1ddf.js",
+    "static/media/basketball-sunset.png": "/static/media/basketball-sunset.f14ca6dc42ef17afda31.png",
+    "static/media/sports-team.png": "/static/media/sports-team.b30cf4e60ca6b77db3bd.png",
+    "static/media/sunset-bike.png": "/static/media/sunset-bike.367aba63ffe13aeb4435.png",
+    "static/media/kayake-sunset.png": "/static/media/kayake-sunset.84c5055af5ed7f9643d2.png",
+    "static/media/martial-arts-sunset.png": "/static/media/martial-arts-sunset.4355f7c00684b14eaa80.png",
+    "static/media/surfer-sunset.png": "/static/media/surfer-sunset.eaf94b96e1e166b6a2c2.png",
+    "static/media/rock-climbing.png": "/static/media/rock-climbing.2938d86e23c4edb86579.png",
+    "static/media/sunset-sport.png": "/static/media/sunset-sport.dd5361b2f2e3cda3fd06.png",
+    "static/media/hero-red.png": "/static/media/hero-red.6030ea57d7bc0efd93f5.png",
+    "static/media/teamwork.png": "/static/media/teamwork.335bca8688f839754bcc.png",
+    "static/media/sports-icon.png": "/static/media/sports-icon.d96bd6d4c1c2d701edba.png",
+    "static/media/spinner.gif": "/static/media/spinner.7e729fecb0d7593e9557.gif",
+    "index.html": "/index.html",
+    "main.99a3c1a5.css.map": "/static/css/main.99a3c1a5.css.map",
+    "main.342b1ddf.js.map": "/static/js/main.342b1ddf.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.99a3c1a5.css",
+    "static/js/main.342b1ddf.js"
+  ]
+}
