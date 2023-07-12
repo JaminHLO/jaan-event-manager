@@ -33,7 +33,7 @@ function Signup(props) {
         <div className="login-container transition ease-in-out delay-150 bg-black opacity-80 rounded-2xl h-auto w-2/5 text-center">
           <p className='text-4xl m-4'>This email has already been used.</p>
           <p className='text-4xl m-4'>Please try a different one.</p>
-          <a className="m-3" href='' >← Back to Signup</a>
+          <Link className="m-3" to='/signup' >← Back to Signup</Link>
         </div>
       </div>
     )
