@@ -46,7 +46,7 @@ const SearchClubs = () => {
     if (userGeocode) latLngArray.push(JSON.parse(userGeocode));
     if (clubs?.length) {
         clubs.map(club => {
-            const clubGeocode = club?.geocode || `{ "lat": 0, "lng": 0 }`
+            const clubGeocode = club?.geocode || `{ "lat":38.889484, "lng":-77.035278}`
             latLngArray.push(JSON.parse(clubGeocode));
         });
     }

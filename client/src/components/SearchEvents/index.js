@@ -51,7 +51,7 @@ const SearchEvents = () => {
     if (userData?.geocode) latLngArray.push(JSON.parse(userData?.geocode));
     if (events?.length) {
         events.map(event => {
-            const eventGeocode = event?.geocode || `{ "lat": 0, "lng": 0 }`
+            const eventGeocode = event?.geocode || `{ "lat":38.889484, "lng":-77.035278}`
             latLngArray.push(JSON.parse(eventGeocode))
         });
     }
