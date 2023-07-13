@@ -235,6 +235,7 @@ export const QUERY_SEARCH_EVENTS = gql`
       description
       isAvailable
       geocode
+      image
       clubId {
         geocode
         _id
